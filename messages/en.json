@@ -1,0 +1,43 @@
+{
+  "seo": {
+    "title": "Maxvario",
+    "description": "Maxvario meta description",
+    "keywords": "Maxvario meta keywords",
+    "races": {
+      "title": "Races"
+    },
+    "events": {
+      "title": "Events"
+    },
+    "news": {
+      "title": "News"
+    },
+    "blog": {
+      "title": "Blog"
+    },
+    "contact": {
+      "title": "Contact"
+    },
+    "signin": {
+      "title": "Sign in"
+    },
+    "account": {
+      "title": "Account"
+    },
+    "home": {
+        "title": "Home"
+    },
+    "about": {
+        "title": "About us"
+    },
+    "404": {
+        "title": "Page not found"
+    },
+    "privacy": {
+        "title": "Privacy policy"
+    },
+    "terms": {
+        "title": "Terms of use"
+    }
+  }
+}

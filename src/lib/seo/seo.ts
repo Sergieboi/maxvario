@@ -37,6 +37,7 @@ export const seoContent = async ({
     openGraph: {
       title,
       description,
+      locale,
     },
   };
 };

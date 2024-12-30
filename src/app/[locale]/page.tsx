@@ -1,4 +1,5 @@
+import Home from "@/components/home/home";
 
-export default function Home() {
-  return <>HI</>
+export default function HomePage() {
+  return <Home />;
 }

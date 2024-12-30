@@ -1,33 +1,30 @@
+'use client'
 import { FC } from "react";
 import Container from "../container";
 import Link from "next/link";
-import { useTranslations } from "next-intl";
+import clsx from "clsx";
+import HeaderActions from "./actions";
+import { usePathname } from "next/navigation";
+import Navbar from "./navbar";
 
 const Header: FC = () => {
-    const t = useTranslations('header');
-    return (
-        <header className="sticky top-0 z-20 shadow-md w-full">
-            <Container className="flex justify-between items-center py-4">
-                <Link href="/" className="text-xl font-bold">Logo</Link>
-                <nav>
-                    <ul className="flex space-x-4">
-                        <li>
-                            <Link href="/" className="hover:underline">{t('nav.calendar')}</Link>
-                        </li>
-                        <li>
-                            <Link href="/about" className="hover:underline">{t('nav.about')}</Link>
-                        </li>
-                        <li>
-                            <Link href="/contact" className="hover:underline">{t('nav.news')}</Link>
-                        </li>
-                        <li>
-                            <Link href="/contact" className="hover:underline">{t('nav.blog')}</Link>
-                        </li>
-                    </ul>
-                </nav>
-            </Container>
-        </header>
-    );
-}
+    const pathname = usePathname();
+  return (
+    
+    <header className={clsx("h-24 flex items-center fixed top-0 z-30 w-full text-white",  (pathname.length <= 3) ? "" : "bg-blue-900")}>
+      <Container className="flex justify-between items-center py-4">
+        <Link href="/" className="text-xl font-bold">
+          Logo
+        </Link>
+        <div className="flex gap-4 items-center">
+          <Navbar   />
+          <div className="actions">
+            <HeaderActions />
+          </div>
+        </div>
+      </Container>
+    </header>
+  );
+};
 
 export default Header;

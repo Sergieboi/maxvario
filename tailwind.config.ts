@@ -18,5 +18,8 @@ export default {
     },
   },
   darkMode: "class",
-  plugins: [nextui()]
+  plugins: [nextui({
+    addCommonColors: true,
+    defaultTheme: "light",
+  })]
 } satisfies Config;

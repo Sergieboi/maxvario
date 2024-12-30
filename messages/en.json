@@ -25,19 +25,19 @@
       "title": "Account"
     },
     "home": {
-        "title": "Home"
+      "title": "Home"
     },
     "about": {
-        "title": "About us"
+      "title": "About us"
     },
     "404": {
-        "title": "Page not found"
+      "title": "Page not found"
     },
     "privacy": {
-        "title": "Privacy policy"
+      "title": "Privacy policy"
     },
     "terms": {
-        "title": "Terms of use"
+      "title": "Terms of use"
     }
   }
 }

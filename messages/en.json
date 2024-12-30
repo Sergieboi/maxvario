@@ -1,5 +1,8 @@
 {
   "seo": {
+    "404": {
+      "title": "Page not found"
+    },
     "title": "Maxvario",
     "description": "Maxvario meta description",
     "keywords": "Maxvario meta keywords",
@@ -25,19 +28,24 @@
       "title": "Account"
     },
     "home": {
-        "title": "Home"
+      "title": "Home"
     },
     "about": {
-        "title": "About us"
-    },
-    "404": {
-        "title": "Page not found"
+      "title": "About us"
     },
     "privacy": {
-        "title": "Privacy policy"
+      "title": "Privacy policy"
     },
     "terms": {
-        "title": "Terms of use"
+      "title": "Terms of use"
+    }
+  },
+  "header": {
+    "nav": {
+      "calendar": "Calendar",
+      "news": "News",
+      "about": "About",
+      "blog": "Blog"
     }
   }
 }

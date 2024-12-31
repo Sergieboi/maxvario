@@ -2,7 +2,6 @@
 import { useTranslations } from "next-intl";
 import { FC, useEffect, useRef } from "react";
 import Container from "../shared/container";
-import { motion } from "framer-motion";
 import { gsap } from "gsap";
 import { SplitText } from "gsap/SplitText";
 import { Button } from "@nextui-org/react";
@@ -18,8 +17,21 @@ const Hero: FC = () => {
   const textRef = useRef<HTMLParagraphElement>(null);
   const mainHero = useRef<HTMLDivElement>(null);
   const actionsRef = useRef<HTMLDivElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
+    const mm = gsap.matchMedia();
+
+        mm.add("(min-width: 1024px)", () => {
+            // Animation for large screens
+            gsap.to(videoRef.current, {
+                scale: 1.2,
+                duration: 22,
+                ease: "easeInOut",
+                repeat: -1,
+                yoyo: true,
+            });
+        });
     if (titleRef.current && descriptionRef.current) {
       // Split the text into words
       const titleSplit = new SplitText(titleRef.current, { type: "chars" });
@@ -77,30 +89,33 @@ const Hero: FC = () => {
         titleSplit.revert();
         textSplit.revert();
         tl.kill();
+        mm.revert();
       };
     }
   }, []);
 
   return (
     <div className="h-dvh w-full relative overflow-hidden">
-      <motion.video
+      <video
+        ref={videoRef}
         src="/assets/paragliding.mp4"
         autoPlay
         muted
         loop
+        poster="/assets/paragliding.jpeg"
         className="min-w-full h-full object-cover"
         preload="auto"
-        variants={{
-          animate: {
-            scale: [1, 1.2, 1],
-          },
-        }}
-        animate="animate"
-        transition={{
-          duration: 22,
-          ease: "easeInOut",
-          repeat: Infinity,
-        }}
+        // variants={{
+        //   animate: {
+        //     scale: [1, 1.2, 1],
+        //   },
+        // }}
+        // animate={false ? "animate" :  undefined}
+        // transition={{
+        //   duration: 22,
+        //   ease: "easeInOut",
+        //   repeat: Infinity,
+        // }}
       />
       <div
         ref={mainHero}

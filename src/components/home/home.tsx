@@ -1,15 +1,12 @@
 import { FC } from "react";
 import Hero from "./hero";
+import HomeIntro from "./intro";
 
 const Home: FC = () => {
     return (
         <div className="bg-blue-900">
             <Hero />
-            <div className="h-36">FERAS</div>
-            <div className="h-36">FERAS</div>
-            <div className="h-36">FERAS</div>
-            <div className="h-36">FERAS</div>
-            <div className="h-36">FERAS</div>
+            <HomeIntro />
         </div>
     )
 };

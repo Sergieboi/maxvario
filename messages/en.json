@@ -53,6 +53,15 @@
       "title": "Welcome to Maxvario",
       "description": "The Home of Hike and Fly",
       "longText": "The destination website for the sport of hike and fly – the world’s toughest adventure sport. Everything for the hike and fly athletes and hike and fly event organisers.​"
-    }
+    },
+    "cta": {
+      "races": "Explore Races",
+      "events": "Worldwide Events"
+    },
+    "ready": "Ready?",
+    "go": "GO"
+  },
+  "homeIntro": {
+    "introTitle": "Popular Events and Races"
   }
 }

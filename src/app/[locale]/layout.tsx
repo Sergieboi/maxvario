@@ -21,9 +21,9 @@ const geistMono = Geist_Mono({
 });
 
 type Props = {
-  params: Promise<{ locale: Locale }>
-}
-export async function generateMetadata({params}: Props): Promise<Metadata> {
+  params: Promise<{ locale: Locale }>;
+};
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const locale = (await params).locale;
   return await seoContent({
     page: "home",
@@ -51,7 +51,9 @@ export default async function RootLayout({
         <NextIntlClientProvider messages={messages}>
           <Providers>
             <Header />
-            {children}</Providers>
+            {children}
+            {/* <FloatingSocialLinks /> */}
+          </Providers>
         </NextIntlClientProvider>
       </body>
     </html>

@@ -6,7 +6,7 @@ const Navbar: FC = () => {
     const t = useTranslations("header");
     return (
         <nav>
-            <ul className="flex space-x-4">
+            <ul className="hidden lg:flex space-x-4">
               <li>
                 <Link href="/" title={t("nav.calendar")} className="p-3 transition-all rounded-md text-white">
                   {t("nav.calendar")}

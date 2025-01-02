@@ -62,6 +62,14 @@
     "go": "GO"
   },
   "homeIntro": {
-    "introTitle": "Popular Events and Races"
+    "introTitle": "Popular Events and Races",
+    "introDescription": "Discover the best of hike and fly! From thrilling races to inspiring adventures, we bring you news and events across various outdoor sports. There's something here for everyon",
+    "cta": {
+      "title": "Find your next challenge"
+    }
+  },
+  "upcoming": {
+    "title": "Upcoming Events",
+    "description": "Several activities, various climate, our events are always HOT!"
   }
 }

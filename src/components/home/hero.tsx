@@ -17,20 +17,12 @@ const Hero: FC = () => {
   const textRef = useRef<HTMLParagraphElement>(null);
   const mainHero = useRef<HTMLDivElement>(null);
   const actionsRef = useRef<HTMLDivElement>(null);
-  const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
     const mm = gsap.matchMedia();
 
         mm.add("(min-width: 1024px)", () => {
             // Animation for large screens
-            gsap.to(videoRef.current, {
-                scale: 1.2,
-                duration: 22,
-                ease: "easeInOut",
-                repeat: -1,
-                yoyo: true,
-            });
         });
     if (titleRef.current && descriptionRef.current) {
       // Split the text into words
@@ -97,7 +89,6 @@ const Hero: FC = () => {
   return (
     <div className="h-dvh w-full relative overflow-hidden">
       <video
-        ref={videoRef}
         src="/assets/paragliding.mp4"
         autoPlay
         muted
@@ -105,17 +96,6 @@ const Hero: FC = () => {
         poster="/assets/paragliding.jpeg"
         className="min-w-full h-full object-cover"
         preload="auto"
-        // variants={{
-        //   animate: {
-        //     scale: [1, 1.2, 1],
-        //   },
-        // }}
-        // animate={false ? "animate" :  undefined}
-        // transition={{
-        //   duration: 22,
-        //   ease: "easeInOut",
-        //   repeat: Infinity,
-        // }}
       />
       <div
         ref={mainHero}

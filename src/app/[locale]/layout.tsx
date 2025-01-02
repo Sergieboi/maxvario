@@ -51,8 +51,13 @@ export default async function RootLayout({
         <NextIntlClientProvider messages={messages}>
           <Providers>
             <Header />
+
+            <div id="smooth-wrapper">
+            <div id="smooth-content">
             {children}
             {/* <FloatingSocialLinks /> */}
+            </div>
+            </div>
           </Providers>
         </NextIntlClientProvider>
       </body>

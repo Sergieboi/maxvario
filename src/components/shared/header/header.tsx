@@ -1,16 +1,41 @@
 "use client";
-import { FC } from "react";
+import { FC, useEffect, useRef } from "react";
 import Container from "../container";
 import Link from "next/link";
 import clsx from "clsx";
 import HeaderActions from "./actions";
 import { usePathname } from "next/navigation";
 import Navbar from "./navbar";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import gsap from "gsap";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const Header: FC = () => {
   const pathname = usePathname();
+  const headerRef = useRef<HTMLDivElement>(null);
+  //
+  useEffect(() => {
+    const header = headerRef.current;
+
+    // Sections that trigger header color change
+    const whiteBackgroundSections = document.querySelectorAll(".upcomings");
+
+    whiteBackgroundSections.forEach((section) => {
+      ScrollTrigger.create({
+        trigger: section,
+        start: "top-=100px top", // When the top of the section hits the top of the viewport
+        end: "bottom top", // When the bottom of the section leaves the viewport
+        onEnter: () => header?.classList.add("bg-blue-900", "text-white"), // Add blue-900 background
+        onLeaveBack: () => header?.classList.remove("bg-blue-900", "text-white"), // Remove blue-900 background
+        onLeave: () => header?.classList.remove("bg-blue-900", "text-white"), // Remove blue-900 background
+        onEnterBack: () => header?.classList.add("bg-blue-900", "text-white")
+      });
+    });
+  }, []);
   return (
     <header
+      ref={headerRef}
       className={clsx(
         "h-24 flex items-center fixed top-0 z-30 w-full text-white",
         pathname.length <= 3 ? "" : "bg-blue-900"

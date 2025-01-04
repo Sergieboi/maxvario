@@ -16,37 +16,37 @@ const HomeIntro: FC = () => {
   const introTitleRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
     if (window.innerWidth > 1024) {
-        gsap.fromTo(
-      introTitleRef.current,
-      {
-        opacity: 0,
-        y: 200,
-      },
-      {
-        opacity: 1,
-        y: 0,
-        duration: 1,
-        ease: "power2.out",
-        scrollTrigger: {
-          trigger: introTitleRef.current,
-          scrub: true,
-          start: "top bottom", // when the top of the trigger hits the top of the viewport
+      gsap.fromTo(
+        introTitleRef.current,
+        {
+          opacity: 0,
+          y: 200,
         },
-      }
-    );
-    ScrollSmoother.create({
-      wrapper: "#smooth-wrapper",
-      content: "#smooth-content",
-      smooth: true,
-      smoothTouch: false,
-      effects: true,
-    });
+        {
+          opacity: 1,
+          y: 0,
+          duration: 1,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: introTitleRef.current,
+            scrub: true,
+            start: "top bottom", // when the top of the trigger hits the top of the viewport
+          },
+        }
+      );
+      ScrollSmoother.create({
+        wrapper: "#smooth-wrapper",
+        content: "#smooth-content",
+        smooth: true,
+        smoothTouch: false,
+        effects: true,
+      });
     }
     return () => {
-        ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
       const smoother = ScrollSmoother.get();
       if (smoother) smoother.kill();
-    }
+    };
   }, []);
   return (
     <div id="images-grid">
@@ -59,7 +59,13 @@ const HomeIntro: FC = () => {
             <p data-speed={1.05} className="text-lg mb-6">
               {t("introDescription")}
             </p>
-            <Button data-speed={1.05} as={Link} href="/calendar" variant="solid" className="bg-white">
+            <Button
+              data-speed={1.05}
+              as={Link}
+              href="/calendar"
+              variant="solid"
+              className="bg-white"
+            >
               {t("cta.title")}
             </Button>
           </div>

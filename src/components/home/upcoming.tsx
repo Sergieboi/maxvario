@@ -36,7 +36,7 @@ const Upcoming: FC<Props> = ({ events }) => {
       );
   }, []);
   return (
-    <div className="bg-white relative">
+    <div className="upcomings bg-white relative">
 
       <Container className="py-20">
         <h1 className="text-3xl font-semibold mb-3 text-blue-800">{t("title")}</h1>

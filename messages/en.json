@@ -71,5 +71,8 @@
   "upcoming": {
     "title": "Upcoming Events",
     "description": "Several activities, various climate, our events are always HOT!"
+  },
+  "common": {
+    "details": "See details"
   }
 }

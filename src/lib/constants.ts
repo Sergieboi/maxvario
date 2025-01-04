@@ -24,3 +24,6 @@ export const languages: Record<Locale, {label: string; flag: string}> = {
     },
 }
 export const DEFAULT_LOCALE = 'en';
+export const REVALIDATE: Record<string, number> = {
+    home: 1,
+}

@@ -19,3 +19,8 @@ body {
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
 }
+@layer utilities {
+  .clip-skewed {
+    clip-path: polygon(0 80%, 100% 0%, 100% 100%, 0 100%);
+  }
+}

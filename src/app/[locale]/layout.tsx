@@ -7,6 +7,7 @@ import { notFound } from "next/navigation";
 import { getMessages } from "next-intl/server";
 import { NextIntlClientProvider } from "next-intl";
 import Header from "@/components/shared/header/header";
+import Footer from "@/components/shared/footer/footer";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -38,12 +39,11 @@ export default async function RootLayout({
         <NextIntlClientProvider messages={messages}>
           <Providers>
             <Header />
-
             <div id="smooth-wrapper">
-            <div id="smooth-content">
-            {children}
-            {/* <FloatingSocialLinks /> */}
-            </div>
+              <div id="smooth-content">
+                {children}
+                <Footer />
+              </div>
             </div>
           </Providers>
         </NextIntlClientProvider>

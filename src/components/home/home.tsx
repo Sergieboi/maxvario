@@ -4,6 +4,8 @@ import HomeIntro from "./intro";
 import Upcoming from "./upcoming";
 // import Cta from "../shared/cta";
 import { HomeResponse } from "@/lib/types/misc";
+import LatestBlog from "./latest-blog";
+import LatestNews from "./latest-news";
 
 type Props = {
   data: HomeResponse;
@@ -15,8 +17,12 @@ const Home: FC<Props> = ({ data }) => {
       <div className="bg-blue-900">
         <Hero />
         <HomeIntro />
-        <Upcoming events={data?.upcoming} />
+        <div className="bg-white light-section">
+          <Upcoming events={data?.upcoming} />
         {/* <Cta /> */}
+        <LatestBlog blog={data?.blog} />
+        <LatestNews news={data?.news} />
+        </div>
       </div>
     </>
   );

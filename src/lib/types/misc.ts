@@ -63,8 +63,21 @@ export type RefLink = {
 };
 export type MVEvent = {
   id: number;
-  name: string;
+  title: string;
+  thumbnail?: string;
+  thumbnail_lg?: string;
+  thumbnail_full?: string;
+  slug: string;
   post_type: "event";
+  content: Array<Block>;
+  excerpt?: string;
+  start_date?: string;
+  end_date?: string;
+  registration_date?: string;
+  registration_end_date?: string;
+  location?: Location;
+  links?: Array<RefLink>;
+  comments: Array<Comment>;
 };
 export type MVRace = {
   id: number;
@@ -104,18 +117,24 @@ export type MVAd = {
 export type MVNews = {
   id: number;
   title: string;
+  slug: string;
   thumbnail?: string;
   content: Array<Block>;
   date: string;
+  excerpt?: string;
   comments: Array<Comment>;
+  categories: Array<Taxonomy>;
 };
 export type MVBlog = {
   id: number;
   title: string;
+  slug: string;
   thumbnail?: string;
   content: Array<Block>;
   date: string;
+  excerpt?: string;
   comments: Array<Comment>;
+  categories: Array<Taxonomy>;
 };
 export type ApiResponse<T> = {
   data: T;

@@ -16,8 +16,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   });
 }
 
-export default async function HomePage() {
-  const home: ApiResponse<HomeResponse> = await getHome();
+export default async function HomePage({ params }: Props) {
+  const locale = (await params).locale;
+  const home: ApiResponse<HomeResponse> = await getHome(locale);
   if (!home?.data) {
     return notFound();
   }

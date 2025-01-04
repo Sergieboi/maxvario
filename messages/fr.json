@@ -1,16 +1,19 @@
 {
   "seo": {
+    "404": {
+      "title": "Page non trouvée"
+    },
     "title": "Maxvario",
-    "description": "Maxvario meta description",
-    "keywords": "Maxvario meta keywords",
+    "description": "Description méta de Maxvario",
+    "keywords": "Mots-clés méta de Maxvario",
     "races": {
-      "title": "Races"
+      "title": "Courses"
     },
     "events": {
-      "title": "Events"
+      "title": "Événements"
     },
     "news": {
-      "title": "News"
+      "title": "Actualités"
     },
     "blog": {
       "title": "Blog"
@@ -19,25 +22,68 @@
       "title": "Contact"
     },
     "signin": {
-      "title": "Sign in"
+      "title": "Se connecter"
     },
     "account": {
-      "title": "Account"
+      "title": "Compte"
     },
     "home": {
-      "title": "Home"
+      "title": "Accueil"
     },
     "about": {
-      "title": "About us"
-    },
-    "404": {
-      "title": "Page not found"
+      "title": "À propos de nous"
     },
     "privacy": {
-      "title": "Privacy policy"
+      "title": "Politique de confidentialité"
     },
     "terms": {
-      "title": "Terms of use"
+      "title": "Conditions d'utilisation"
     }
+  },
+  "header": {
+    "nav": {
+      "calendar": "Calendrier",
+      "news": "Actualités",
+      "about": "À propos",
+      "blog": "Blog"
+    }
+  },
+  "home": {
+    "hero": {
+      "title": "Bienvenue chez Maxvario",
+      "description": "La maison du Hike and Fly",
+      "longText": "Le site de référence pour le sport du hike and fly – le sport d'aventure le plus difficile au monde. Tout pour les athlètes de hike and fly et les organisateurs d'événements de hike and fly.​"
+    },
+    "cta": {
+      "races": "Explorer les courses",
+      "events": "Événements dans le monde"
+    },
+    "ready": "Prêt ?",
+    "go": "GO"
+  },
+  "homeIntro": {
+    "introTitle": "Événements et courses populaires",
+    "introDescription": "Découvrez le meilleur du hike and fly ! Des courses palpitantes aux aventures inspirantes, nous vous apportons des actualités et événements à travers divers sports de plein air. Il y a quelque chose pour tout le monde.",
+    "cta": {
+      "title": "Trouvez votre prochain défi"
+    }
+  },
+  "upcoming": {
+    "title": "Événements à venir",
+    "description": "Plusieurs activités, divers climats, nos événements sont toujours CHAUDS !"
+  },
+  "common": {
+    "details": "Voir les détails"
+  },
+  "latest-blog": {
+    "title": "Dernier Blog",
+    "description": "Votre source pour les dernières histoires, conseils et aventures"
+  },
+  "latest-news": {
+    "title": "Actualités récentes",
+    "description": "Dernières mises à jour et informations du monde du Hike and Fly"
+  },
+  "footer": {
+    "description": "Le site de référence pour le sport du hike and fly – le sport d'aventure le plus difficile au monde."
   }
 }

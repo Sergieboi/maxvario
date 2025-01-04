@@ -74,5 +74,16 @@
   },
   "common": {
     "details": "See details"
+  },
+  "latest-blog": {
+    "title": "Latest Blog",
+    "description": "Your Source for the Latest Stories, Tips, and Adventures"
+  },
+  "latest-news": {
+    "title": "Recent News",
+    "description": "Breaking Updates and Insights from the World of Hike and Fly"
+  },
+  "footer": {
+    "description": "The destination website for the sport of hike and fly – the world’s toughest adventure sport."
   }
 }

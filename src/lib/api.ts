@@ -17,7 +17,6 @@ export const fetcher = async ({
   revalidate,
   token,
 }: Fetcher) => {
-    console.log(url)
   try {
     const response = await fetch(url, {
       method: method || "GET",
@@ -42,10 +41,10 @@ export const fetcher = async ({
   return null;
 };
 
-export const getHome = async () => {
+export const getHome = async (locale: Locale) => {
   try {
     const data = await fetcher({
-      url: `${process.env.NEXT_PUBLIC_MAXVARIO_API}/home`,
+      url: `${process.env.NEXT_PUBLIC_MAXVARIO_API}/home?lang=${locale}`,
       revalidate: REVALIDATE.home,
     });
     return data;

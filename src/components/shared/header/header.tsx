@@ -17,22 +17,53 @@ const Header: FC = () => {
   //
   useEffect(() => {
     const header = headerRef.current;
+    if (!header) return;
+    const createScrollTriggers = () => {
+      let activeSection: HTMLElement | null = null;
 
-    // Sections that trigger header color change
-    const whiteBackgroundSections = document.querySelectorAll(".upcomings");
-
-    whiteBackgroundSections.forEach((section) => {
-      ScrollTrigger.create({
-        trigger: section,
-        start: "top-=100px top", // When the top of the section hits the top of the viewport
-        end: "bottom top", // When the bottom of the section leaves the viewport
-        onEnter: () => header?.classList.add("bg-blue-900", "text-white"), // Add blue-900 background
-        onLeaveBack: () => header?.classList.remove("bg-blue-900", "text-white"), // Remove blue-900 background
-        onLeave: () => header?.classList.remove("bg-blue-900", "text-white"), // Remove blue-900 background
-        onEnterBack: () => header?.classList.add("bg-blue-900", "text-white")
+      const whiteBackgroundSections =
+        document.querySelectorAll(".light-section");
+      whiteBackgroundSections.forEach((section) => {
+        ScrollTrigger.create({
+          trigger: section,
+          start: "top-=96px top",
+          end: "bottom top",
+          onEnter: () => {
+            if (activeSection !== section) {
+              activeSection = section as HTMLElement;
+              header?.classList.add("bg-blue-900", "text-white");
+            }
+          },
+          onLeaveBack: () => {
+            if (activeSection === section) {
+              activeSection = null; // Clear the active section when leaving back
+              header?.classList.remove("bg-blue-900", "text-white");
+            }
+          },
+          onLeave: () => {
+            if (activeSection === section) {
+              activeSection = null; // Clear the active section when leaving
+              header?.classList.remove("bg-blue-900", "text-white");
+            }
+          },
+          onEnterBack: () => {
+            if (activeSection !== section) {
+              activeSection = section as HTMLElement;
+              header?.classList.add("bg-blue-900", "text-white");
+            }
+          },
+        });
       });
-    });
-  }, []);
+      ScrollTrigger.refresh(); // Refresh triggers after creating
+    };
+
+    setTimeout(() => {
+      createScrollTriggers();
+    }, 1000);
+    return () => {
+      // ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+    };
+  }, [pathname]); // Reinitialize triggers on route change
   return (
     <header
       ref={headerRef}

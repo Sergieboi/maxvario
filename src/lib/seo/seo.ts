@@ -28,6 +28,7 @@ export const seoContent = async ({
     case "signin":
     case "events":
     case "races":
+    case 'calendar':
       title += ` - ${t(`${page}.title`)}`;
       break;
   }

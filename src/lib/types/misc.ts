@@ -1,10 +1,19 @@
 import { LOCALES } from "../constants";
+import { EventInput } from '@fullcalendar/core';
+
+
+export interface CalendarEvent extends EventInput {
+  extendedProps?: {
+    post_type?: string;
+  };
+}
 
 export type Locale = (typeof LOCALES)[number];
 
 export type PageName =
   | "home"
   | "about"
+  | "calendar"
   | "contact"
   | "404"
   | "races"

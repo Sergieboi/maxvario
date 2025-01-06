@@ -52,3 +52,16 @@ export const getHome = async (locale: Locale) => {
     console.error(error);
   }
 };
+
+export const getCalendar = async(data: Record<string, unknown>, locale: Locale) => {
+  try {
+    const response = await fetcher({
+      url: `${process.env.NEXT_PUBLIC_MAXVARIO_API}/calendar`,
+      data,
+      locale,
+    });
+    return response;
+  } catch (error) {
+    console.error(error);
+  }
+};

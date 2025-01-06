@@ -14,11 +14,11 @@ type Props = CardProps & {
 const BlogCard: FC<Props> = ({ blog, ...props }) => {
   return (
     <Card className="w-full max-w-[720px]" {...props}>
-      <CardBody className="flex flex-row flex-wrap p-0 sm:flex-nowrap">
+      <CardBody className="flex flex-row p-0 flex-nowrap">
         {blog.thumbnail && (
           <Link
             href={`/blog/${blog.slug}`}
-            className="w-full md:w-48 flex"
+            className="w-full min-w-48 max-w-48 max-h-48   flex"
             title={blog.title}
           >
             <Image
@@ -30,14 +30,14 @@ const BlogCard: FC<Props> = ({ blog, ...props }) => {
             />
           </Link>
         )}
-        <div className="px-4 py-5">
+        <div className="px-4 py-5 w-full">
           <h3 className="text-large font-medium">
             <Link href={`/blog/${blog.slug}`} title={blog.title}>
               {blog.title}
             </Link>
           </h3>
           <div className="flex flex-col gap-3 pt-2 text-small text-default-400">
-            <p className="line-clamp-2">{blog.excerpt}</p>
+            <p className="line-clamp-3">{blog.excerpt}</p>
           </div>
           {blog.categories.length > 0 && (
             <div className="flex flex-wrap gap-2 pt-2">

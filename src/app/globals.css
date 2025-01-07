@@ -24,3 +24,33 @@ body {
     clip-path: polygon(0 80%, 100% 0%, 100% 100%, 0 100%);
   }
 }
+.fc .fc-day-other .fc-daygrid-day-top {
+  @apply opacity-100;
+}
+.fc-col-header .fc-col-header-cell {
+  @apply text-center font-bold p-2; /* Tailwind classes */
+}
+
+.fc-col-header .fc-col-header-cell a {
+  @apply no-underline text-sm/6 font-semibold text-gray-700; /* Style the link inside the cell */
+}
+.fc .fc-daygrid-day.fc-day-today {
+  @apply bg-white;
+}
+
+.fc-daygrid-day-number {
+  @apply text-sm/6 font-medium text-gray-700; /* Style the day number */
+}
+.fc .fc-daygrid-day.fc-day-today {
+  @apply bg-primary-50;
+}
+.fc .fc-daygrid-day.fc-day-today a {
+  @apply text-primary font-medium;
+}
+.fc .fc-daygrid-day-number {
+  padding: 6px 10px;
+}
+.fc-toolbar-title {
+  font-size: 1.25rem !important;
+  @apply font-bold text-gray-800; /* Style the calendar title */
+}

@@ -155,3 +155,13 @@ export type HomeResponse = {
   news: Array<MVNews>;
   blog: Array<MVBlog>;
 };
+export type CalendarResponse = {
+  calendar: Array<MVRace | MVEvent>;
+  filter_options: {
+    athlete_category: Array<Taxonomy>;
+    fai_category: Array<Taxonomy>;
+    race_category: Array<Taxonomy>;
+    event_category: Array<Taxonomy>;
+  }
+};
+

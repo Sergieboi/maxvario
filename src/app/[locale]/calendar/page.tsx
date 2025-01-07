@@ -1,7 +1,9 @@
-import MainCalendar from "@/components/calendar/calendar";
+import MainCalendar from "@/components/calendar/main-calendar";
+import { getCalendar } from "@/lib/api";
 import { seoContent } from "@/lib/seo/seo";
-import { Locale } from "@/lib/types/misc";
+import { ApiResponse, CalendarResponse, Locale } from "@/lib/types/misc";
 import { Metadata } from "next";
+import { notFound } from "next/navigation";
 
 type Props = {
   params: Promise<{ locale: Locale }>;
@@ -14,8 +16,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   });
 }
 
-export default async function CalendarPage() {
-  // const locale = (await params).locale;
-  //   const events: ApiResponse<CalendarResponse> = await getCalendar({},locale);
-  return <MainCalendar />;
+export default async function CalendarPage({params}: Props) {
+  const locale = (await params).locale;
+  const events: ApiResponse<CalendarResponse> | null = await getCalendar(undefined,locale);
+  if (!events) {
+    return notFound();
+  }
+  return <MainCalendar {...events.data} />;
 }

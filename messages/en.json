@@ -88,5 +88,30 @@
   },
   "footer": {
     "description": "The destination website for the sport of hike and fly – the world’s toughest adventure sport."
+  },
+  "calendar": {
+    "page": {
+      "title": "Maxvario Calendar",
+      "description": "Plan your next adventure with ease! Our comprehensive calendar lets you explore upcoming hike-and-fly events by date, location, and difficulty. Stay ahead with event details, registration links, and everything you need to join the action. Whether you're looking for local meetups or international challenges, our calendar keeps you connected to the thrill of the sport."
+    },
+    "filter": {
+      "title": "Events Filter",
+      "country": {
+        "title": "Country"
+      },
+      "city": {
+        "title": "City"
+      },
+      "after": {
+        "title": "From"
+      },
+      "before": {
+        "title": "To"
+      },
+      "name": {
+        "title": "Name"
+      },
+      "submit": "Filter"
+    }
   }
 }

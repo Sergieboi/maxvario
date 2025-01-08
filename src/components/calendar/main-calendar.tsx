@@ -28,7 +28,7 @@ interface FilterOptions {
   raceCategory: string;
   athleteCategory: string;
   faiCategory: string;
-  eventCategory: string;
+  raceFormat: string;
 }
 
 const MainCalendar: FC<CalendarResponse> = ({ calendar, filter_options }) => {
@@ -71,11 +71,10 @@ const MainCalendar: FC<CalendarResponse> = ({ calendar, filter_options }) => {
       dateFrom: "",
       dateTo: "",
       country: "",
-      city: "",
       title: "",
       athleteCategory: "",
       faiCategory: "",
-      eventCategory: "",
+      raceFormat: "",
       raceCategory: "",
     },
   });
@@ -287,14 +286,14 @@ const MainCalendar: FC<CalendarResponse> = ({ calendar, filter_options }) => {
           <div>
             <Controller
               control={control}
-              name="eventCategory"
+              name="raceFormat"
               render={({ field }) => (
                 <Select
                   {...field}
                   selectionMode="multiple"
-                  label={t("filter.eventCategory.title")}
+                  label={t("filter.raceFormat.title")}
                 >
-                  {(filter_options.event_categories ?? []).map((category) => {
+                  {(filter_options.race_formats ?? []).map((category) => {
                     return (
                       <SelectItem key={category.term_id}>
                         {category.name}

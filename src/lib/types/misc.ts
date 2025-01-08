@@ -70,24 +70,7 @@ export type RefLink = {
   title: string;
   url: string;
 };
-export type MVEvent = {
-  id: number;
-  title: string;
-  thumbnail?: string;
-  thumbnail_lg?: string;
-  thumbnail_full?: string;
-  slug: string;
-  post_type: "event";
-  content: Array<Block>;
-  excerpt?: string;
-  start_date?: string;
-  end_date?: string;
-  registration_date?: string;
-  registration_end_date?: string;
-  location?: Location;
-  links?: Array<RefLink>;
-  comments: Array<Comment>;
-};
+
 export type MVRace = {
   id: number;
   title: string;
@@ -150,18 +133,18 @@ export type ApiResponse<T> = {
   messages: Array<string>;
 };
 export type HomeResponse = {
-  upcoming: Array<MVEvent | MVRace>;
+  upcoming: Array<MVRace>;
   ads: Array<MVAd>;
   news: Array<MVNews>;
   blog: Array<MVBlog>;
 };
 export type CalendarResponse = {
-  calendar: Array<MVRace | MVEvent>;
+  calendar: Array<MVRace>;
   filter_options: {
     athlete_categories: Array<Taxonomy>;
     fai_categories: Array<Taxonomy>;
     race_categories: Array<Taxonomy>;
-    event_categories: Array<Taxonomy>;
+    race_formats: Array<Taxonomy>;
   }
 };
 

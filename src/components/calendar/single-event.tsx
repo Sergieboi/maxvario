@@ -1,4 +1,4 @@
-import { CalendarEvent, MVEvent, MVRace } from "@/lib/types/misc";
+import { CalendarEvent, MVRace } from "@/lib/types/misc";
 import {
   Button,
   Popover,
@@ -7,7 +7,6 @@ import {
 } from "@nextui-org/react";
 import clsx from "clsx";
 import { FC } from "react";
-import EventCard from "../cards/event-card";
 import RaceCard from "../cards/race-card";
 
 type Props = {
@@ -38,10 +37,7 @@ const SingleEvent: FC<Props> = ({ event }) => {
           </Button>
         </PopoverTrigger>
         <PopoverContent className="p-0 max-w-64">
-          <>
-          {event.extendedProps?.post_type === "event" && <EventCard event={event.extendedProps as MVEvent} />}
-          {event.extendedProps?.post_type === "race" && <RaceCard race={event.extendedProps as MVRace} />}
-          </>
+          <RaceCard race={event.extendedProps as MVRace} />
         </PopoverContent>
       </Popover>
     </div>

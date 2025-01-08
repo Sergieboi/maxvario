@@ -127,6 +127,9 @@
       },
       "within": {
         "title": "Within"
+      },
+      "raceFormat": {
+        "title": "Race Format"
       }
     },
     "resultsfound": "{count} results found"

@@ -24,9 +24,9 @@ export async function POST(request: NextRequest) {
         formDataToSend.append('race_category[]', category);
       })
     }
-    if (body?.eventCategory) {
-      (body.eventCategory ?? '').split(",").forEach((category: string) => {
-        formDataToSend.append('event_category[]', category);
+    if (body?.raceFormat) {
+      (body.raceFormat ?? '').split(",").forEach((category: string) => {
+        formDataToSend.append('race_format[]', category);
       })
     }
 

@@ -19,6 +19,9 @@ import {
 } from "@nextui-org/react";
 import { FLAGS } from "@/lib/flags";
 
+import {parseDate} from "@internationalized/date";
+
+
 interface FilterOptions {
   dateFrom: string;
   dateTo: string;
@@ -67,7 +70,7 @@ const MainCalendar: FC<CalendarResponse> = ({ calendar, filter_options }) => {
     formState: { isSubmitting },
   } = useForm<FilterOptions>({
     defaultValues: {
-      dateFrom: "",
+      dateFrom: new Date().toISOString(),
       dateTo: "",
       country: "",
       title: "",
@@ -188,6 +191,7 @@ const MainCalendar: FC<CalendarResponse> = ({ calendar, filter_options }) => {
                 lang={locale}
                 isInvalid={invalid}
                 errorMessage={error?.message}
+                defaultValue={parseDate(new Date().toISOString().split('T')[0])}
                 onChange={(dateValue) => {
                   setValue("dateFrom", dateValue?.toString() ?? "");
                 }}

@@ -12,7 +12,7 @@ import {
   Button,
   ButtonGroup,
   Chip,
-  DateRangePicker,
+  DatePicker,
   Input,
   Select,
   SelectItem,
@@ -23,7 +23,6 @@ interface FilterOptions {
   dateFrom: string;
   dateTo: string;
   country: string;
-  city: string;
   title: string;
   raceCategory: string;
   athleteCategory: string;
@@ -179,19 +178,8 @@ const MainCalendar: FC<CalendarResponse> = ({ calendar, filter_options }) => {
               </Select>
             )}
           />
+          
           <Controller
-            name="city"
-            control={control}
-            render={({ field, fieldState: { invalid, error } }) => (
-              <Input
-                {...field}
-                label={t("filter.city.title")}
-                isInvalid={invalid}
-                errorMessage={error?.message}
-              />
-            )}
-          />
-          {/* <Controller
             name="dateFrom"
             control={control}
             render={({ fieldState: { invalid, error } }) => (
@@ -205,17 +193,16 @@ const MainCalendar: FC<CalendarResponse> = ({ calendar, filter_options }) => {
                 }}
               />
             )}
-          /> */}
+          />
           <Controller
             name="dateTo"
             control={control}
             render={() => (
-              <DateRangePicker
+              <DatePicker
                 defaultValue={undefined}
-                label={t("filter.within.title")}
+                label={t("filter.before.title")}
                 onChange={(dateValue) => {
-                  setValue("dateFrom", dateValue?.start.toString() ?? "");
-                  setValue("dateTo", dateValue?.end.toString() ?? "");
+                  setValue("dateTo", dateValue?.toString() ?? "");
                 }}
               />
             )}

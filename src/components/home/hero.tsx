@@ -39,8 +39,8 @@ const Hero: FC = () => {
       // show title
       tl.fromTo(
         titleSplit.chars,
-        { opacity: 0, y: 50 },
-        { opacity: 1, y: 0, stagger: 0.045, duration: 0.45, ease: "power2.out" }
+        { opacity: 0, scale: 1.5 },
+        { opacity: 1, scale: 1, stagger: 0.05, duration: 0.75, ease: "power2.out" }
       )
         // show description
         .fromTo(
@@ -131,10 +131,6 @@ const Hero: FC = () => {
         </Container>
       </div>
       <div className="absolute h-full w-full bg-gradient-to-b from-blue-800/10 to-blue-900 z-10 top-0 left-0"></div>
-      <div className="z-20 bottom-24 absolute text-white hidden">
-        <span>{t('ready')}</span>
-        <span>{t('go')}</span>
-      </div>
     </div>
   );
 };

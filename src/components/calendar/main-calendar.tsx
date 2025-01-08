@@ -69,7 +69,6 @@ const MainCalendar: FC<CalendarResponse> = ({ calendar }) => {
     const response = await req.json();
     console.log(response);
     if (req.status === 200) {
-      console.log(response);
       const mappedEvents: CalendarEvent[] = (response?.data as CalendarResponse).calendar.map((event) => {
         return {
           title: event.title,
@@ -99,7 +98,7 @@ const MainCalendar: FC<CalendarResponse> = ({ calendar }) => {
           <p className="leading-8">{t("page.description")}</p>
         </Container>
       </div>
-      <Container>
+      <Container className="pb-20">
         {/* FILTER */}
         <h2 className="font-bold text-2xl mt-8">{t("filter.title")}</h2>
         <form
@@ -205,6 +204,7 @@ const MainCalendar: FC<CalendarResponse> = ({ calendar }) => {
         </form>
         {/* CALENDAR  */}
         <FullCalendar
+        height="auto"
           plugins={[dayGridPlugin]}
           dayHeaderClassNames={() => {
             return "calendar-header-cell";
@@ -217,7 +217,6 @@ const MainCalendar: FC<CalendarResponse> = ({ calendar }) => {
           eventContent={SingleEvent}
           locale={locale}
           eventInteractive
-          aspectRatio={1.9}
           eventBackgroundColor="transparent"
           eventBorderColor="transparent"
           events={events}

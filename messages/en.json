@@ -97,7 +97,8 @@
     "filter": {
       "title": "Events Filter",
       "country": {
-        "title": "Country"
+        "title": "Country",
+        "all": "--- Any ---"
       },
       "city": {
         "title": "City"
@@ -111,7 +112,23 @@
       "name": {
         "title": "Name"
       },
-      "submit": "Filter"
-    }
+      "submit": "Filter",
+      "raceCategory": {
+        "title": "Race Category"
+      },
+      "faiCategory": {
+        "title": "FAI Category"
+      },
+      "athleteCategory": {
+        "title": "Athlete Category"
+      },
+      "eventCategory": {
+        "title": "Event Category"
+      },
+      "within": {
+        "title": "Within"
+      }
+    },
+    "resultsfound": "{count} results found"
   }
 }

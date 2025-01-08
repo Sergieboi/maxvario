@@ -4,13 +4,37 @@ export async function POST(request: NextRequest) {
   const body = await request.json();
   try {
     const formDataToSend = new URLSearchParams();
-    if (body.country) formDataToSend.append("country", body.country);
-    if (body.city) formDataToSend.append("city", body.city);
-    if (body.title) formDataToSend.append("title", body.title);
-    if (body.dateFrom) formDataToSend.append("after", body.dateFrom);
-    if (body.dateTo) formDataToSend.append("before", body.dateTo);
+    if (body?.country) {
+      (body.country ?? '')?.split(",").forEach((country: string) => {
+        formDataToSend.append("country[]", country);
+      })
+    }
+    if (body?.athleteCategory) {
+      (body.athleteCategory ?? '').split(",").forEach((category: string) => {
+        formDataToSend.append("athlete_category[]", category);
+      })
+    }
+    if (body?.faiCategory) {
+      (body.faiCategory ?? '').split(",").forEach((category: string) => {
+        formDataToSend.append("fai_category[]", category);
+      })
+    }
+    if (body?.raceCategory) {
+      (body.raceCategory ?? '').split(",").forEach((category: string) => {
+        formDataToSend.append('race_category[]', category);
+      })
+    }
+    if (body?.eventCategory) {
+      (body.eventCategory ?? '').split(",").forEach((category: string) => {
+        formDataToSend.append('event_category[]', category);
+      })
+    }
 
-    console.log(formDataToSend.toString());
+    if (body?.city) formDataToSend.append("city", body.city);
+    if (body?.title) formDataToSend.append("title", body.title);
+    if (body?.dateFrom) formDataToSend.append("after", body.dateFrom);
+    if (body?.dateTo) formDataToSend.append("before", body.dateTo);
+
 
     const response = await fetch(
       `${
@@ -31,7 +55,8 @@ export async function POST(request: NextRequest) {
     } else {
       return NextResponse.json({ message: "error", status: 500 });
     }
-  } catch {
+  } catch (e){
+    console.error(e);
     return NextResponse.json({ message: "error", status: 500 });
   }
 }

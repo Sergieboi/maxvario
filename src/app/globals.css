@@ -54,3 +54,13 @@ body {
   font-size: 1.25rem !important;
   @apply font-bold text-gray-800; /* Style the calendar title */
 }
+.fc {
+  @apply bg-gray-50 border-gray-200 border-l-1; /* Style the calendar container */
+}
+.fc-theme-standard .fc-scrollgrid {
+  @apply border-0;
+}
+.fc-theme-standard td,
+.fc-theme-standard th {
+  @apply border-1 border-solid border-gray-200;
+}

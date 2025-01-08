@@ -158,10 +158,10 @@ export type HomeResponse = {
 export type CalendarResponse = {
   calendar: Array<MVRace | MVEvent>;
   filter_options: {
-    athlete_category: Array<Taxonomy>;
-    fai_category: Array<Taxonomy>;
-    race_category: Array<Taxonomy>;
-    event_category: Array<Taxonomy>;
+    athlete_categories: Array<Taxonomy>;
+    fai_categories: Array<Taxonomy>;
+    race_categories: Array<Taxonomy>;
+    event_categories: Array<Taxonomy>;
   }
 };
 

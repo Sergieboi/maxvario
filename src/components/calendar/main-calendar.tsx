@@ -1,5 +1,5 @@
 "use client";
-import { FC, useEffect, useState } from "react";
+import { FC, useEffect, useRef, useState } from "react";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import Container from "../shared/container";
@@ -10,7 +10,9 @@ import { useForm, Controller } from "react-hook-form";
 import {
   Avatar,
   Button,
-  DatePicker,
+  ButtonGroup,
+  Chip,
+  DateRangePicker,
   Input,
   Select,
   SelectItem,
@@ -23,12 +25,28 @@ interface FilterOptions {
   country: string;
   city: string;
   title: string;
+  raceCategory: string;
+  athleteCategory: string;
+  faiCategory: string;
+  eventCategory: string;
 }
 
-const MainCalendar: FC<CalendarResponse> = ({ calendar }) => {
+const MainCalendar: FC<CalendarResponse> = ({ calendar, filter_options }) => {
+  const calendarRef = useRef<FullCalendar>(null);
   const [events, setEvents] = useState<CalendarEvent[]>([]);
   const t = useTranslations("calendar");
   const locale = useLocale();
+  const [currentMonth, setCurrentMonth] = useState<string>();
+  const handlePrev = () => {
+    const calendarApi = calendarRef.current?.getApi();
+    calendarApi?.prev(); // Navigate to the previous month
+  };
+
+  const handleNext = () => {
+    const calendarApi = calendarRef.current?.getApi();
+    calendarApi?.next(); // Navigate to the next month
+  };
+
   useEffect(() => {
     const mappedEvents: CalendarEvent[] = calendar.map((event) => {
       return {
@@ -55,21 +73,26 @@ const MainCalendar: FC<CalendarResponse> = ({ calendar }) => {
       country: "",
       city: "",
       title: "",
+      athleteCategory: "",
+      faiCategory: "",
+      eventCategory: "",
+      raceCategory: "",
     },
   });
 
   const onSubmit = async (data: FilterOptions) => {
-    const req = await fetch('/api/calendar/filter', {
-      'method': 'POST',
-      'headers': {
-        'Content-Type': 'application/json'
+    const req = await fetch("/api/calendar/filter", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
       },
-      'body': JSON.stringify(data)
+      body: JSON.stringify(data),
     });
     const response = await req.json();
-    console.log(response);
     if (req.status === 200) {
-      const mappedEvents: CalendarEvent[] = (response?.data as CalendarResponse).calendar.map((event) => {
+      const mappedEvents: CalendarEvent[] = (
+        response?.data as CalendarResponse
+      ).calendar.map((event) => {
         return {
           title: event.title,
           start: event.start_date?.substring(0, 10),
@@ -100,10 +123,18 @@ const MainCalendar: FC<CalendarResponse> = ({ calendar }) => {
       </div>
       <Container className="pb-20">
         {/* FILTER */}
-        <h2 className="font-bold text-2xl mt-8">{t("filter.title")}</h2>
+        <div className="flex items-center justify-between  mt-8">
+          <h2 className="font-bold text-2xl">{t("filter.title")}</h2>
+          <Chip
+            color={events.length > 0 ? "primary" : "warning"}
+            className="text-sm text-white italic"
+          >
+            {t("resultsfound", { count: events.length })}
+          </Chip>
+        </div>
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className="my-4 grid grid-cols-2 md:grid-cols-5 gap-4"
+          className="my-4 grid grid-cols-2 grid-rows-2 md:grid-cols-5 gap-4"
         >
           <Controller
             name="title"
@@ -123,28 +154,29 @@ const MainCalendar: FC<CalendarResponse> = ({ calendar }) => {
             render={({ field, fieldState: { invalid, error } }) => (
               <Select
                 {...field}
+                selectionMode="multiple"
                 label={t("filter.country.title")}
                 isInvalid={invalid}
                 errorMessage={error?.message}
               >
-                {
-                  FLAGS.map((flag) => {
-                    return (
-                      <SelectItem
-                        key={flag.code}
-                        startContent={
+                {FLAGS.map((flag) => {
+                  return (
+                    <SelectItem
+                      key={flag.code}
+                      startContent={
+                        flag.code ? (
                           <Avatar
                             alt="Argentina"
                             className="w-6 h-6"
                             src={`/assets/flags/${flag.code}.svg`}
                           />
-                        }
-                      >
-                        {flag.name}
-                      </SelectItem>
-                    )
-                  })
-                }
+                        ) : null
+                      }
+                    >
+                      {flag.name}
+                    </SelectItem>
+                  );
+                })}
               </Select>
             )}
           />
@@ -160,12 +192,13 @@ const MainCalendar: FC<CalendarResponse> = ({ calendar }) => {
               />
             )}
           />
-          <Controller
+          {/* <Controller
             name="dateFrom"
             control={control}
             render={({ fieldState: { invalid, error } }) => (
               <DatePicker
                 label={t("filter.after.title")}
+                lang={locale}
                 isInvalid={invalid}
                 errorMessage={error?.message}
                 onChange={(dateValue) => {
@@ -173,25 +206,106 @@ const MainCalendar: FC<CalendarResponse> = ({ calendar }) => {
                 }}
               />
             )}
-          />
+          /> */}
           <Controller
             name="dateTo"
             control={control}
-            render={({ fieldState: { invalid, error } }) => {
-              return (
-                <DatePicker
-                  defaultValue={undefined}
-                  label={t("filter.before.title")}
-                  isInvalid={invalid}
-                  errorMessage={error?.message}
-                  onChange={(dateValue) => {
-                    setValue("dateTo", dateValue?.toString() ?? "");
-                  }}
-                />
-              );
-            }}
+            render={() => (
+              <DateRangePicker
+                defaultValue={undefined}
+                label={t("filter.within.title")}
+                onChange={(dateValue) => {
+                  setValue("dateFrom", dateValue?.start.toString() ?? "");
+                  setValue("dateTo", dateValue?.end.toString() ?? "");
+                }}
+              />
+            )}
           />
           <div>
+            <Controller
+              control={control}
+              name="raceCategory"
+              render={({ field }) => (
+                <Select
+                  {...field}
+                  selectionMode="multiple"
+                  label={t("filter.raceCategory.title")}
+                >
+                  {(filter_options.race_categories ?? []).map((category) => {
+                    return (
+                      <SelectItem key={category.term_id}>
+                        {category.name}
+                      </SelectItem>
+                    );
+                  })}
+                </Select>
+              )}
+            />
+          </div>
+          <div>
+            <Controller
+              control={control}
+              name="faiCategory"
+              render={({ field }) => (
+                <Select
+                  {...field}
+                  selectionMode="multiple"
+                  label={t("filter.faiCategory.title")}
+                >
+                  {(filter_options.fai_categories ?? []).map((category) => {
+                    return (
+                      <SelectItem key={category.term_id}>
+                        {category.name}
+                      </SelectItem>
+                    );
+                  })}
+                </Select>
+              )}
+            />
+          </div>
+          <div>
+            <Controller
+              control={control}
+              name="athleteCategory"
+              render={({ field }) => (
+                <Select
+                  {...field}
+                  selectionMode="multiple"
+                  label={t("filter.athleteCategory.title")}
+                >
+                  {(filter_options.athlete_categories ?? []).map((category) => {
+                    return (
+                      <SelectItem key={category.term_id}>
+                        {category.name}
+                      </SelectItem>
+                    );
+                  })}
+                </Select>
+              )}
+            />
+          </div>
+          <div>
+            <Controller
+              control={control}
+              name="eventCategory"
+              render={({ field }) => (
+                <Select
+                  {...field}
+                  selectionMode="multiple"
+                  label={t("filter.eventCategory.title")}
+                >
+                  {(filter_options.event_categories ?? []).map((category) => {
+                    return (
+                      <SelectItem key={category.term_id}>
+                        {category.name}
+                      </SelectItem>
+                    );
+                  })}
+                </Select>
+              )}
+            />
+          </div>
+          <div className="col-span-2 md:col-span-5">
             <Button
               type="submit"
               color="primary"
@@ -203,16 +317,51 @@ const MainCalendar: FC<CalendarResponse> = ({ calendar }) => {
           </div>
         </form>
         {/* CALENDAR  */}
+        <div className="flex items-center justify-between border-b border-l border-t rounded-t-lg border-r border-gray-200 px-6 py-4 lg:flex-none bg-gray-50">
+          <h1 className="font-bold">{currentMonth}</h1>
+          <ButtonGroup>
+            <Button isIconOnly color="primary" onPress={handlePrev}>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="size-6"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M6.75 15.75 3 12m0 0 3.75-3.75M3 12h18"
+                />
+              </svg>
+            </Button>
+            <Button isIconOnly color="primary" onPress={handleNext}>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="size-6"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3"
+                />
+              </svg>
+            </Button>
+          </ButtonGroup>
+        </div>
         <FullCalendar
-        height="auto"
+          ref={calendarRef}
+          height="auto"
           plugins={[dayGridPlugin]}
           dayHeaderClassNames={() => {
             return "calendar-header-cell";
           }}
-          headerToolbar={{
-            start: "title",
-            end: "prev,next",
-          }}
+          headerToolbar={false}
           initialView="dayGridMonth"
           eventContent={SingleEvent}
           locale={locale}
@@ -221,7 +370,18 @@ const MainCalendar: FC<CalendarResponse> = ({ calendar }) => {
           eventBorderColor="transparent"
           events={events}
           datesSet={(dateInfo) => {
-            console.log(dateInfo);
+            const activeDate = new Date(dateInfo.view.currentStart); // The first date of the active view (aligned to the displayed month)
+
+            const loc = dateInfo.view.calendar.getOption("locale"); // Get FullCalendar's active locale
+            const monthName = activeDate.toLocaleString(loc?.toString(), {
+              month: "long",
+            });
+            const year = activeDate.getFullYear();
+            setCurrentMonth(
+              `${
+                monthName.charAt(0).toUpperCase() + monthName.slice(1)
+              }. ${year}`
+            );
           }}
           dayCellClassNames={({ isOther }) => {
             if (isOther) {

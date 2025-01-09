@@ -70,14 +70,14 @@
   },
   "homeIntro": {
     "introTitle": "Popular Events and Races",
-    "introDescription": "Discover the best of hike and fly! From thrilling races to inspiring adventures, we bring you news and events across various outdoor sports. There's something here for everyon",
+    "introDescription": "Everything you need to find a race, register, train, organize, support or race in the sport of Hike and Fly",
     "cta": {
       "title": "Find your next challenge"
     }
   },
   "upcoming": {
-    "title": "Upcoming Events",
-    "description": "Several activities, various climate, our events are always HOT!"
+    "title": "Upcoming Races",
+    "description": "Find your race, optimise your training, rprepare your gear and join the Hike and Fly Community."
   },
   "common": {
     "details": "See details",
@@ -85,11 +85,11 @@
   },
   "latest-blog": {
     "title": "Latest Blog",
-    "description": "Your Source for the Latest Stories, Tips, and Adventures"
+    "description": "Your go to site for the latest information on races, gear and training"
   },
   "latest-news": {
     "title": "Recent News",
-    "description": "Breaking Updates and Insights from the World of Hike and Fly"
+    "description": "Keep track of our sport, the athletes and the races."
   },
   "footer": {
     "description": "The destination website for the sport of hike and fly – the world’s toughest adventure sport."

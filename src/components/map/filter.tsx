@@ -81,6 +81,8 @@ const MapFilter: FC<Props> = ({ hide, filter_options, update, visible }) => {
     }
     const res = await req.json();
     update(res?.data?.calendar);
+    onClose();
+    window.setTimeout(hide, 500);
   };
 
   return (

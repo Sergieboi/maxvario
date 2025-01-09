@@ -41,6 +41,9 @@
     },
     "calendar": {
       "title": "Calendar"
+    },
+    "map": {
+      "title": "Map"
     }
   },
   "header": {
@@ -48,7 +51,8 @@
       "calendar": "Calendar",
       "news": "News",
       "about": "About",
-      "blog": "Blog"
+      "blog": "Blog",
+      "races": "Races"
     }
   },
   "home": {
@@ -76,7 +80,8 @@
     "description": "Several activities, various climate, our events are always HOT!"
   },
   "common": {
-    "details": "See details"
+    "details": "See details",
+    "cancel": "Cancel"
   },
   "latest-blog": {
     "title": "Latest Blog",
@@ -133,5 +138,11 @@
       }
     },
     "resultsfound": "{count} results found"
+  },
+  "map": {
+    "filter": {
+      "title": "Filter Races & Events"
+    },
+    "listView": "List View"
   }
 }

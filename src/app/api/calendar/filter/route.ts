@@ -19,11 +19,6 @@ export async function POST(request: NextRequest) {
         formDataToSend.append("fai_category[]", category);
       })
     }
-    if (body?.raceCategory) {
-      (body.raceCategory ?? '').split(",").forEach((category: string) => {
-        formDataToSend.append('race_category[]', category);
-      })
-    }
     if (body?.raceFormat) {
       (body.raceFormat ?? '').split(",").forEach((category: string) => {
         formDataToSend.append('race_format[]', category);
@@ -34,7 +29,6 @@ export async function POST(request: NextRequest) {
     if (body?.title) formDataToSend.append("title", body.title);
     if (body?.dateFrom) formDataToSend.append("after", body.dateFrom);
     if (body?.dateTo) formDataToSend.append("before", body.dateTo);
-
 
     const response = await fetch(
       `${

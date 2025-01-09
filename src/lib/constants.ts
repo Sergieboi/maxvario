@@ -1,5 +1,8 @@
 import { Locale } from "./types/misc";
 
+export const MAPS_KEY = 'AIzaSyBS-TWoQTH2OM6TSmV8QIj95NB01nre-Y0';
+export const MAP_ID = '80c93426ec151eba';
+
 export const LOCALES = ['de', 'en', 'es', 'fr', 'it'] as const;
 export const languages: Record<Locale, {label: string; flag: string}> = {
     de: {

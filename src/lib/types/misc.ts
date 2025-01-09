@@ -1,6 +1,5 @@
 import { LOCALES } from "../constants";
-import { EventInput } from '@fullcalendar/core';
-
+import { EventInput } from "@fullcalendar/core";
 
 export interface CalendarEvent extends EventInput {
   extendedProps?: {
@@ -17,6 +16,7 @@ export type PageName =
   | "contact"
   | "404"
   | "races"
+  | "map"
   | "events"
   | "news"
   | "blog"
@@ -81,11 +81,11 @@ export type MVRace = {
   post_type: "race";
   content: Array<Block>;
   excerpt?: string;
-  start_date?: string;
+  start_date: string;
   end_date?: string;
   registration_date?: string;
   registration_end_date?: string;
-  location?: Location;
+  location: Location;
   length?: number;
   duration?: number;
   format: "speed" | "points" | "distance" | "mix";
@@ -138,13 +138,12 @@ export type HomeResponse = {
   news: Array<MVNews>;
   blog: Array<MVBlog>;
 };
+export type FilterOptions = {
+  athlete_categories: Array<Taxonomy>;
+  fai_categories: Array<Taxonomy>;
+  race_formats: Array<Taxonomy>;
+};
 export type CalendarResponse = {
   calendar: Array<MVRace>;
-  filter_options: {
-    athlete_categories: Array<Taxonomy>;
-    fai_categories: Array<Taxonomy>;
-    race_categories: Array<Taxonomy>;
-    race_formats: Array<Taxonomy>;
-  }
+  filter_options: FilterOptions;
 };
-

@@ -8,6 +8,11 @@ const Navbar: FC = () => {
         <nav>
             <ul className="hidden lg:flex space-x-4">
               <li>
+                <Link href="/races" title={t("nav.races")} className="p-3 transition-all rounded-md text-white">
+                  {t("nav.races")}
+                </Link>
+              </li>
+              <li>
                 <Link href="/calendar" title={t("nav.calendar")} className="p-3 transition-all rounded-md text-white">
                   {t("nav.calendar")}
                 </Link>

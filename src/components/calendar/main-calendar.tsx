@@ -19,15 +19,13 @@ import {
 } from "@nextui-org/react";
 import { FLAGS } from "@/lib/flags";
 
-import {parseDate} from "@internationalized/date";
-
+import { parseDate } from "@internationalized/date";
 
 interface FilterOptions {
   dateFrom: string;
   dateTo: string;
   country: string;
   title: string;
-  raceCategory: string;
   athleteCategory: string;
   faiCategory: string;
   raceFormat: string;
@@ -77,7 +75,6 @@ const MainCalendar: FC<CalendarResponse> = ({ calendar, filter_options }) => {
       athleteCategory: "",
       faiCategory: "",
       raceFormat: "",
-      raceCategory: "",
     },
   });
 
@@ -181,7 +178,7 @@ const MainCalendar: FC<CalendarResponse> = ({ calendar, filter_options }) => {
               </Select>
             )}
           />
-          
+
           <Controller
             name="dateFrom"
             control={control}
@@ -191,7 +188,7 @@ const MainCalendar: FC<CalendarResponse> = ({ calendar, filter_options }) => {
                 lang={locale}
                 isInvalid={invalid}
                 errorMessage={error?.message}
-                defaultValue={parseDate(new Date().toISOString().split('T')[0])}
+                defaultValue={parseDate(new Date().toISOString().split("T")[0])}
                 onChange={(dateValue) => {
                   setValue("dateFrom", dateValue?.toString() ?? "");
                 }}
@@ -211,27 +208,7 @@ const MainCalendar: FC<CalendarResponse> = ({ calendar, filter_options }) => {
               />
             )}
           />
-          <div>
-            <Controller
-              control={control}
-              name="raceCategory"
-              render={({ field }) => (
-                <Select
-                  {...field}
-                  selectionMode="multiple"
-                  label={t("filter.raceCategory.title")}
-                >
-                  {(filter_options.race_categories ?? []).map((category) => {
-                    return (
-                      <SelectItem key={category.term_id}>
-                        {category.name}
-                      </SelectItem>
-                    );
-                  })}
-                </Select>
-              )}
-            />
-          </div>
+
           <div>
             <Controller
               control={control}

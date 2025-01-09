@@ -7,13 +7,6 @@
   --foreground: #171717;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
 body {
   color: var(--foreground);
   background: var(--background);
@@ -63,4 +56,22 @@ body {
 .fc-theme-standard td,
 .fc-theme-standard th {
   @apply border-1 border-solid border-gray-200;
+}
+.perspective {
+  perspective: 1000px;
+}
+.backface-hidden {
+  backface-visibility: hidden;
+}
+.transform-style-preserve-3d {
+  transform-style: preserve-3d;
+}
+.gm-style-iw-t > div {
+  padding: 0 !important;
+}
+
+.gm-style-iw-d {
+  padding: 0 !important;
+  margin: 0 !important;
+  overflow: visible !important;
 }

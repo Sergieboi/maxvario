@@ -81,7 +81,9 @@
   },
   "common": {
     "details": "See details",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "or": "OR",
+    "agreeterms": "I agree with <terms>terms</terms> and <privacy>privacy policy</privacy>"
   },
   "latest-blog": {
     "title": "Latest Blog",
@@ -144,5 +146,65 @@
       "title": "Filter Races & Events"
     },
     "listView": "List View"
+  },
+  "race": {
+    "duration": {
+      "title": "Duration",
+      "location": "Location"
+    },
+    "location": {
+      "title": "Location"
+    },
+    "athleteCategory": {
+      "title": "Athlete Category"
+    },
+    "faiCategory": {
+      "title": "Is FAI"
+    },
+    "raceFormat": {
+      "title": "Race Format"
+    },
+    "registration": {
+      "title": "Registration"
+    }
+  },
+  "auth": {
+    "signup": {
+      "title": "Sign up",
+      "email": {
+        "title": "E-mail address",
+        "placeholder": "Enter your email address"
+      },
+      "password": {
+        "title": "Password",
+        "placeholder": "Enter your password"
+      },
+      "button": "Sign up",
+      "google": "Login with Google"
+    },
+    "alreadyHaveAccount": "Already have an account",
+    "signin": {
+      "title": "Sign in",
+      "button": "Sign in",
+      "password": {
+        "title": "Password",
+        "placeholder": "Enter your password",
+        "required": "Please enter your password"
+      },
+      "email": {
+        "title": "E-mail address",
+        "placeholder": "Enter your email address",
+        "required": "E-mail address is required"
+      }
+    },
+    "noAccount": "Do not have an account?"
+  },
+  "pages": {
+    "terms": {
+      "slug": "terms"
+    },
+    "privacy": {
+      "slug": "privacy"
+    }
   }
 }

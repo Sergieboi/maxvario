@@ -59,7 +59,7 @@ const RaceCard: FC<Props> = ({ race, ...props }) => {
             </div>
           )}
           <div className="flex items-center gap-1 text-xs">
-            {race?.athlete_category.length > 0 && (
+            {race?.athlete_category?.length > 0 && (
               <>
                 {race.athlete_category.map((category, index) => (
                   <Chip variant="flat" key={index} color="warning" size="sm">
@@ -68,7 +68,7 @@ const RaceCard: FC<Props> = ({ race, ...props }) => {
                 ))}
               </>
             )}
-            {race?.fai_category.length > 0 && (
+            {race?.fai_category?.length > 0 && (
               <>
                 {race.fai_category.map((category, index) => (
                   <Chip variant="flat" key={index} color="secondary" size="sm">
@@ -77,9 +77,9 @@ const RaceCard: FC<Props> = ({ race, ...props }) => {
                 ))}
               </>
             )}
-            {race?.race_category.length > 0 && (
+            {race?.race_format?.length > 0 && (
               <>
-                {race.race_category.map((category, index) => (
+                {race.race_format.map((category, index) => (
                   <Chip variant="flat" key={index} color="primary" size="sm">
                     {category.name}
                   </Chip>

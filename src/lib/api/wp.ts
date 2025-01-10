@@ -1,5 +1,5 @@
-import { DEFAULT_LOCALE } from "./constants";
-import { ApiResponse, CalendarResponse, Locale } from "./types/misc";
+import { DEFAULT_LOCALE } from "../constants";
+import { ApiResponse, CalendarResponse, Locale } from "../types/misc";
 
 type Fetcher = {
   url: string;

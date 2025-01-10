@@ -1,5 +1,5 @@
 import Home from "@/components/home/home";
-import { getHome } from "@/lib/api";
+import { getHome } from "@/lib/api/wp";
 import { seoContent } from "@/lib/seo/seo";
 import { ApiResponse, HomeResponse, Locale } from "@/lib/types/misc";
 import { Metadata } from "next";

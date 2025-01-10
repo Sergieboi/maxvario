@@ -1,5 +1,5 @@
 import MapProvider from "@/components/map/map-provider";
-import { getCalendar } from "@/lib/api";
+import { getCalendar } from "@/lib/api/wp";
 import { seoContent } from "@/lib/seo/seo";
 import { ApiResponse, CalendarResponse, Locale } from "@/lib/types/misc";
 import { Metadata } from "next";

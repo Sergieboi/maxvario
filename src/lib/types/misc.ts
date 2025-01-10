@@ -38,6 +38,10 @@ export type BlockName =
   | "core/paragraph"
   | "core/image"
   | "core/video"
+  | "core/heading"
+  | "core/quote"
+  | "core/gallery"
+  | "core/list-item"
   | "core/list";
 export type Block = {
   blockName: BlockName;
@@ -80,7 +84,7 @@ export type MVRace = {
   thumbnail_full?: string;
   slug: string;
   post_type: "race";
-  content: Array<Block>;
+  content_json: Array<Block>;
   excerpt?: string;
   start_date: string;
   end_date?: string;
@@ -101,8 +105,9 @@ export type MVRace = {
   comments: Array<Comment>;
   athlete_category: Array<Taxonomy>;
   fai_category: Array<Taxonomy>;
-  race_category: Array<Taxonomy>;
+  race_format: Array<Taxonomy>;
   yoast_head?: string;
+  yoast_head_json: object;
 };
 export type MVAd = {
   id: number;

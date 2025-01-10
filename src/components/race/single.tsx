@@ -4,7 +4,7 @@ import Container from "../shared/container";
 import RaceDateChip from "./race-date-chip";
 import { useTranslations } from "next-intl";
 
-import Editor from "./editor";
+// import Editor from "./editor";
 
 type Props = {
   race: MVRace;
@@ -86,9 +86,7 @@ const SingleRace: FC<Props> = ({ race }) => {
         ))}
       </div>
       <Container className="py-20">
-        <div className="w-full xl:w-3/4 space-y-5">
-          <Editor />
-        </div>
+        <div className="w-full xl:w-3/4 space-y-5">{/* <Editor /> */}</div>
         <div className="w-full xl:w-1/4"></div>
       </Container>
     </>

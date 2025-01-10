@@ -195,6 +195,9 @@
         "title": "E-mail address",
         "placeholder": "Enter your email address",
         "required": "E-mail address is required"
+      },
+      "error": {
+        "invalidcredentials": "Invalid credentials, could not sign in"
       }
     },
     "noAccount": "Do not have an account?"

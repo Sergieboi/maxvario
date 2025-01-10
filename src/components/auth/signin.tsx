@@ -3,6 +3,8 @@ import { Button, Input, Link } from "@nextui-org/react";
 import { useTranslations } from "next-intl";
 import { FC } from "react";
 import { Controller, useForm } from "react-hook-form";
+import { signIn, SignInOptions } from "next-auth/react";
+import { useSearchParams } from "next/navigation";
 
 interface AuthSigninProps {
   email: string;
@@ -11,10 +13,13 @@ interface AuthSigninProps {
 
 const AuthSignin: FC = () => {
   const t = useTranslations();
+  const sp = useSearchParams();
 
   const {
     handleSubmit,
     control,
+    setError,
+    reset,
     formState: { isSubmitting },
   } = useForm<AuthSigninProps>({
     defaultValues: {
@@ -24,7 +29,30 @@ const AuthSignin: FC = () => {
   });
 
   const onSubmit = async (data: AuthSigninProps) => {
-    console.log(data);
+    try {
+      const res = await signIn("credentials", {
+        ...data,
+        redirect: false,
+      } as SignInOptions);
+      if (res?.error) {
+        reset();
+        setError("email", {});
+        setError("password", {
+          type: "manual",
+          message: t("auth.signin.error.invalidcredentials"),
+        });
+      } else {
+        const target = sp.get("redirect") || "/account";
+        window.location.href = target as string;
+      }
+    } catch {
+      reset();
+      setError("email", {});
+      setError("password", {
+        type: "manual",
+        message: t("auth.signin.error.invalidcredentials"),
+      });
+    }
   };
 
   return (
@@ -111,7 +139,7 @@ const AuthSignin: FC = () => {
       </div> */}
       <p className="text-center text-small">
         {t("auth.noAccount")}&nbsp;
-        <Link href="#" size="sm">
+        <Link href="/auth/signup" size="sm">
           {t("auth.signup.title")}
         </Link>
       </p>

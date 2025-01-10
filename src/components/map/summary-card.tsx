@@ -25,7 +25,7 @@ const SummaryCard: FC<SummaryCardProps> = ({ race, onClick, ...props }) => {
         <div className="absolute flex items-center w-[calc(100%-16px)] h-full px-2 gap-1.5 z-20">
           <Avatar
             size="sm"
-            src={`/assets/flags/${race.location.country_short}.svg`}
+            src={`/assets/flags/${race.location.country_short?.toLowerCase()}.svg`}
           />
           <div className="flex flex-col gap-1.5">
             <p className="text-white">{race.title}</p>

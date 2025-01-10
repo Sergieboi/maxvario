@@ -16,6 +16,7 @@ export type PageName =
   | "contact"
   | "404"
   | "races"
+  | "race"
   | "map"
   | "events"
   | "news"
@@ -101,6 +102,7 @@ export type MVRace = {
   athlete_category: Array<Taxonomy>;
   fai_category: Array<Taxonomy>;
   race_category: Array<Taxonomy>;
+  yoast_head?: string;
 };
 export type MVAd = {
   id: number;

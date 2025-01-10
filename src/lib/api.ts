@@ -1,4 +1,4 @@
-import { DEFAULT_LOCALE, REVALIDATE } from "./constants";
+import { DEFAULT_LOCALE } from "./constants";
 import { ApiResponse, CalendarResponse, Locale } from "./types/misc";
 
 type Fetcher = {
@@ -45,7 +45,7 @@ export const getHome = async (locale: Locale) => {
   try {
     const data = await fetcher({
       url: `${process.env.NEXT_PUBLIC_MAXVARIO_API}/home?lang=${locale}`,
-      revalidate: REVALIDATE.home,
+      revalidate: 120,
     });
     return data;
   } catch (error) {
@@ -63,4 +63,16 @@ export const getCalendar = async (
     locale,
   });
   return response;
+};
+
+export const getRace = async (slug: string, locale: Locale) => {
+  const race = await fetcher({
+    url: `${process.env.NEXT_PUBLIC_WP_API_URL}/races?slug=${slug}&lang=${locale}`,
+    locale,
+    revalidate: 300,
+  });
+  if (Array.isArray(race) && race.length > 0) {
+    return race[0]
+  }
+  return null;
 };

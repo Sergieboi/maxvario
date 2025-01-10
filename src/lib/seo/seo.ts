@@ -1,20 +1,24 @@
 import { Metadata } from "next";
-import { Locale, PageName } from "../types/misc";
+import { Locale, MVRace, PageName } from "../types/misc";
 import { getTranslations } from "next-intl/server";
 import { DEFAULT_LOCALE } from "../constants";
 
 type Props = {
   page: PageName;
   locale: Locale;
+  data?: Record<string, unknown>;
 };
 
 export const seoContent = async ({
   page,
   locale = DEFAULT_LOCALE,
+  data,
 }: Props): Promise<Metadata> => {
   const t = await getTranslations({ locale, namespace: "seo" });
-  let title = t("title");
-  const description = t("description");
+  const md: Metadata = {}
+  md.openGraph = {}
+  md.title = t("title");
+  md.description = t("description");
   switch (page) {
     case "blog":
     case "news":
@@ -30,16 +34,21 @@ export const seoContent = async ({
     case "races":
     case 'calendar':
     case 'map':
-      title += ` - ${t(`${page}.title`)}`;
+      md.title += ` - ${t(`${page}.title`)}`;
+      break;
+    case 'race':
+      md.title += ` - ${(data as MVRace)?.title}`;
+      md.robots = {
+        index: true,
+        follow: true,
+        "max-image-preview": "large",
+      }
+      md.openGraph.images = []
       break;
   }
-  return {
-    title,
-    description,
-    openGraph: {
-      title,
-      description,
-      locale,
-    },
-  };
+  md.openGraph.title = md.title;
+  md.openGraph.description = md.description;
+  md.openGraph.locale = locale;
+
+  return md;
 };

@@ -28,11 +28,11 @@ export default async function SingleRacePage({ params }: Props) {
   }
   return (
     <>
-      {race?.yoast_head_json && (
+      {/* {race?.yoast_head_json && (
         <script type="application/ld+json">
           {JSON.stringify(race.yoast_head_json)}
         </script>
-      )}
+      )} */}
       <SingleRace race={race} />
     </>
   );

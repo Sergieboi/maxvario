@@ -10,6 +10,7 @@ import Header from "@/components/shared/header/header";
 import Footer from "@/components/shared/footer/footer";
 import { SessionProvider } from "next-auth/react";
 import { auth } from "../../../auth";
+import Script from "next/script";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -37,6 +38,11 @@ export default async function RootLayout({
   return (
     <SessionProvider session={session}>
       <html lang={locale}>
+        <Script
+          async
+          defer
+          src={`https://www.google.com/recaptcha/api.js?render=${process.env.NEXT_PUBLIC_RECAPTCHA}`}
+        ></Script>
         <body
           className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         >

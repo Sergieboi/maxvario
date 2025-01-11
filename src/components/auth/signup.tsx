@@ -1,161 +1,171 @@
 "use client";
-import { Button, Checkbox, Divider, Input, Link } from "@nextui-org/react";
-import { useTranslations } from "next-intl";
+import Link from "next/link";
+import { Alert, Button, Input } from "@nextui-org/react";
+import { useLocale, useTranslations } from "next-intl";
 import { FC, useState } from "react";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
+import { redirect } from "next/navigation";
 
 interface AuthSignupProps {
   name: string;
+  email: string;
+  password: string;
+  passwordConfirmation: string;
 }
 
 const AuthSignin: FC = () => {
   const t = useTranslations();
-  const [isVisible, setIsVisible] = useState(false);
-  const [isConfirmVisible, setIsConfirmVisible] = useState(false);
-
-  const toggleVisibility = () => setIsVisible(!isVisible);
-  const toggleConfirmVisibility = () => setIsConfirmVisible(!isConfirmVisible);
+  const locale = useLocale();
+  const [showError, setShowError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const {
     handleSubmit,
+    control,
+    setError,
     formState: { isSubmitting },
-  } = useForm<AuthSignupProps>();
+  } = useForm<AuthSignupProps>({
+    defaultValues: {
+      name: "",
+      email: "",
+      password: "",
+      passwordConfirmation: "",
+    },
+  });
 
-  const onSubmit = async () => {};
+  const onSubmit = async (data: AuthSignupProps) => {
+    if (data.password !== data.passwordConfirmation) {
+      setError("passwordConfirmation", {
+        type: "manual",
+        message: t("auth.signup.passwordConfirmation.error"),
+      });
+      return;
+    }
+
+    try {
+      // Execute reCAPTCHA and get the token
+      const token = await new Promise<string>((resolve, reject) => {
+        window.grecaptcha.ready(() => {
+          window.grecaptcha
+            .execute(process.env.NEXT_PUBLIC_RECAPTCHA as string, {
+              action: "registration_form",
+            })
+            .then(resolve)
+            .catch(reject);
+        });
+      });
+
+      // Make the API request
+      const res = await fetch("/api/account/signup", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ ...data, locale, recaptchaToken: token }),
+      });
+
+      const result = await res.json();
+
+      if (result.success) {
+        redirect("/auth/signin");
+        return; // Stop further execution if successful
+      }
+
+      // Handle errors
+      setShowError(true);
+      setErrorMessage((result?.messages ?? []).join(", "));
+    } catch (error) {
+      // Handle unexpected errors
+      console.error("Error during signup:", error);
+      setShowError(true);
+      setErrorMessage(t("auth.signup.genericError"));
+    }
+  };
 
   return (
-    <div className="flex w-full max-w-md flex-col gap-4 rounded-large bg-content1 px-8 pb-10 pt-6 shadow-small">
+    <div className="flex max-w-full w-96 flex-col gap-4 rounded-large bg-content1 px-8 pb-10 pt-6 shadow-small">
       <p className="pb-2 text-xl font-medium">{t("auth.signup.title")}</p>
+      {showError && (
+        <Alert
+          color="danger"
+          title={t("common.error")}
+          description={errorMessage}
+        />
+      )}
       <form className="flex flex-col gap-3" onSubmit={handleSubmit(onSubmit)}>
-        <Input
-          label={t("auth.signup.email.title")}
+        <Controller
+          name="name"
+          rules={{ required: t("auth.signup.name.required") }}
+          control={control}
+          render={({ field, fieldState: { invalid, error } }) => (
+            <Input
+              {...field}
+              label={t("auth.signup.name.title")}
+              name="name"
+              placeholder={t("auth.signup.name.placeholder")}
+              type="name"
+              variant="bordered"
+              isInvalid={invalid}
+              errorMessage={error?.message}
+            />
+          )}
+        />
+        <Controller
           name="email"
-          placeholder={t("auth.signup.email.placeholder")}
-          type="email"
-          variant="bordered"
+          rules={{ required: t("auth.signup.email.required") }}
+          control={control}
+          render={({ field, fieldState: { invalid, error } }) => (
+            <Input
+              {...field}
+              label={t("auth.signup.email.title")}
+              name="email"
+              placeholder={t("auth.signup.email.placeholder")}
+              type="email"
+              variant="bordered"
+              isInvalid={invalid}
+              errorMessage={error?.message}
+            />
+          )}
         />
-        <Input
-          endContent={
-            <button type="button" onClick={toggleVisibility}>
-              {isVisible ? (
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth={1.5}
-                  stroke="currentColor"
-                  className="size-6"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M3.98 8.223A10.477 10.477 0 0 0 1.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.451 10.451 0 0 1 12 4.5c4.756 0 8.773 3.162 10.065 7.498a10.522 10.522 0 0 1-4.293 5.774M6.228 6.228 3 3m3.228 3.228 3.65 3.65m7.894 7.894L21 21m-3.228-3.228-3.65-3.65m0 0a3 3 0 1 0-4.243-4.243m4.242 4.242L9.88 9.88"
-                  />
-                </svg>
-              ) : (
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth={1.5}
-                  stroke="currentColor"
-                  className="size-6"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z"
-                  />
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
-                  />
-                </svg>
-              )}
-            </button>
-          }
-          label={t("auth.signup.password.title")}
+        <Controller
           name="password"
-          placeholder={t("auth.signup.password.placeholder")}
-          type={isVisible ? "text" : "password"}
-          variant="bordered"
+          control={control}
+          rules={{ required: t("auth.signup.password.required") }}
+          render={({ field, fieldState: { invalid, error } }) => (
+            <Input
+              {...field}
+              label={t("auth.signup.password.title")}
+              name="password"
+              placeholder={t("auth.signup.password.placeholder")}
+              type="password"
+              variant="bordered"
+              isInvalid={invalid}
+              errorMessage={error?.message}
+            />
+          )}
         />
-        <Input
-          endContent={
-            <button type="button" onClick={toggleConfirmVisibility}>
-              {isConfirmVisible ? (
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth={1.5}
-                  stroke="currentColor"
-                  className="size-6"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M3.98 8.223A10.477 10.477 0 0 0 1.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.451 10.451 0 0 1 12 4.5c4.756 0 8.773 3.162 10.065 7.498a10.522 10.522 0 0 1-4.293 5.774M6.228 6.228 3 3m3.228 3.228 3.65 3.65m7.894 7.894L21 21m-3.228-3.228-3.65-3.65m0 0a3 3 0 1 0-4.243-4.243m4.242 4.242L9.88 9.88"
-                  />
-                </svg>
-              ) : (
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth={1.5}
-                  stroke="currentColor"
-                  className="size-6"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z"
-                  />
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
-                  />
-                </svg>
-              )}
-            </button>
-          }
-          label="Confirm Password"
-          name="confirmPassword"
-          placeholder="Confirm your password"
-          type={isConfirmVisible ? "text" : "password"}
-          variant="bordered"
+        <Controller
+          name="passwordConfirmation"
+          control={control}
+          rules={{ required: t("auth.signup.passwordConfirmation.required") }}
+          render={({ field, fieldState: { invalid, error } }) => (
+            <Input
+              {...field}
+              label={t("auth.signup.passwordConfirmation.title")}
+              name="password"
+              placeholder={t("auth.signup.password.placeholder")}
+              type="password"
+              variant="bordered"
+              isInvalid={invalid}
+              errorMessage={error?.message}
+            />
+          )}
         />
-        <div>
-          <Checkbox className="py-4" size="sm" />
-          {t.rich("common.agreeterms", {
-            terms: (chunks) => (
-              <Link
-                href={`/pages/${t("pages.terms.slug")}`}
-                size="sm"
-                target="_blank"
-              >
-                {chunks}
-              </Link>
-            ),
-            privacy: (chunks) => (
-              <Link
-                href={`/pages/${t("pages.privacy.slug")}`}
-                size="sm"
-                target="_blank"
-              >
-                {chunks}
-              </Link>
-            ),
-          })}
-        </div>
         <Button color="primary" type="submit" isLoading={isSubmitting}>
           {t("auth.signup.button")}
         </Button>
       </form>
-      <div className="flex items-center gap-4 py-2">
+      {/* <div className="flex items-center gap-4 py-2">
         <Divider className="flex-1" />
         <p className="shrink-0 text-tiny text-default-500">{t("common.or")}</p>
         <Divider className="flex-1" />
@@ -194,10 +204,10 @@ const AuthSignin: FC = () => {
         >
           {t("auth.signup.google")}
         </Button>
-      </div>
+      </div> */}
       <p className="text-center text-small">
         {t("auth.alreadyHaveAccount")}&nbsp;
-        <Link href="#" size="sm">
+        <Link href="/auth/signin" className="text-primary">
           {t("auth.signin.title")}
         </Link>
       </p>

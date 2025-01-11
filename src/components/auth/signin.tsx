@@ -1,7 +1,8 @@
 "use client";
-import { Button, Input, Link } from "@nextui-org/react";
+import Link from "next/link";
+import { Alert, Button, Input } from "@nextui-org/react";
 import { useTranslations } from "next-intl";
-import { FC } from "react";
+import { FC, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { signIn, SignInOptions } from "next-auth/react";
 import { useSearchParams } from "next/navigation";
@@ -12,14 +13,13 @@ interface AuthSigninProps {
 }
 
 const AuthSignin: FC = () => {
+  const [showError, setShowError] = useState(false);
   const t = useTranslations();
   const sp = useSearchParams();
 
   const {
     handleSubmit,
     control,
-    setError,
-    reset,
     formState: { isSubmitting },
   } = useForm<AuthSigninProps>({
     defaultValues: {
@@ -35,29 +35,26 @@ const AuthSignin: FC = () => {
         redirect: false,
       } as SignInOptions);
       if (res?.error) {
-        reset();
-        setError("email", {});
-        setError("password", {
-          type: "manual",
-          message: t("auth.signin.error.invalidcredentials"),
-        });
+        setShowError(true);
       } else {
         const target = sp.get("redirect") || "/account";
         window.location.href = target as string;
       }
     } catch {
-      reset();
-      setError("email", {});
-      setError("password", {
-        type: "manual",
-        message: t("auth.signin.error.invalidcredentials"),
-      });
+      setShowError(true);
     }
   };
 
   return (
     <div className="flex max-w-full w-96 flex-col gap-4 rounded-large bg-content1 px-8 pb-10 pt-6 shadow-small">
       <p className="pb-2 text-xl font-medium">{t("auth.signin.title")}</p>
+      {showError && (
+        <Alert
+          color="danger"
+          title={t("common.error")}
+          description={t("auth.signin.error.invalidcredentials")}
+        />
+      )}
       <form className="flex flex-col gap-3" onSubmit={handleSubmit(onSubmit)}>
         <Controller
           name="email"
@@ -139,7 +136,7 @@ const AuthSignin: FC = () => {
       </div> */}
       <p className="text-center text-small">
         {t("auth.noAccount")}&nbsp;
-        <Link href="/auth/signup" size="sm">
+        <Link href="/auth/signup" className="text-primary">
           {t("auth.signup.title")}
         </Link>
       </p>

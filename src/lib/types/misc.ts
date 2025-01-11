@@ -22,6 +22,7 @@ export type PageName =
   | "news"
   | "blog"
   | "signin"
+  | "signup"
   | "account"
   | "privacy"
   | "terms";
@@ -139,6 +140,10 @@ export type ApiResponse<T> = {
   data: T;
   messages: Array<string>;
 };
+export type RegistrationResponse = {
+  success: boolean;
+  messages: Array<string>;
+}
 export type HomeResponse = {
   upcoming: Array<MVRace>;
   ads: Array<MVAd>;

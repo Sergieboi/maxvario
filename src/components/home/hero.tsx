@@ -19,11 +19,6 @@ const Hero: FC = () => {
   const actionsRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const mm = gsap.matchMedia();
-
-        mm.add("(min-width: 1024px)", () => {
-            // Animation for large screens
-        });
     if (titleRef.current && descriptionRef.current) {
       // Split the text into words
       const titleSplit = new SplitText(titleRef.current, { type: "chars" });
@@ -39,8 +34,23 @@ const Hero: FC = () => {
       // show title
       tl.fromTo(
         titleSplit.chars,
-        { opacity: 0, scale: 1.5 },
-        { opacity: 1, scale: 1, stagger: 0.05, duration: 0.75, ease: "power2.out" }
+        {
+          opacity: 0,
+          scale: 1.75,
+          x: (i) => {
+            const len = titleSplit.chars.length / 2;
+            const distance = Math.abs(len - i) * 30;
+            return len > i ? -distance : distance;
+          },
+        },
+        {
+          x: 0,
+          opacity: 1,
+          scale: 1,
+          // stagger: 0.05,
+          duration: 1,
+          ease: "power2.out",
+        }
       )
         // show description
         .fromTo(
@@ -68,20 +78,23 @@ const Hero: FC = () => {
             ease: "power2.out",
           }
         )
-        .fromTo(actionsRef.current, {
-          opacity: 0,
-          duration: 0.45,
-          ease: "power2.out",
-        }, {
-          opacity: 1,
-        })
+        .fromTo(
+          actionsRef.current,
+          {
+            opacity: 0,
+            duration: 0.45,
+            ease: "power2.out",
+          },
+          {
+            opacity: 1,
+          }
+        );
 
       // Cleanup on unmount
       return () => {
         titleSplit.revert();
         textSplit.revert();
         tl.kill();
-        mm.revert();
       };
     }
   }, []);
@@ -124,7 +137,13 @@ const Hero: FC = () => {
             <Button as={Link} href="/races" variant="solid" color="primary">
               {t("cta.races")}
             </Button>
-            <Button as={Link} href="/races" variant="solid" color="primary" className="bg-white text-primary">
+            <Button
+              as={Link}
+              href="/races"
+              variant="solid"
+              color="primary"
+              className="bg-white text-primary"
+            >
               {t("cta.events")}
             </Button>
           </div>

@@ -3,7 +3,7 @@ import { FC, PropsWithChildren } from "react";
 const AuthLayout: FC<PropsWithChildren> = ({ children }) => {
   return (
     <div
-      className="relative flex h-dvh w-full items-center justify-center overflow-hidden bg-content1 p-2 sm:p-4 lg:p-8"
+      className="relative flex h-dvh w-full items-center justify-center overflow-hidden bg-content1 bg-fixed bg-cover p-2 sm:p-4 lg:p-8"
       style={{
         backgroundImage:
           "url(/assets/friends-hiking-together-outdoors-exploring.jpg), url(/assets/friends-hiking-together-outdoors-exploring.jpg)",

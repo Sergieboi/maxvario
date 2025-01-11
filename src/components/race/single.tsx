@@ -68,7 +68,7 @@ const SingleRace: FC<Props> = ({ race }) => {
   return (
     <>
       <div
-        className="min-h-80 bg-cover bg-center flex items-center mt-24 relative"
+        className="min-h-80 bg-cover bg-center bg-fixed flex items-center mt-24 relative"
         style={{ backgroundImage: `url(${race.thumbnail_full})` }}
       >
         <div className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-70"></div>

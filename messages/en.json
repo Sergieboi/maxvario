@@ -83,7 +83,8 @@
     "details": "See details",
     "cancel": "Cancel",
     "or": "OR",
-    "agreeterms": "I agree with <terms>terms</terms> and <privacy>privacy policy</privacy>"
+    "agreeterms": "I agree with <terms>terms</terms> and <privacy>privacy policy</privacy>",
+    "error": "Error"
   },
   "latest-blog": {
     "title": "Latest Blog",
@@ -159,7 +160,7 @@
       "title": "Athlete Category"
     },
     "faiCategory": {
-      "title": "Is FAI"
+      "title": "FAI Category"
     },
     "raceFormat": {
       "title": "Race Format"
@@ -173,14 +174,27 @@
       "title": "Sign up",
       "email": {
         "title": "E-mail address",
-        "placeholder": "Enter your email address"
+        "placeholder": "Enter your email address",
+        "required": "The e-mail address is required"
       },
       "password": {
         "title": "Password",
-        "placeholder": "Enter your password"
+        "placeholder": "Enter your password",
+        "required": "Please enter your password"
       },
       "button": "Sign up",
-      "google": "Login with Google"
+      "google": "Login with Google",
+      "name": {
+        "title": "Name",
+        "required": "The name is required",
+        "placeholder": "Enter your name"
+      },
+      "passwordConfirmation": {
+        "required": "Please confirm your password",
+        "title": "Password confirmation",
+        "error": "Password confirmation is not matching"
+      },
+      "genericError": "Generic error, please try again later"
     },
     "alreadyHaveAccount": "Already have an account",
     "signin": {

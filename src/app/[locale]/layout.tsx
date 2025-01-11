@@ -8,6 +8,8 @@ import { getMessages } from "next-intl/server";
 import { NextIntlClientProvider } from "next-intl";
 import Header from "@/components/shared/header/header";
 import Footer from "@/components/shared/footer/footer";
+import { SessionProvider } from "next-auth/react";
+import { auth } from "../../../auth";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -31,23 +33,26 @@ export default async function RootLayout({
     notFound();
   }
   const messages = await getMessages();
+  const session = await auth();
   return (
-    <html lang={locale}>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        <NextIntlClientProvider messages={messages}>
-          <Providers>
-            <Header />
-            <div id="smooth-wrapper">
-              <div id="smooth-content">
-                {children}
-                <Footer />
+    <SessionProvider session={session}>
+      <html lang={locale}>
+        <body
+          className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        >
+          <NextIntlClientProvider messages={messages} locale={locale}>
+            <Providers>
+              <Header />
+              <div id="smooth-wrapper">
+                <div id="smooth-content">
+                  {children}
+                  <Footer />
+                </div>
               </div>
-            </div>
-          </Providers>
-        </NextIntlClientProvider>
-      </body>
-    </html>
+            </Providers>
+          </NextIntlClientProvider>
+        </body>
+      </html>
+    </SessionProvider>
   );
 }

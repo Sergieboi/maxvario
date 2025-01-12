@@ -14,7 +14,7 @@ const RaceDateChip: FC<{ race: MVRace }> = ({ race }) => {
       size="lg"
       avatar={
         <Avatar
-          src={`/assets/flags/${race?.location?.country_short?.toLowerCase()}.svg`}
+          src={`/assets/flags/${race?.location_data?.country_short?.toLowerCase()}.svg`}
         />
       }
     >

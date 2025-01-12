@@ -46,7 +46,7 @@ const AuthSignin: FC = () => {
   };
 
   return (
-    <div className="flex max-w-full w-96 flex-col gap-4 rounded-large bg-content1 px-8 pb-10 pt-6 shadow-small">
+    <div className="flex max-w-[calc(100%-32px)] mx-auto w-96 flex-col gap-4 rounded-large bg-content1 px-8 pb-10 pt-6 shadow-small">
       <p className="pb-2 text-xl font-medium">{t("auth.signin.title")}</p>
       {showError && (
         <Alert
@@ -90,6 +90,11 @@ const AuthSignin: FC = () => {
             />
           )}
         />
+        <div className="flex w-full items-center justify-end px-1 py-2">
+          <Link className="text-default-500" href="/auth/forgot-password">
+            {t("auth.signin.forgot")}?
+          </Link>
+        </div>
         <Button color="primary" type="submit" isLoading={isSubmitting}>
           {t("auth.signin.button")}
         </Button>

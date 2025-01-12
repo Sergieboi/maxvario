@@ -17,7 +17,7 @@ const SingleRace: FC<Props> = ({ race }) => {
     {
       label: t("race.location.title"),
       content: (
-        <span className="text-sm">{`${race.location?.country} (${race.location?.country_short})`}</span>
+        <span className="text-sm">{`${race.location_data?.country} (${race.location_data?.country_short})`}</span>
       ),
     },
     {

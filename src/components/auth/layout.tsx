@@ -12,7 +12,7 @@ const AuthLayout: FC<PropsWithChildren> = ({ children }) => {
       }}
     >
       <div className="absolute top-0 left-0 w-full h-full bg-blue-900 bg-opacity-70 z-10"></div>
-      <div className="relative z-20 mt-24 px-2">{children}</div>
+      <div className="relative z-20 mt-24">{children}</div>
     </div>
   );
 };

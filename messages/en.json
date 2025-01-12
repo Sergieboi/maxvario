@@ -194,7 +194,9 @@
         "title": "Password confirmation",
         "error": "Password confirmation is not matching"
       },
-      "genericError": "Generic error, please try again later"
+      "genericError": "Generic error, please try again later",
+      "success": "Done",
+      "successDescription": "Please follow the link we sent to your email"
     },
     "alreadyHaveAccount": "Already have an account",
     "signin": {
@@ -212,9 +214,15 @@
       },
       "error": {
         "invalidcredentials": "Invalid credentials, could not sign in"
-      }
+      },
+      "forgot": "Forgot password"
     },
-    "noAccount": "Do not have an account?"
+    "noAccount": "Do not have an account?",
+    "forgotPassword": {
+      "title": "Forgot Password",
+      "button": "Send reset link",
+      "backToSignin": "Back to login"
+    }
   },
   "pages": {
     "terms": {

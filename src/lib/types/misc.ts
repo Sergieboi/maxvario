@@ -10,21 +10,22 @@ export interface CalendarEvent extends EventInput {
 export type Locale = (typeof LOCALES)[number];
 
 export type PageName =
-  | "home"
+  | "404"
   | "about"
+  | "account"
+  | "blog"
   | "calendar"
   | "contact"
-  | "404"
+  | "events"
+  | "forgotPassword"
+  | "home"
+  | "map"
+  | "news"
+  | "privacy"
   | "races"
   | "race"
-  | "map"
-  | "events"
-  | "news"
-  | "blog"
   | "signin"
   | "signup"
-  | "account"
-  | "privacy"
   | "terms";
 
 export type Comment = {
@@ -91,7 +92,7 @@ export type MVRace = {
   end_date?: string;
   registration_date?: string;
   registration_end_date?: string;
-  location: Location;
+  location_data: Location;
   length?: number;
   duration?: number;
   format: "speed" | "points" | "distance" | "mix";
@@ -143,7 +144,7 @@ export type ApiResponse<T> = {
 export type RegistrationResponse = {
   success: boolean;
   messages: Array<string>;
-}
+};
 export type HomeResponse = {
   upcoming: Array<MVRace>;
   ads: Array<MVAd>;

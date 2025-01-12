@@ -25,14 +25,14 @@ const MainMap: FC<CalendarResponse> = ({ calendar, filter_options }) => {
   useEffect(() => {
     if (!selectedRace || !mapRef) return;
     mapRef?.panTo({
-      lat: selectedRace.location.lat,
-      lng: selectedRace.location.lng,
+      lat: selectedRace.location_data.lat,
+      lng: selectedRace.location_data.lng,
     });
   }, [
     mapRef,
     selectedRace,
-    selectedRace?.location.lat,
-    selectedRace?.location.lng,
+    selectedRace?.location_data.lat,
+    selectedRace?.location_data.lng,
   ]);
   const goToList = () => {
     const el = document.querySelector("#list-view");
@@ -74,7 +74,7 @@ const MainMap: FC<CalendarResponse> = ({ calendar, filter_options }) => {
             fullscreenControl={false}
           >
             {(data ?? [])
-              .filter((e) => e.location?.lat && e.location.lng)
+              .filter((e) => e.location_data?.lat && e.location_data.lng)
               .map((race) => (
                 <MarkerWithInfoWindow
                   selected={selectedRace?.id === race.id}
@@ -82,8 +82,8 @@ const MainMap: FC<CalendarResponse> = ({ calendar, filter_options }) => {
                   race={race}
                   onClick={(race) => setSelectedRace(race)}
                   position={{
-                    lat: race.location?.lat as number,
-                    lng: race.location?.lng as number,
+                    lat: race.location_data?.lat as number,
+                    lng: race.location_data?.lng as number,
                   }}
                 />
               ))}

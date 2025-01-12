@@ -16,13 +16,16 @@ interface AuthSignupProps {
 const AuthSignin: FC = () => {
   const t = useTranslations();
   const locale = useLocale();
-  const [showError, setShowError] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
+  const [showAlert, setShowAlert] = useState(false);
+  const [alertMessage, setAlertMessage] = useState("");
+  const [alertTitle, setAlertTitle] = useState("");
+  const [alertType, setAlertType] = useState<"success" | "danger">("danger");
 
   const {
     handleSubmit,
     control,
     setError,
+    reset,
     formState: { isSubmitting },
   } = useForm<AuthSignupProps>({
     defaultValues: {
@@ -67,29 +70,39 @@ const AuthSignin: FC = () => {
       const result = await res.json();
 
       if (result.success) {
-        redirect("/auth/signin");
+        setShowAlert(true);
+        setAlertType("success");
+        setAlertTitle(t("auth.signup.success"));
+        setAlertMessage(t("auth.signup.successDescription"));
+        reset();
+        window.setTimeout(() => {
+          redirect("/auth/signin");
+        }, 5000);
         return; // Stop further execution if successful
       }
-
       // Handle errors
-      setShowError(true);
-      setErrorMessage((result?.messages ?? []).join(", "));
+      setAlertMessage((result?.messages ?? []).join(", "));
     } catch (error) {
       // Handle unexpected errors
       console.error("Error during signup:", error);
-      setShowError(true);
-      setErrorMessage(t("auth.signup.genericError"));
+      setAlertMessage(t("auth.signup.genericError"));
     }
+    setAlertTitle(t("common.error"));
+    setAlertType("danger");
+    setShowAlert(true);
   };
 
   return (
-    <div className="flex max-w-full w-96 flex-col gap-4 rounded-large bg-content1 px-8 pb-10 pt-6 shadow-small">
+    <div className="flex max-w-[calc(100%-32px)] mx-auto w-96 flex-col gap-4 rounded-large bg-content1 px-8 pb-10 pt-6 shadow-small">
       <p className="pb-2 text-xl font-medium">{t("auth.signup.title")}</p>
-      {showError && (
+      {showAlert && (
         <Alert
-          color="danger"
-          title={t("common.error")}
-          description={errorMessage}
+          color={alertType}
+          title={alertTitle}
+          description={alertMessage}
+          classNames={{
+            title: "text-base font-medium",
+          }}
         />
       )}
       <form className="flex flex-col gap-3" onSubmit={handleSubmit(onSubmit)}>

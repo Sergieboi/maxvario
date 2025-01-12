@@ -44,17 +44,17 @@ const RaceCard: FC<Props> = ({ race, ...props }) => {
               {race.excerpt}
             </p>
           )}
-          {race.location?.country_short && (
+          {race.location_data?.country_short && (
             <div className="flex items-center gap-1 text-xs">
               <Image
-                src={`/assets/flags/${race.location?.country_short.toLowerCase()}.svg`}
-                alt={race.location?.country_short}
+                src={`/assets/flags/${race.location_data?.country_short.toLowerCase()}.svg`}
+                alt={race.location_data?.country_short}
                 width={24}
                 height={24}
               />
               <span>
-                {race.location.state ?? race.location.city},{" "}
-                {race.location.country}
+                {race.location_data.city ?? race.location_data.state},{" "}
+                {race.location_data.country}
               </span>
             </div>
           )}

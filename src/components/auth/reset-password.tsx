@@ -4,31 +4,35 @@ import { Alert, Button, Input } from "@nextui-org/react";
 import { useLocale, useTranslations } from "next-intl";
 import { FC, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
+import { useSearchParams } from "next/navigation";
 
-interface AuthForgotPasswordProps {
-  email: string;
+interface AuthResetPasswordProps {
+  password: string;
+  passwordConfirmation: string;
 }
 
-const AuthForgotPassword: FC = () => {
+const AuthResetPassword: FC = () => {
   const t = useTranslations();
   const locale = useLocale();
   const [showAlert, setShowAlert] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
   const [alertTitle, setAlertTitle] = useState("");
   const [alertType, setAlertType] = useState<"success" | "danger">("danger");
+  const sp = useSearchParams();
 
   const {
     handleSubmit,
     control,
     reset,
     formState: { isSubmitting },
-  } = useForm<AuthForgotPasswordProps>({
+  } = useForm<AuthResetPasswordProps>({
     defaultValues: {
-      email: "",
+      password: "",
+      passwordConfirmation: "",
     },
   });
 
-  const onSubmit = async (data: AuthForgotPasswordProps) => {
+  const onSubmit = async (data: AuthResetPasswordProps) => {
     try {
       // Execute reCAPTCHA and get the token
       const token = await new Promise<string>((resolve, reject) => {
@@ -41,12 +45,17 @@ const AuthForgotPassword: FC = () => {
             .catch(reject);
         });
       });
-      const res = await fetch("/api/account/forgot-password", {
+      const res = await fetch("/api/account/reset-password", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ ...data, lang: locale, recaptchaToken: token }),
+        body: JSON.stringify({
+          ...data,
+          lang: locale,
+          recaptchaToken: token,
+          hash: sp.get("hash"),
+        }),
       });
 
       const result = await res.json();
@@ -54,8 +63,8 @@ const AuthForgotPassword: FC = () => {
       if (result.success) {
         setShowAlert(true);
         setAlertType("success");
-        setAlertTitle(t("auth.signup.success"));
-        setAlertMessage(t("auth.signup.successDescription"));
+        setAlertTitle(t("auth.resetPassword.success"));
+        setAlertMessage(t("auth.resetPassword.successDescription"));
         reset();
         return; // Stop further execution if successful
       }
@@ -64,7 +73,7 @@ const AuthForgotPassword: FC = () => {
     } catch (error) {
       // Handle unexpected errors
       console.error("Error during signup:", error);
-      setAlertMessage(t("auth.signup.genericError"));
+      setAlertMessage(t("auth.resetPassword.genericError"));
     }
     setAlertTitle(t("common.error"));
     setAlertType("danger");
@@ -74,7 +83,7 @@ const AuthForgotPassword: FC = () => {
   return (
     <div className="flex max-w-[calc(100%-32px)] mx-auto w-96 flex-col gap-4 rounded-large bg-content1 px-8 pb-10 pt-6 shadow-small">
       <p className="pb-2 text-xl font-medium">
-        {t("auth.forgotPassword.title")}
+        {t("auth.resetPassword.title")}
       </p>
       {showAlert && (
         <Alert
@@ -85,16 +94,33 @@ const AuthForgotPassword: FC = () => {
       )}
       <form className="flex flex-col gap-3" onSubmit={handleSubmit(onSubmit)}>
         <Controller
-          name="email"
-          rules={{ required: t("auth.signin.email.required") }}
+          name="password"
+          rules={{ required: t("auth.resetPassword.password.required") }}
           control={control}
           render={({ field, fieldState: { invalid, error } }) => (
             <Input
               {...field}
-              label={t("auth.signin.email.title")}
-              name="email"
-              placeholder={t("auth.signin.email.placeholder")}
-              type="email"
+              label={t("auth.resetPassword.password.title")}
+              name="password"
+              placeholder={t("auth.resetPassword.password.placeholder")}
+              type="password"
+              variant="bordered"
+              isInvalid={invalid}
+              errorMessage={error?.message}
+            />
+          )}
+        />
+        <Controller
+          name="passwordConfirmation"
+          rules={{ required: t("auth.resetPassword.confirmPassword.required") }}
+          control={control}
+          render={({ field, fieldState: { invalid, error } }) => (
+            <Input
+              {...field}
+              label={t("auth.resetPassword.confirmPassword.title")}
+              name="passwordConfirmation"
+              placeholder={t("auth.resetPassword.confirmPassword.placeholder")}
+              type="password"
               variant="bordered"
               isInvalid={invalid}
               errorMessage={error?.message}
@@ -102,7 +128,7 @@ const AuthForgotPassword: FC = () => {
           )}
         />
         <Button color="primary" type="submit" isLoading={isSubmitting}>
-          {t("auth.forgotPassword.button")}
+          {t("auth.resetPassword.button")}
         </Button>
       </form>
       <p className="text-center text-small">
@@ -114,4 +140,4 @@ const AuthForgotPassword: FC = () => {
   );
 };
 
-export default AuthForgotPassword;
+export default AuthResetPassword;

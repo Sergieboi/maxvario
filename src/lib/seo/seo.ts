@@ -15,8 +15,8 @@ export const seoContent = async ({
   data,
 }: Props): Promise<Metadata> => {
   const t = await getTranslations({ locale, namespace: "seo" });
-  const md: Metadata = {}
-  md.openGraph = {}
+  const md: Metadata = {};
+  md.openGraph = {};
   md.title = t("title");
   md.description = t("description");
   switch (page) {
@@ -32,18 +32,21 @@ export const seoContent = async ({
     case "signin":
     case "events":
     case "races":
-    case 'calendar':
-    case 'map':
+    case "calendar":
+    case "map":
+    case "forgotPassword":
+    case "resetPassword":
+    case "signup":
       md.title += ` - ${t(`${page}.title`)}`;
       break;
-    case 'race':
+    case "race":
       md.title += ` - ${(data as MVRace)?.title}`;
       md.robots = {
         index: true,
         follow: true,
         "max-image-preview": "large",
-      }
-      md.openGraph.images = []
+      };
+      md.openGraph.images = [];
       break;
   }
   md.openGraph.title = md.title;

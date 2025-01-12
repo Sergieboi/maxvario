@@ -44,6 +44,15 @@
     },
     "map": {
       "title": "Map"
+    },
+    "forgotPassword": {
+      "title": "Forgot Password"
+    },
+    "signup": {
+      "title": "Sign up"
+    },
+    "resetPassword": {
+      "title": "Reset Password"
     }
   },
   "header": {
@@ -222,6 +231,23 @@
       "title": "Forgot Password",
       "button": "Send reset link",
       "backToSignin": "Back to login"
+    },
+    "resetPassword": {
+      "title": "Reset Password",
+      "password": {
+        "title": "New Password",
+        "placeholder": "Enter your new password",
+        "required": "The password is required"
+      },
+      "confirmPassword": {
+        "required": "Please enter the password confirmation",
+        "placeholder": "Confirm your new password",
+        "title": "Password confirmation"
+      },
+      "button": "Change my password",
+      "success": "Done",
+      "successDescription": "Your password has been set successfully",
+      "genericError": "Generic error, please try again later"
     }
   },
   "pages": {
@@ -230,6 +256,39 @@
     },
     "privacy": {
       "slug": "privacy"
+    }
+  },
+  "account": {
+    "title": "My account",
+    "menu": {
+      "profile": "Profile",
+      "posts": "My posts",
+      "subscriptions": "Subscriptions",
+      "signout": "Sign out",
+      "notifications": "Notifications"
+    },
+    "posts": {
+      "races": {
+        "title": "Races"
+      },
+      "news": {
+        "title": "News"
+      },
+      "blog": {
+        "title": "Blog"
+      }
+    },
+    "races": {
+      "column": {
+        "id": "ID",
+        "title": "Title",
+        "country": "Country",
+        "fai": "FAI",
+        "format": "Format",
+        "athlete": "Athlete",
+        "status": "Status",
+        "actions": "Actions"
+      }
     }
   }
 }

@@ -1,3 +1,4 @@
+import { User } from "next-auth";
 import { LOCALES } from "../constants";
 import { EventInput } from "@fullcalendar/core";
 
@@ -5,6 +6,21 @@ export interface CalendarEvent extends EventInput {
   extendedProps?: {
     post_type?: string;
   };
+}
+
+export interface MVUser extends User {
+  token: string;
+  user_email: string;
+  user_nicename: string;
+  user_display_name: string;
+  user: {
+    id: number;
+    email: string;
+    name: string;
+    first_name: string;
+    last_name: string;
+    avatar: string;
+  }
 }
 
 export type Locale = (typeof LOCALES)[number];
@@ -24,6 +40,7 @@ export type PageName =
   | "privacy"
   | "races"
   | "race"
+  | "resetPassword"
   | "signin"
   | "signup"
   | "terms";
@@ -78,6 +95,8 @@ export type RefLink = {
   url: string;
 };
 
+export type PostStatus = "draft" | "publish";
+
 export type MVRace = {
   id: number;
   title: string;
@@ -93,6 +112,7 @@ export type MVRace = {
   registration_date?: string;
   registration_end_date?: string;
   location_data: Location;
+  status: PostStatus;
   length?: number;
   duration?: number;
   format: "speed" | "points" | "distance" | "mix";
@@ -121,6 +141,8 @@ export type MVNews = {
   slug: string;
   thumbnail?: string;
   content: Array<Block>;
+  post_type: 'news';
+  status: PostStatus;
   date: string;
   excerpt?: string;
   comments: Array<Comment>;
@@ -132,10 +154,12 @@ export type MVBlog = {
   slug: string;
   thumbnail?: string;
   content: Array<Block>;
+  post_type: 'post';
   date: string;
   excerpt?: string;
   comments: Array<Comment>;
   categories: Array<Taxonomy>;
+  status: PostStatus;
 };
 export type ApiResponse<T> = {
   data: T;

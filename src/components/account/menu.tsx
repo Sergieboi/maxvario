@@ -1,13 +1,67 @@
 "use client";
-import { Button } from "@nextui-org/react";
-import { signOut } from "next-auth/react";
+import Link from "next/link";
 import { FC } from "react";
+import Container from "../shared/container";
+import { useTranslations } from "next-intl";
+import { Button, cn } from "@nextui-org/react";
+import { signOut } from "next-auth/react";
+import { usePathname } from "next/navigation";
 
 const AccountMenu: FC = () => {
+  const t = useTranslations();
+  const path = usePathname();
   return (
-    <div>
-      Menu
-      <Button onPress={() => signOut()}>Logout</Button>
+    <div className="bg-primary text-white p-4 flex items-center">
+      <Container className="flex justify-between items-center">
+        <ul className="flex">
+          <li>
+            <Link
+              href="/account/"
+              title={t("account.menu.posts")}
+              className={cn(
+                "py-2 px-3 rounded-lg",
+                path.endsWith("account") && "bg-white text-primary border-0"
+              )}
+            >
+              {t("account.menu.posts")}
+            </Link>
+          </li>
+          <li>
+            <Link
+              href="/account/profile"
+              title={t("account.menu.profile")}
+              className={cn(
+                "py-2 px-3 rounded-lg",
+                path.endsWith("profile") && "bg-white text-primary border-0"
+              )}
+            >
+              {t("account.menu.profile")}
+            </Link>
+          </li>
+          <li>
+            <Link
+              href="/account/notifications"
+              title={t("account.menu.notifications")}
+              className={cn(
+                "py-2 px-3 rounded-lg",
+                path.endsWith("notifications") &&
+                  "bg-white text-primary border-0"
+              )}
+            >
+              {t("account.menu.notifications")}
+            </Link>
+          </li>
+        </ul>
+        <Button
+          variant="faded"
+          color="danger"
+          className="border-0"
+          size="sm"
+          onPress={() => signOut()}
+        >
+          {t("account.menu.signout")}
+        </Button>
+      </Container>
     </div>
   );
 };

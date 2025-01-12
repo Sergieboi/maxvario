@@ -64,7 +64,7 @@ const AuthSignin: FC = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ ...data, locale, recaptchaToken: token }),
+        body: JSON.stringify({ ...data, lang: locale, recaptchaToken: token }),
       });
 
       const result = await res.json();

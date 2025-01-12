@@ -15,7 +15,7 @@ const SummaryCard: FC<SummaryCardProps> = ({ race, onClick, ...props }) => {
   return (
     <Card
       isPressable
-      className="bg-cover bg-center min-h-28"
+      className="bg-contain bg-no-repeat bg-center min-h-28"
       style={{ backgroundImage: `url(${race.thumbnail_lg})` }}
       onPress={() => onClick(race)}
       {...props}

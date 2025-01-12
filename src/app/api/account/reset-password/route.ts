@@ -16,10 +16,8 @@ export async function POST(request: NextRequest) {
     );
   }
 
-  const register = await fetch(
-    `${process.env.NEXT_PUBLIC_MAXVARIO_API}/register?lang=${
-      body?.locale ?? "en"
-    }`,
+  const req = await fetch(
+    `${process.env.NEXT_PUBLIC_MAXVARIO_API}/reset-password`,
     {
       method: "POST",
       headers: {
@@ -28,6 +26,6 @@ export async function POST(request: NextRequest) {
       body: JSON.stringify(body),
     }
   );
-  const result = await register.json();
+  const result = await req.json();
   return NextResponse.json(result);
 }

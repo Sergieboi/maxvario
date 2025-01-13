@@ -79,3 +79,15 @@ body {
   margin: 0 !important;
   overflow: visible !important;
 }
+#editorjs-container h2 {
+  @apply text-2xl font-bold text-gray-800; /* Style the editorjs heading */
+}
+#editorjs-container h3 {
+  @apply text-xl font-bold text-gray-800; /* Style the editorjs subheading */
+}
+#editorjs-container h6 {
+  @apply font-bold text-gray-800; /* Style the editorjs subheading */
+}
+.codex-editor__redactor {
+  padding-bottom: 0 !important;
+}

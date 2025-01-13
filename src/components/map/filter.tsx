@@ -58,7 +58,7 @@ const MapFilter: FC<Props> = ({ hide, filter_options, update, visible }) => {
     formState: { isSubmitting },
   } = useForm<FilterFields>({
     defaultValues: {
-      dateFrom: new Date().toISOString(),
+      dateFrom: "", // new Date().toISOString(),
       dateTo: "",
       country: "",
       title: "",

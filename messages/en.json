@@ -103,7 +103,9 @@
     "next": "Next",
     "allSelected": "All items selected",
     "xItemsSelected": "Selected {selected} of {all}",
-    "searchByTitle": "Search by title"
+    "searchByTitle": "Search by title",
+    "submit": "Submit",
+    "selectImage": "Select post thumbnail"
   },
   "latest-blog": {
     "title": "Latest Blog",
@@ -297,7 +299,9 @@
         "format": "Format",
         "athlete": "Athlete",
         "status": "Status",
-        "actions": "Actions"
+        "actions": "Actions",
+        "date": "Date",
+        "registration": "Registration"
       },
       "total": "Total {count, plural, =1 {one race} other {# races}}."
     },
@@ -330,6 +334,39 @@
         "actions": "Actions"
       },
       "total": "Total {count, plural, =1 {one item} other {# items}}."
+    },
+    "new": {
+      "title": {
+        "required": "The title is required",
+        "label": "Title"
+      },
+      "blog": {
+        "title": "Add new post"
+      },
+      "category": {
+        "label": "Category",
+        "required": "The category is required"
+      },
+      "thumbnail": {
+        "required": "The thumbnail is required"
+      },
+      "content": {
+        "required": "The content is required",
+        "label": "Content"
+      }
+    }
+  },
+  "add": {
+    "new": {
+      "news": {
+        "title": "Add new news"
+      }
+    }
+  },
+  "editor": {
+    "placeholder": "Please type content here",
+    "tools": {
+      "hyperlink": "Link"
     }
   }
 }

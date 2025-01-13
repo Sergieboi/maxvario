@@ -4,6 +4,7 @@ import { Card, CardBody, Tab, Tabs } from "@nextui-org/react";
 import { useTranslations } from "next-intl";
 import { FC } from "react";
 import RacesTable from "./races/races";
+import BlogTable from "./blog/blog";
 
 type Props = {
   data: Array<MVRace | MVBlog | MVNews>;
@@ -26,18 +27,20 @@ const AccountPosts: FC<Props> = ({ data }) => {
         <Tab key="news" title={t("account.posts.news.title")}>
           <Card>
             <CardBody>
-              Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-              reprehenderit in voluptate velit esse cillum dolore eu fugiat
-              nulla pariatur.
+              <BlogTable
+                blog={data.filter((p) => p.post_type === "news")}
+                postType="news"
+              />
             </CardBody>
           </Card>
         </Tab>
         <Tab key="blog" title={t("account.posts.blog.title")}>
           <Card>
             <CardBody>
-              Excepteur sint occaecat cupidatat non proident, sunt in culpa qui
-              officia deserunt mollit anim id est laborum.
+              <BlogTable
+                blog={data.filter((p) => p.post_type === "post")}
+                postType="post"
+              />
             </CardBody>
           </Card>
         </Tab>

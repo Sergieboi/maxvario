@@ -93,7 +93,17 @@
     "cancel": "Cancel",
     "or": "OR",
     "agreeterms": "I agree with <terms>terms</terms> and <privacy>privacy policy</privacy>",
-    "error": "Error"
+    "error": "Error",
+    "status": "Status",
+    "tableColumns": "Table columns",
+    "columns": "Columns",
+    "add": "Add",
+    "rowsPerPage": "Rows per page",
+    "previous": "Previous",
+    "next": "Next",
+    "allSelected": "All items selected",
+    "xItemsSelected": "Selected {selected} of {all}",
+    "searchByTitle": "Search by title"
   },
   "latest-blog": {
     "title": "Latest Blog",
@@ -288,7 +298,38 @@
         "athlete": "Athlete",
         "status": "Status",
         "actions": "Actions"
+      },
+      "total": "Total {count, plural, =1 {one race} other {# races}}."
+    },
+    "data": {
+      "status": {
+        "publish": {
+          "title": "Published"
+        },
+        "draft": {
+          "title": "Draft"
+        }
+      },
+      "options": {
+        "view": {
+          "title": "View"
+        },
+        "edit": {
+          "title": "Edit"
+        },
+        "delete": {
+          "title": "Delete"
+        }
       }
+    },
+    "blog": {
+      "column": {
+        "title": "Title",
+        "category": "Category",
+        "status": "Status",
+        "actions": "Actions"
+      },
+      "total": "Total {count, plural, =1 {one item} other {# items}}."
     }
   }
 }

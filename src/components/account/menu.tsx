@@ -11,9 +11,9 @@ const AccountMenu: FC = () => {
   const t = useTranslations();
   const path = usePathname();
   return (
-    <div className="bg-primary text-white p-4 flex items-center">
+    <div className="bg-primary text-white py-4 flex items-center">
       <Container className="flex justify-between items-center">
-        <ul className="flex">
+        <ul className="flex text-sm font-medium">
           <li>
             <Link
               href="/account/"

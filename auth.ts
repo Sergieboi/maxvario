@@ -37,7 +37,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   },
   callbacks: {
     async session({ session, token }) {
-      // console.log("TOKEN: ", token)
       // Add custom user data to session object
       if (token.user) {
         session.user = token.user as AdapterUser & MVUser; // Ensure user in session is AdapterUser & MVUser

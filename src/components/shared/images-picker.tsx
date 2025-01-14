@@ -6,6 +6,7 @@ import Image from "next/image";
 import React, {
   FC,
   PropsWithChildren,
+  ReactNode,
   useEffect,
   useRef,
   useState,
@@ -15,12 +16,14 @@ type Props = PropsWithChildren<{
   setSelectedImages: (images: File) => void;
   selectedImages?: File;
   preview?: boolean;
+  buttonText?: string | ReactNode;
 }>;
 
 const ImagesPicker: FC<Props> = ({
   selectedImages,
   preview = true,
   setSelectedImages,
+  buttonText,
 }) => {
   const t = useTranslations();
   const [imagePreviews, setImagePreviews] = useState<Array<string>>([]);
@@ -125,7 +128,7 @@ const ImagesPicker: FC<Props> = ({
         }}
         type="button"
       >
-        {t("common.selectImage")}
+        {buttonText ? buttonText : t("common.selectImage")}
       </Button>
     </>
   );

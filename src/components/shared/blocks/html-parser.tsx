@@ -31,7 +31,6 @@ const htmlParser = (html: string): ReactNode => {
             return linkParser(domNode);
           }
           case "figure": {
-            console.log(domNode);
             return figureParser(domNode);
           }
         }

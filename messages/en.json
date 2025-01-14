@@ -105,7 +105,14 @@
     "xItemsSelected": "Selected {selected} of {all}",
     "searchByTitle": "Search by title",
     "submit": "Submit",
-    "selectImage": "Select post thumbnail"
+    "selectImage": "Select post thumbnail",
+    "delete": "Delete",
+    "noContent": "Nothing added so far ...",
+    "search": "search",
+    "searchPlace": "Find a place",
+    "extractedAddress": "Extracted info",
+    "backgroundImage": "Select background Image",
+    "logo": "Select race logo"
   },
   "latest-blog": {
     "title": "Latest Blog",
@@ -324,6 +331,12 @@
         "delete": {
           "title": "Delete"
         }
+      },
+      "deletion": {
+        "confirmation": {
+          "title": "Deletion confirmation"
+        },
+        "description": "Are you sure you want to delete the following content"
       }
     },
     "blog": {
@@ -353,6 +366,70 @@
       "content": {
         "required": "The content is required",
         "label": "Content"
+      },
+      "athleteCategory": {
+        "required": "Athlete category is required",
+        "label": "Athlete category"
+      },
+      "faiCategory": {
+        "required": "The FAI category is required",
+        "label": "FAI Category"
+      },
+      "raceFormat": {
+        "required": "The race format is required",
+        "label": "Race Formats"
+      },
+      "race": {
+        "location": "Location data",
+        "links": "Links",
+        "media": "Media",
+        "locationDescription": "Use the search input to find a place, then drag the marker to adjust the location for better accuracy. Address details will be displayed in the \"Extracted Info\" section—gray fields are automatically populated from the map, while blue fields are editable for any necessary corrections.",
+        "timeline": "Race Timeline"
+      },
+      "address": {
+        "label": "Address"
+      },
+      "lat": {
+        "label": "Latitude"
+      },
+      "lng": {
+        "label": "Longitude"
+      },
+      "country": {
+        "label": "Country"
+      },
+      "city": {
+        "label": "City"
+      },
+      "state": {
+        "label": "State"
+      },
+      "placeId": {
+        "label": "Place ID"
+      },
+      "website": {
+        "label": "Website"
+      },
+      "facebook": {
+        "label": "Facebook"
+      },
+      "instagram": {
+        "label": "Instagram"
+      },
+      "x": {
+        "label": "X (Twitter)"
+      },
+      "tiktok": {
+        "label": "TikTok"
+      },
+      "trackingUrl": {
+        "label": "Tracking URL"
+      },
+      "resultsUrl": {
+        "label": "Results URL"
+      },
+      "youtube": {
+        "label": "YouTube"
       }
     }
   },
@@ -360,6 +437,9 @@
     "new": {
       "news": {
         "title": "Add new news"
+      },
+      "race": {
+        "title": "Add new race"
       }
     }
   },

@@ -1,4 +1,5 @@
-import React, { FC } from "react";
+"use client";
+import React, { FC, useState } from "react";
 import {
   Table,
   TableHeader,
@@ -29,6 +30,7 @@ import {
   PlusIcon,
 } from "@heroicons/react/24/outline";
 import Link from "next/link";
+import DeleteConfirmation from "../delete-confirmation";
 
 const statusColorMap: Record<string, ChipProps["color"]> = {
   publish: "success",
@@ -36,11 +38,17 @@ const statusColorMap: Record<string, ChipProps["color"]> = {
 };
 
 type Props = {
-  races: Array<MVRace>;
+  racesList: Array<MVRace>;
 };
 
-const RacesTable: FC<Props> = ({ races }) => {
+const RacesTable: FC<Props> = ({ racesList }) => {
+  const [races, setRaces] = useState<Array<MVRace>>(racesList);
+
   const t = useTranslations();
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [postsToDelete, setPostsToDelete] = useState<
+    Array<{ id: number; title: string }>
+  >([]);
   const statusOptions = [
     { name: t("account.data.status.publish.title"), uid: "publish" },
     { name: t("account.data.status.draft.title"), uid: "draft" },
@@ -209,7 +217,13 @@ const RacesTable: FC<Props> = ({ races }) => {
                 <DropdownItem key="edit">
                   {t("account.data.options.edit.title")}
                 </DropdownItem>
-                <DropdownItem key="delete">
+                <DropdownItem
+                  key="delete"
+                  onPress={() => {
+                    setPostsToDelete([{ id: race.id, title: race.title }]);
+                    setIsDeleteModalOpen(true);
+                  }}
+                >
                   {t("account.data.options.delete.title")}
                 </DropdownItem>
               </DropdownMenu>
@@ -403,44 +417,59 @@ const RacesTable: FC<Props> = ({ races }) => {
   }, [selectedKeys, items.length, page, pages, hasSearchFilter]);
 
   return (
-    <Table
-      isHeaderSticky
-      bottomContent={bottomContent}
-      bottomContentPlacement="outside"
-      classNames={{
-        wrapper: "max-h-[382px]",
-      }}
-      selectedKeys={selectedKeys}
-      // selectionMode="multiple"
-      sortDescriptor={sortDescriptor}
-      topContent={topContent}
-      topContentPlacement="outside"
-      onSelectionChange={setSelectedKeys}
-      onSortChange={setSortDescriptor}
-    >
-      <TableHeader columns={headerColumns}>
-        {(column) => (
-          <TableColumn
-            key={column.uid}
-            align={column.uid === "actions" ? "center" : "start"}
-            allowsSorting={column.sortable}
-          >
-            {column.name}
-          </TableColumn>
-        )}
-      </TableHeader>
-      <TableBody emptyContent={"No races found"} items={sortedItems}>
-        {(item) => (
-          <TableRow key={item.id}>
-            {(columnKey) => (
-              <TableCell key={columnKey}>
-                {renderCell(item, columnKey)}
-              </TableCell>
-            )}
-          </TableRow>
-        )}
-      </TableBody>
-    </Table>
+    <>
+      <Table
+        isHeaderSticky
+        bottomContent={bottomContent}
+        bottomContentPlacement="outside"
+        classNames={{
+          wrapper: "max-h-[382px]",
+        }}
+        selectedKeys={selectedKeys}
+        // selectionMode="multiple"
+        sortDescriptor={sortDescriptor}
+        topContent={topContent}
+        topContentPlacement="outside"
+        onSelectionChange={setSelectedKeys}
+        onSortChange={setSortDescriptor}
+      >
+        <TableHeader columns={headerColumns}>
+          {(column) => (
+            <TableColumn
+              key={column.uid}
+              align={column.uid === "actions" ? "center" : "start"}
+              allowsSorting={column.sortable}
+            >
+              {column.name}
+            </TableColumn>
+          )}
+        </TableHeader>
+        <TableBody emptyContent={t("common.noContent")} items={sortedItems}>
+          {(item) => (
+            <TableRow key={item.id}>
+              {(columnKey) => (
+                <TableCell key={columnKey}>
+                  {renderCell(item, columnKey)}
+                </TableCell>
+              )}
+            </TableRow>
+          )}
+        </TableBody>
+      </Table>
+      {isDeleteModalOpen && (
+        <DeleteConfirmation
+          posts={postsToDelete}
+          onDelete={() => {
+            const deletedIds = postsToDelete.map((p) => p.id);
+            setRaces(races.filter((race) => !deletedIds.includes(race.id)));
+          }}
+          onCancel={() => {
+            setIsDeleteModalOpen(false);
+            setPostsToDelete([]);
+          }}
+        />
+      )}
+    </>
   );
 };
 

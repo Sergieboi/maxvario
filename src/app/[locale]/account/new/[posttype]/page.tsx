@@ -1,5 +1,5 @@
-import NewBlog from "@/components/account/posts/new/blog";
-import NewRace from "@/components/account/posts/new/race";
+import NewBlog from "@/components/account/posts/single/blog";
+import SingleRace from "@/components/account/posts/single/race";
 import { getCategories } from "@/lib/api/wp";
 import { Locale } from "@/lib/types/misc";
 import { notFound } from "next/navigation";
@@ -14,7 +14,7 @@ export default async function NewPost({ params }: Props) {
   const categories = await getCategories(locale);
   switch (postType) {
     case "race":
-      return <NewRace />;
+      return <SingleRace {...categories.data} />;
     case "post":
     case "news":
       return <NewBlog {...categories.data} postType={postType} />;

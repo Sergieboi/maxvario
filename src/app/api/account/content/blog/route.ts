@@ -32,3 +32,36 @@ export async function POST(request: NextRequest) {
     );
   }
 }
+
+export async function DELETE(request: NextRequest) {
+  const session = await auth();
+  try {
+    const data = await request.json();
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_MAXVARIO_API}/delete-posts`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${session?.user.token}`,
+        },
+        body: JSON.stringify(data),
+      }
+    );
+    if (response.ok) {
+      return NextResponse.json({ success: true });
+    } else {
+      const result = await response.json();
+      return NextResponse.json(
+        { success: false, messages: result.messages },
+        { status: response.status }
+      );
+    }
+  } catch (e) {
+    console.error(e);
+    return NextResponse.json(
+      { success: false, messages: ["An error occurred"] },
+      { status: 500 }
+    );
+  }
+}

@@ -1,4 +1,5 @@
-import React, { FC } from "react";
+"use client";
+import React, { FC, useState } from "react";
 import {
   Table,
   TableHeader,
@@ -28,6 +29,7 @@ import {
   PlusIcon,
 } from "@heroicons/react/24/outline";
 import Link from "next/link";
+import DeleteConfirmation from "../delete-confirmation";
 
 const statusColorMap: Record<string, ChipProps["color"]> = {
   publish: "success",
@@ -35,12 +37,17 @@ const statusColorMap: Record<string, ChipProps["color"]> = {
 };
 
 type Props = {
-  blog: Array<MVBlog | MVNews>;
+  blogs: Array<MVBlog | MVNews>;
   postType: "post" | "news";
 };
 
-const BlogTable: FC<Props> = ({ blog, postType }) => {
+const BlogTable: FC<Props> = ({ blogs, postType }) => {
+  const [blog, setBlog] = useState<Array<MVBlog | MVNews>>(blogs);
   const t = useTranslations();
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [postsToDelete, setPostsToDelete] = useState<
+    Array<{ id: number; title: string }>
+  >([]);
   const statusOptions = [
     { name: t("account.data.status.publish.title"), uid: "publish" },
     { name: t("account.data.status.draft.title"), uid: "draft" },
@@ -157,6 +164,7 @@ const BlogTable: FC<Props> = ({ blog, postType }) => {
                 <DropdownMenu>
                   <DropdownItem key="view">
                     <Link
+                      className="flex w-full"
                       href={`/${postType === "news" ? "news" : "blog"}/${
                         article.slug
                       }`}
@@ -166,9 +174,23 @@ const BlogTable: FC<Props> = ({ blog, postType }) => {
                     </Link>
                   </DropdownItem>
                   <DropdownItem key="edit">
-                    {t("account.data.options.edit.title")}
+                    <Link
+                      className="flex w-full"
+                      href={`/account/edit/${article.slug}`}
+                      title={article.title}
+                    >
+                      {t("account.data.options.edit.title")}
+                    </Link>
                   </DropdownItem>
-                  <DropdownItem key="delete">
+                  <DropdownItem
+                    key="delete"
+                    onPress={() => {
+                      setPostsToDelete([
+                        { id: article.id, title: article.title },
+                      ]);
+                      setIsDeleteModalOpen(true);
+                    }}
+                  >
                     {t("account.data.options.delete.title")}
                   </DropdownItem>
                 </DropdownMenu>
@@ -364,45 +386,60 @@ const BlogTable: FC<Props> = ({ blog, postType }) => {
   }, [selectedKeys, items.length, page, pages, hasSearchFilter]);
 
   return (
-    <Table
-      isHeaderSticky
-      aria-label="Example table with custom cells, pagination and sorting"
-      bottomContent={bottomContent}
-      bottomContentPlacement="outside"
-      classNames={{
-        wrapper: "max-h-[382px]",
-      }}
-      selectedKeys={selectedKeys}
-      selectionMode="multiple"
-      sortDescriptor={sortDescriptor}
-      topContent={topContent}
-      topContentPlacement="outside"
-      onSelectionChange={setSelectedKeys}
-      onSortChange={setSortDescriptor}
-    >
-      <TableHeader columns={headerColumns}>
-        {(column) => (
-          <TableColumn
-            key={column.uid}
-            align={column.uid === "actions" ? "center" : "start"}
-            allowsSorting={column.sortable}
-          >
-            {column.name}
-          </TableColumn>
-        )}
-      </TableHeader>
-      <TableBody emptyContent={"No blog found"} items={sortedItems}>
-        {(item) => (
-          <TableRow key={item.id}>
-            {(columnKey) => (
-              <TableCell key={columnKey}>
-                {renderCell(item, columnKey)}
-              </TableCell>
-            )}
-          </TableRow>
-        )}
-      </TableBody>
-    </Table>
+    <>
+      <Table
+        isHeaderSticky
+        aria-label="Example table with custom cells, pagination and sorting"
+        bottomContent={bottomContent}
+        bottomContentPlacement="outside"
+        classNames={{
+          wrapper: "max-h-[382px]",
+        }}
+        selectedKeys={selectedKeys}
+        // selectionMode="multiple"
+        sortDescriptor={sortDescriptor}
+        topContent={topContent}
+        topContentPlacement="outside"
+        onSelectionChange={setSelectedKeys}
+        onSortChange={setSortDescriptor}
+      >
+        <TableHeader columns={headerColumns}>
+          {(column) => (
+            <TableColumn
+              key={column.uid}
+              align={column.uid === "actions" ? "center" : "start"}
+              allowsSorting={column.sortable}
+            >
+              {column.name}
+            </TableColumn>
+          )}
+        </TableHeader>
+        <TableBody emptyContent={t("common.noContent")} items={sortedItems}>
+          {(item) => (
+            <TableRow key={item.id}>
+              {(columnKey) => (
+                <TableCell key={columnKey}>
+                  {renderCell(item, columnKey)}
+                </TableCell>
+              )}
+            </TableRow>
+          )}
+        </TableBody>
+      </Table>
+      {isDeleteModalOpen && (
+        <DeleteConfirmation
+          posts={postsToDelete}
+          onDelete={() => {
+            const deletedIds = postsToDelete.map((p) => p.id);
+            setBlog(blog.filter((b) => !deletedIds.includes(b.id)));
+          }}
+          onCancel={() => {
+            setIsDeleteModalOpen(false);
+            setPostsToDelete([]);
+          }}
+        />
+      )}
+    </>
   );
 };
 

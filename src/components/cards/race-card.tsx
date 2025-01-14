@@ -28,17 +28,21 @@ const RaceCard: FC<Props> = ({ race, ...props }) => {
       }}
     >
       <CardBody className="px-3 pb-1 w-full">
-        {race.thumbnail_lg && (
+        {(race?.thumbnail_lg || race?.background_image) && (
           <Image
             alt="Card image"
             className="aspect-video w-full object-cover object-top"
-            src={race.thumbnail_lg}
+            src={race.background_image ?? race.thumbnail_lg}
             isZoomed
           />
         )}
         <Spacer y={2} />
         <div className="flex flex-col gap-3 px-2">
           <h3 className="text-lg font-semibold text-black">{race.title}</h3>
+          <Chip color="success" size="sm" variant="flat">
+            {race?.start_date ? race.start_date.substring(0, 10) : "N/A"} -{" "}
+            {race?.end_date ? race.end_date.substring(0, 10) : "N/A"}
+          </Chip>
           {race.excerpt && (
             <p className="text-small text-default-600 line-clamp-3">
               {race.excerpt}
@@ -47,7 +51,7 @@ const RaceCard: FC<Props> = ({ race, ...props }) => {
           {race.location_data?.country_short && (
             <div className="flex items-center gap-1 text-xs">
               <Image
-                src={`/assets/flags/${race.location_data?.country_short.toLowerCase()}.svg`}
+                src={`/assets/flags/${race.location_data?.country_short?.toLowerCase()}.svg`}
                 alt={race.location_data?.country_short}
                 width={24}
                 height={24}

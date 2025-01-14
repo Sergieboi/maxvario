@@ -103,6 +103,7 @@ export type MVRace = {
   thumbnail?: string;
   thumbnail_lg?: string;
   thumbnail_full?: string;
+  background_image?: string;
   slug: string;
   post_type: "race";
   content_json: Array<Block>;
@@ -123,6 +124,8 @@ export type MVRace = {
   x?: string;
   instagram?: string;
   website?: string;
+  tiktok?: string;
+  youtube?: string;
   links?: Array<RefLink>;
   comments: Array<Comment>;
   athlete_category: Array<Taxonomy>;
@@ -130,6 +133,8 @@ export type MVRace = {
   race_format: Array<Taxonomy>;
   yoast_head?: string;
   yoast_head_json: object;
+  tracking_url?: string;
+  results_url?: string;
 };
 export type MVAd = {
   id: number;

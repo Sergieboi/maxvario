@@ -1,31 +1,33 @@
 "use client";
 import ImagesPicker from "@/components/shared/images-picker";
-import { Taxonomy } from "@/lib/types/misc";
+import { MVBlog, MVNews, Taxonomy } from "@/lib/types/misc";
 import { Button, Input, Select, SelectItem } from "@nextui-org/react";
 import { useLocale, useTranslations } from "next-intl";
 import dynamic from "next/dynamic";
 import { useParams } from "next/navigation";
-import { FC, useEffect, useState } from "react";
+import { FC, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 
 const Editor = dynamic(() => import("@/components/shared/editor/editor"), {
   ssr: false,
 });
 
-interface NewBlogProps {
+interface SingleBlogProps {
   title: string;
   content: string;
   category: string;
   thumbnail: File | undefined;
 }
 
-interface NewBlogParams {
+interface SingleBlogParams {
+  init?: MVNews | MVBlog;
   categories: Array<Taxonomy>;
   news_categories: Array<Taxonomy>;
   postType: "news" | "post";
 }
 
-const NewBlog: FC<NewBlogParams> = ({
+const SingleBlog: FC<SingleBlogParams> = ({
+  init,
   categories,
   news_categories,
   postType,
@@ -37,18 +39,18 @@ const NewBlog: FC<NewBlogParams> = ({
     setValue,
     reset,
     formState: { isSubmitting },
-  } = useForm<NewBlogProps>({
+  } = useForm<SingleBlogProps>({
     defaultValues: {
-      title: "",
+      title: init?.title || "",
       content: "",
-      category: "",
+      category: init?.categories[0]?.term_id?.toString() || "",
       thumbnail: undefined,
     },
   });
   const locale = useLocale();
   const params = useParams();
   const t = useTranslations();
-  const onSubmit = async (data: NewBlogProps) => {
+  const onSubmit = async (data: SingleBlogProps) => {
     try {
       // Execute reCAPTCHA and get the token
       const token = await new Promise<string>((resolve, reject) => {
@@ -87,9 +89,7 @@ const NewBlog: FC<NewBlogParams> = ({
     }
   };
   const [postContent, setPostContent] = useState("");
-  useEffect(() => {
-    console.log(postContent);
-  }, [postContent]);
+
   return (
     <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
       <h1 className="text-2xl font-semibold">
@@ -158,4 +158,4 @@ const NewBlog: FC<NewBlogParams> = ({
   );
 };
 
-export default NewBlog;
+export default SingleBlog;

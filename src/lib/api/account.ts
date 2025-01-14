@@ -27,3 +27,12 @@ export const myPosts = async (token: string): Promise<null | ApiResponse<Array<M
     }
     return null;
 };
+
+export const getSinglePost = async (slug: string, locale: string): Promise<null | ApiResponse<MVRace | MVBlog | MVNews>> => {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_MAXVARIO_API}/post?slug=${slug}lang=${locale}`);
+    if (response.ok) {
+        const post = await response.json();
+        return post;
+    }
+    return null;
+}

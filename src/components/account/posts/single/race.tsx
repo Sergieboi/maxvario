@@ -1,0 +1,526 @@
+"use client";
+import ImagesPicker from "@/components/shared/images-picker";
+import LocationPicker from "@/components/shared/location-picker";
+import { MAPS_KEY } from "@/lib/constants";
+import { MVRace, Taxonomy } from "@/lib/types/misc";
+import { Avatar, Button, Input, Select, SelectItem } from "@nextui-org/react";
+import { APIProvider } from "@vis.gl/react-google-maps";
+import { useLocale, useTranslations } from "next-intl";
+import dynamic from "next/dynamic";
+import { FC, useState } from "react";
+import { Controller, useForm } from "react-hook-form";
+import { Icon } from "@iconify/react";
+
+const Editor = dynamic(() => import("@/components/shared/editor/editor"), {
+  ssr: false,
+});
+
+interface SingleRaceProps {
+  title: string;
+  content: string;
+  athlete_category: string;
+  fai_category: string;
+  race_format: string;
+  thumbnail: File | undefined;
+  backgroundImage: File | undefined;
+  country: string;
+  countryShort: string;
+  state: string;
+  city: string;
+  lat: number;
+  lng: number;
+  address: string;
+  placeId: string;
+  duration: string;
+  facebook: string;
+  instagram: string;
+  website: string;
+  tiktok: string;
+  youtube: string;
+  x: string;
+  trackingUrl: string;
+  resultsUrl: string;
+}
+
+interface SingleRaceParams {
+  init?: MVRace;
+  fai_categories: Array<Taxonomy>;
+  athlete_categories: Array<Taxonomy>;
+  race_formats: Array<Taxonomy>;
+}
+
+const SingleRace: FC<SingleRaceParams> = ({
+  init,
+  athlete_categories,
+  fai_categories,
+  race_formats,
+}) => {
+  const {
+    handleSubmit,
+    control,
+    getValues,
+    setValue,
+    reset,
+    formState: { isSubmitting },
+  } = useForm<SingleRaceProps>({
+    defaultValues: {
+      title: init?.title || "",
+      content: "",
+      backgroundImage: undefined,
+      thumbnail: undefined,
+      tiktok: init?.tiktok || "",
+      youtube: init?.youtube || "",
+      facebook: init?.facebook || "",
+      x: init?.x || "",
+      instagram: init?.instagram || "",
+      website: init?.website || "",
+      trackingUrl: init?.tracking_url || "",
+      resultsUrl: init?.results_url || "",
+      lat: init?.location_data.lat || 0,
+      lng: init?.location_data.lng || 0,
+      country: init?.location_data.country || "",
+      countryShort: init?.location_data.country_short || "",
+      city: init?.location_data.city || "",
+      state: init?.location_data.state || "",
+      address: init?.location_data.address || "",
+      duration: init?.duration ? (init?.duration as unknown as string) : "",
+      athlete_category: init?.athlete_category?.[0]?.term_id?.toString() || "",
+      fai_category: init?.fai_category?.[0]?.term_id?.toString() || "",
+      race_format: init?.race_format?.[0]?.term_id?.toString() || "",
+    },
+  });
+  const locale = useLocale();
+  const t = useTranslations();
+  const onSubmit = async (data: SingleRaceProps) => {
+    try {
+      // Execute reCAPTCHA and get the token
+      const token = await new Promise<string>((resolve, reject) => {
+        window.grecaptcha.ready(() => {
+          window.grecaptcha
+            .execute(process.env.NEXT_PUBLIC_RECAPTCHA as string, {
+              action: "registration_form",
+            })
+            .then(resolve)
+            .catch(reject);
+        });
+      });
+
+      const formData = new FormData();
+      formData.append("title", data.title);
+      formData.append("content", JSON.stringify(postContent));
+
+      if (data.thumbnail) {
+        formData.append("thumbnail", data.thumbnail);
+      }
+      formData.append("lang", locale);
+      formData.append("recaptchaToken", token);
+
+      const res = await fetch("/api/account/content/blog", {
+        method: "POST",
+        body: formData,
+      });
+      if (res.ok) {
+        reset();
+        setValue("thumbnail", undefined);
+        setPostContent("");
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  const [postContent, setPostContent] = useState("");
+
+  return (
+    <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
+      <h1 className="text-3xl font-semibold">{t("add.new.race.title")}</h1>
+      <div className="flex gap-4 items-center flex-col md:flex-row">
+        <Controller
+          name="title"
+          control={control}
+          rules={{ required: t("account.new.title.required") }}
+          render={({ field, fieldState: { invalid, error } }) => (
+            <Input
+              {...field}
+              isRequired
+              label={t("account.new.title.label")}
+              isInvalid={invalid}
+              errorMessage={error?.message}
+            />
+          )}
+        />
+        <Controller
+          name="athlete_category"
+          control={control}
+          rules={{ required: t("account.new.athleteCategory.required") }}
+          render={({ field, fieldState: { invalid, error } }) => (
+            <Select
+              {...field}
+              label={t("account.new.athleteCategory.label")}
+              isRequired
+              isInvalid={invalid}
+              errorMessage={error?.message}
+            >
+              {athlete_categories.map((category) => (
+                <SelectItem key={category.term_id}>{category.name}</SelectItem>
+              ))}
+            </Select>
+          )}
+        />
+        <Controller
+          name="fai_category"
+          control={control}
+          rules={{ required: t("account.new.faiCategory.required") }}
+          render={({ field, fieldState: { invalid, error } }) => (
+            <Select
+              {...field}
+              label={t("account.new.faiCategory.label")}
+              isRequired
+              isInvalid={invalid}
+              errorMessage={error?.message}
+            >
+              {fai_categories.map((category) => (
+                <SelectItem key={category.term_id}>{category.name}</SelectItem>
+              ))}
+            </Select>
+          )}
+        />
+        <Controller
+          name="race_format"
+          control={control}
+          rules={{ required: t("account.new.raceFormat.required") }}
+          render={({ field, fieldState: { invalid, error } }) => (
+            <Select
+              {...field}
+              label={t("account.new.raceFormat.label")}
+              isRequired
+              isInvalid={invalid}
+              selectionMode="multiple"
+              errorMessage={error?.message}
+            >
+              {race_formats.map((category) => (
+                <SelectItem key={category.term_id}>{category.name}</SelectItem>
+              ))}
+            </Select>
+          )}
+        />
+      </div>
+      <Editor
+        value={postContent}
+        onChange={setPostContent}
+        holder="editorjs-container"
+      />
+      <h3 className="text-xl font-semibold">
+        {t("account.new.race.timeline")}
+      </h3>
+      <p>--- TO BE DISCUSSED ---</p>
+      <h3 className="text-xl font-semibold">
+        {t("account.new.race.location")}
+      </h3>
+      <p>{t("account.new.race.locationDescription")}</p>
+      <div className="flex gap-4 items-start flex-col md:flex-row">
+        <div className="w-full lg:w-3/4">
+          <APIProvider apiKey={MAPS_KEY}>
+            <LocationPicker
+              onLocationChange={(location) => {
+                setValue("lat", location.lat);
+                setValue("lng", location.lng);
+                setValue("address", location.address ?? "");
+                setValue("country", location.country ?? "");
+                setValue("countryShort", location.country_code ?? "");
+                setValue("city", location.city ?? "");
+                setValue("state", location.state ?? "");
+                setValue("placeId", location.place_id ?? "");
+              }}
+            />
+          </APIProvider>
+        </div>
+        <div className="flex flex-1 flex-col gap-2">
+          <p>{t("common.extractedAddress")}</p>
+          <Controller
+            name="address"
+            control={control}
+            rules={{ required: true }}
+            render={({ field, fieldState: { invalid, error } }) => (
+              <Input
+                {...field}
+                isRequired
+                size="sm"
+                color="primary"
+                label={t("account.new.address.label")}
+                isInvalid={invalid}
+                errorMessage={error?.message}
+              />
+            )}
+          />
+          <div className="flex gap-1">
+            <Controller
+              name="lat"
+              control={control}
+              rules={{ required: true }}
+              render={({ field, fieldState: { invalid, error } }) => (
+                <Input
+                  {...field}
+                  value={field.value.toString()}
+                  isRequired
+                  disabled
+                  size="sm"
+                  label={t("account.new.lat.label")}
+                  isInvalid={invalid}
+                  errorMessage={error?.message}
+                />
+              )}
+            />
+            <Controller
+              name="lng"
+              control={control}
+              rules={{ required: true }}
+              render={({ field, fieldState: { invalid, error } }) => (
+                <Input
+                  {...field}
+                  value={field.value.toString()}
+                  isRequired
+                  disabled
+                  size="sm"
+                  label={t("account.new.lng.label")}
+                  isInvalid={invalid}
+                  errorMessage={error?.message}
+                />
+              )}
+            />
+          </div>
+
+          <Controller
+            name="country"
+            control={control}
+            rules={{ required: true }}
+            render={({ field, fieldState: { invalid, error } }) => (
+              <Input
+                {...field}
+                isRequired
+                disabled
+                size="sm"
+                label={t("account.new.country.label")}
+                isInvalid={invalid}
+                errorMessage={error?.message}
+                endContent={
+                  getValues("countryShort") ? (
+                    <Avatar
+                      size="sm"
+                      className="min-w-8"
+                      src={`/assets/flags/${getValues(
+                        "countryShort"
+                      ).toLowerCase()}.svg`}
+                    />
+                  ) : (
+                    ""
+                  )
+                }
+              />
+            )}
+          />
+          <Controller
+            name="state"
+            control={control}
+            render={({ field, fieldState: { invalid, error } }) => (
+              <Input
+                {...field}
+                color="primary"
+                size="sm"
+                label={t("account.new.state.label")}
+                isInvalid={invalid}
+                errorMessage={error?.message}
+              />
+            )}
+          />
+          <Controller
+            name="city"
+            control={control}
+            render={({ field, fieldState: { invalid, error } }) => (
+              <Input
+                {...field}
+                color="primary"
+                size="sm"
+                label={t("account.new.city.label")}
+                isInvalid={invalid}
+                errorMessage={error?.message}
+              />
+            )}
+          />
+          <Controller
+            name="placeId"
+            control={control}
+            render={({ field, fieldState: { invalid, error } }) => (
+              <Input
+                {...field}
+                size="sm"
+                disabled
+                label={t("account.new.placeId.label")}
+                isInvalid={invalid}
+                errorMessage={error?.message}
+              />
+            )}
+          />
+        </div>
+      </div>
+      <h3 className="text-xl font-semibold">{t("account.new.race.media")}</h3>
+      <div className="flex gap-4 items-start flex-col md:flex-row">
+        <div className="flex-1">
+          <ImagesPicker
+            setSelectedImages={(images) => setValue("thumbnail", images)}
+            selectedImages={getValues("thumbnail")}
+            buttonText={t("common.logo")}
+          />
+        </div>
+        <div className="flex-1">
+          <ImagesPicker
+            setSelectedImages={(images) => setValue("backgroundImage", images)}
+            selectedImages={getValues("backgroundImage")}
+            buttonText={t("common.backgroundImage")}
+          />
+        </div>
+      </div>
+      <h3 className="text-xl font-semibold">{t("account.new.race.links")}</h3>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <Controller
+          name="website"
+          control={control}
+          render={({ field, fieldState: { invalid, error } }) => (
+            <Input
+              {...field}
+              size="sm"
+              startContent={
+                <Icon icon="ic:sharp-link" width="16" height="16" />
+              }
+              label={t("account.new.website.label")}
+              isInvalid={invalid}
+              errorMessage={error?.message}
+            />
+          )}
+        />
+        <Controller
+          name="facebook"
+          control={control}
+          render={({ field, fieldState: { invalid, error } }) => (
+            <Input
+              {...field}
+              size="sm"
+              startContent={
+                <Icon icon="ri:facebook-fill" width="16" height="16" />
+              }
+              label={t("account.new.facebook.label")}
+              isInvalid={invalid}
+              errorMessage={error?.message}
+            />
+          )}
+        />
+        <Controller
+          name="instagram"
+          control={control}
+          render={({ field, fieldState: { invalid, error } }) => (
+            <Input
+              {...field}
+              size="sm"
+              startContent={
+                <Icon icon="mingcute:instagram-fill" width="24" height="24" />
+              }
+              label={t("account.new.instagram.label")}
+              isInvalid={invalid}
+              errorMessage={error?.message}
+            />
+          )}
+        />
+        <Controller
+          name="x"
+          control={control}
+          render={({ field, fieldState: { invalid, error } }) => (
+            <Input
+              {...field}
+              size="sm"
+              label={t("account.new.x.label")}
+              startContent={
+                <Icon icon="ri:twitter-x-line" width="16" height="16" />
+              }
+              isInvalid={invalid}
+              errorMessage={error?.message}
+            />
+          )}
+        />
+        <Controller
+          name="youtube"
+          control={control}
+          render={({ field, fieldState: { invalid, error } }) => (
+            <Input
+              {...field}
+              size="sm"
+              startContent={
+                <Icon icon="iconoir:youtube-solid" width="16" height="16" />
+              }
+              label={t("account.new.youtube.label")}
+              isInvalid={invalid}
+              errorMessage={error?.message}
+            />
+          )}
+        />
+        <Controller
+          name="tiktok"
+          control={control}
+          render={({ field, fieldState: { invalid, error } }) => (
+            <Input
+              {...field}
+              size="sm"
+              startContent={
+                <Icon icon="line-md:tiktok" width="16" height="16" />
+              }
+              label={t("account.new.tiktok.label")}
+              isInvalid={invalid}
+              errorMessage={error?.message}
+            />
+          )}
+        />
+
+        <Controller
+          name="trackingUrl"
+          control={control}
+          render={({ field, fieldState: { invalid, error } }) => (
+            <Input
+              {...field}
+              size="sm"
+              startContent={
+                <Icon icon="fluent:live-24-regular" width="16" height="16" />
+              }
+              label={t("account.new.trackingUrl.label")}
+              isInvalid={invalid}
+              errorMessage={error?.message}
+            />
+          )}
+        />
+        <Controller
+          name="resultsUrl"
+          control={control}
+          render={({ field, fieldState: { invalid, error } }) => (
+            <Input
+              {...field}
+              size="sm"
+              startContent={
+                <Icon icon="carbon:result" width="16" height="16" />
+              }
+              label={t("account.new.resultsUrl.label")}
+              isInvalid={invalid}
+              errorMessage={error?.message}
+            />
+          )}
+        />
+      </div>
+      <Button
+        type="submit"
+        variant="solid"
+        color="primary"
+        isLoading={isSubmitting}
+      >
+        {t("common.submit")}
+      </Button>
+    </form>
+  );
+};
+
+export default SingleRace;

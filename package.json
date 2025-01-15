@@ -23,6 +23,7 @@
     "@gsap/react": "^2.1.1",
     "@heroicons/react": "^2.2.0",
     "@iconify/react": "^5.2.0",
+    "@internationalized/date": "^3.7.0",
     "@nextui-org/react": "^2.6.10",
     "@vis.gl/react-google-maps": "^1.4.3",
     "editorjs-hyperlink": "^1.0.6",

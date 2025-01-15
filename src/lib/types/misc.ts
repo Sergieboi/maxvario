@@ -43,15 +43,15 @@ export type PageName =
   | "resetPassword"
   | "signin"
   | "signup"
+  | 'single-blog'
   | "terms";
 
 export type Comment = {
-  id: number;
-  name: string;
-  email: string;
-  content: string;
-  date: string;
-  approved: boolean;
+  comment_ID: number;
+  comment_author: string;
+  comment_author_email: string;
+  comment_content: string;
+  comment_date: string;
 };
 export type BlockName =
   | "core/paragraph"
@@ -83,12 +83,14 @@ export type Taxonomy = {
 };
 export type Location = {
   address: string;
-  city: string;
-  state: string;
+  city?: string;
+  state?: string;
   country: string;
   lat: number;
   lng: number;
   country_short: string;
+  post_code?: string;
+  name?: string;
 };
 export type RefLink = {
   title: string;
@@ -145,6 +147,7 @@ export type MVNews = {
   title: string;
   slug: string;
   thumbnail?: string;
+  thumbnail_full?: string;
   content: Array<Block>;
   post_type: 'news';
   status: PostStatus;
@@ -152,12 +155,15 @@ export type MVNews = {
   excerpt?: string;
   comments: Array<Comment>;
   news_category: Array<Taxonomy>;
+  yoast_head?: string;
+  yoast_head_json: object;
 };
 export type MVBlog = {
   id: number;
   title: string;
   slug: string;
   thumbnail?: string;
+  thumbnail_full?: string;
   content: Array<Block>;
   post_type: 'post';
   date: string;
@@ -165,6 +171,8 @@ export type MVBlog = {
   comments: Array<Comment>;
   category: Array<Taxonomy>;
   status: PostStatus;
+  yoast_head?: string;
+  yoast_head_json: object;
 };
 export type ApiResponse<T> = {
   data: T;

@@ -112,7 +112,12 @@
     "searchPlace": "Find a place",
     "extractedAddress": "Extracted info",
     "backgroundImage": "Select background Image",
-    "logo": "Select race logo"
+    "logo": "Select race logo",
+    "requiredField": "This field is required",
+    "name": "Name",
+    "email": "E-mail",
+    "comment": "Comment",
+    "days": "Days"
   },
   "latest-blog": {
     "title": "Latest Blog",
@@ -351,7 +356,7 @@
     "new": {
       "title": {
         "required": "The title is required",
-        "label": "Title"
+        "label": "Race name"
       },
       "blog": {
         "title": "Add new post"
@@ -430,6 +435,15 @@
       },
       "youtube": {
         "label": "YouTube"
+      },
+      "raceDateRange": {
+        "label": "Race start and end date"
+      },
+      "raceRegistrationDateRange": {
+        "label": "Ragistration start / end"
+      },
+      "duration": {
+        "label": "Actual duration (days)"
       }
     }
   },
@@ -459,6 +473,9 @@
     "index": {
       "title": "Maxvario Blog",
       "description": "Your go to site for the latest information on races, gear and training"
+    },
+    "comments": {
+      "title": "Comments"
     }
   }
 }

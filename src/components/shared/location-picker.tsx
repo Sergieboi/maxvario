@@ -16,6 +16,8 @@ type PlaceDetails = {
   state?: string;
   country?: string;
   country_code?: string; // Added country code
+  post_code?: string;
+  name?: string;
 };
 
 type Props = {
@@ -43,12 +45,14 @@ const extractAddressComponents = (
   state?: string;
   country?: string;
   country_code?: string;
+  post_code?: string;
 } => {
   const result: {
     city?: string;
     state?: string;
     country?: string;
     country_code?: string;
+    post_code?: string;
   } = {};
 
   components.forEach((component) => {
@@ -60,6 +64,8 @@ const extractAddressComponents = (
     } else if (types.includes("country")) {
       result.country = component.long_name;
       result.country_code = component.short_name; // Get 2-letter country code
+    } else if (component.types.includes("postal_code")) {
+      result.post_code = component.long_name;
     }
   });
 
@@ -76,8 +82,9 @@ const extractPlaceDetails = (
 
   const lat = place.geometry.location?.lat() ?? 0;
   const lng = place.geometry.location?.lng() ?? 0;
+  const name = place.name || "";
   const addressComponents = place.address_components || [];
-  const { city, state, country, country_code } =
+  const { city, state, country, country_code, post_code } =
     extractAddressComponents(addressComponents);
 
   return {
@@ -89,6 +96,8 @@ const extractPlaceDetails = (
     state,
     country,
     country_code,
+    post_code,
+    name,
   };
 };
 

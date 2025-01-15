@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import { Locale, MVRace, PageName } from "../types/misc";
+import { Locale, MVBlog, MVNews, MVRace, PageName } from "../types/misc";
 import { getTranslations } from "next-intl/server";
 import { DEFAULT_LOCALE } from "../constants";
 
@@ -41,6 +41,15 @@ export const seoContent = async ({
       break;
     case "race":
       md.title += ` - ${(data as MVRace)?.title}`;
+      md.robots = {
+        index: true,
+        follow: true,
+        "max-image-preview": "large",
+      };
+      md.openGraph.images = [];
+      break;
+    case 'single-blog':
+      md.title += ` - ${(data as MVNews | MVBlog)?.title}`;
       md.robots = {
         index: true,
         follow: true,

@@ -65,13 +65,17 @@ export const getCalendar = async (
   return response;
 };
 
-export const getCategories = async (locale: Locale): Promise<ApiResponse<{
-  categories: Array<Taxonomy>;
-  news_categories: Array<Taxonomy>;
-  fai_categories: Array<Taxonomy>;
-  race_formats: Array<Taxonomy>;
-  athlete_categories: Array<Taxonomy>;
-}>> => {
+export const getCategories = async (
+  locale: Locale
+): Promise<
+  ApiResponse<{
+    categories: Array<Taxonomy>;
+    news_categories: Array<Taxonomy>;
+    fai_categories: Array<Taxonomy>;
+    race_formats: Array<Taxonomy>;
+    athlete_categories: Array<Taxonomy>;
+  }>
+> => {
   const categories = await fetcher({
     url: `${process.env.NEXT_PUBLIC_MAXVARIO_API}/categories?lang=${locale}`,
     revalidate: 300,
@@ -99,6 +103,18 @@ export const getPosts = async (locale: Locale) => {
 export const getRace = async (slug: string, locale: Locale) => {
   const race = await fetcher({
     url: `${process.env.NEXT_PUBLIC_WP_API_URL}/races?slug=${slug}&lang=${locale}`,
+    locale,
+    revalidate: 300,
+  });
+  if (Array.isArray(race) && race.length > 0) {
+    return race[0];
+  }
+  return null;
+};
+
+export const getNewsBlog = async (slug: string, locale: Locale) => {
+  const race = await fetcher({
+    url: `${process.env.NEXT_PUBLIC_WP_API_URL}/news?slug=${slug}&lang=${locale}`,
     locale,
     revalidate: 300,
   });

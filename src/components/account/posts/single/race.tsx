@@ -3,7 +3,17 @@ import ImagesPicker from "@/components/shared/images-picker";
 import LocationPicker from "@/components/shared/location-picker";
 import { MAPS_KEY } from "@/lib/constants";
 import { MVRace, Taxonomy } from "@/lib/types/misc";
-import { Avatar, Button, Input, Select, SelectItem } from "@nextui-org/react";
+import {
+  Avatar,
+  Button,
+  DateRangePicker,
+  Input,
+  RangeValue,
+  Select,
+  SelectItem,
+} from "@nextui-org/react";
+import { type ZonedDateTime } from "@internationalized/date";
+
 import { APIProvider } from "@vis.gl/react-google-maps";
 import { useLocale, useTranslations } from "next-intl";
 import dynamic from "next/dynamic";
@@ -14,6 +24,24 @@ import { Icon } from "@iconify/react";
 const Editor = dynamic(() => import("@/components/shared/editor/editor"), {
   ssr: false,
 });
+
+const getDateTime = (date: ZonedDateTime) => {
+  // eslint-disable-next-line prefer-const
+  let { year, month, day, hour, minute } = date;
+  if (month < 10) {
+    month = `0${month}` as unknown as number;
+  }
+  if (day < 10) {
+    day = `0${day}` as unknown as number;
+  }
+  if (hour < 10) {
+    hour = `0${hour}` as unknown as number;
+  }
+  if (minute < 10) {
+    minute = `0${minute}` as unknown as number;
+  }
+  return `${year}-${month}-${day} ${hour}:${minute}`;
+};
 
 interface SingleRaceProps {
   title: string;
@@ -27,6 +55,8 @@ interface SingleRaceProps {
   countryShort: string;
   state: string;
   city: string;
+  post_code?: string;
+  name?: string;
   lat: number;
   lng: number;
   address: string;
@@ -40,6 +70,8 @@ interface SingleRaceProps {
   x: string;
   trackingUrl: string;
   resultsUrl: string;
+  raceDateRange: RangeValue<ZonedDateTime> | null;
+  raceRegistrationDateRange: RangeValue<ZonedDateTime> | null;
 }
 
 interface SingleRaceParams {
@@ -55,12 +87,15 @@ const SingleRace: FC<SingleRaceParams> = ({
   fai_categories,
   race_formats,
 }) => {
+  // const formatter = useDateFormatter({ dateStyle: "long" });
+
   const {
     handleSubmit,
     control,
     getValues,
     setValue,
     reset,
+    // trigger,
     formState: { isSubmitting },
   } = useForm<SingleRaceProps>({
     defaultValues: {
@@ -87,6 +122,8 @@ const SingleRace: FC<SingleRaceParams> = ({
       athlete_category: init?.athlete_category?.[0]?.term_id?.toString() || "",
       fai_category: init?.fai_category?.[0]?.term_id?.toString() || "",
       race_format: init?.race_format?.[0]?.term_id?.toString() || "",
+      post_code: init?.location_data?.post_code || "",
+      name: init?.location_data?.name || "",
     },
   });
   const locale = useLocale();
@@ -106,6 +143,31 @@ const SingleRace: FC<SingleRaceParams> = ({
       });
 
       const formData = new FormData();
+
+      if (data.raceDateRange?.start && data.raceDateRange) {
+        formData.append("start_date", getDateTime(data.raceDateRange.start));
+      }
+      if (data.raceDateRange?.end && data.raceDateRange) {
+        formData.append("end_date", getDateTime(data.raceDateRange.end));
+      }
+      if (
+        data.raceRegistrationDateRange?.start &&
+        data.raceRegistrationDateRange
+      ) {
+        formData.append(
+          "registrations_date",
+          getDateTime(data.raceRegistrationDateRange.start)
+        );
+      }
+      if (
+        data.raceRegistrationDateRange?.end &&
+        data.raceRegistrationDateRange
+      ) {
+        formData.append(
+          "registrations_end_date",
+          getDateTime(data.raceRegistrationDateRange.end)
+        );
+      }
       formData.append("title", data.title);
       formData.append("content", JSON.stringify(postContent));
       formData.append("fai_category", data.fai_category);
@@ -129,6 +191,13 @@ const SingleRace: FC<SingleRaceParams> = ({
       formData.append("tiktok", data.tiktok);
       formData.append("trackingUrl", data.trackingUrl);
       formData.append("resultsUrl", data.resultsUrl);
+      if (data?.post_code) {
+        formData.append("post_code", data.post_code);
+      }
+      if (data?.name) {
+        formData.append("name", data.name);
+      }
+      formData.append("duration", data.duration);
       if (data.backgroundImage) {
         formData.append("backgroundImage", data.backgroundImage);
       }
@@ -154,6 +223,9 @@ const SingleRace: FC<SingleRaceParams> = ({
   };
   const [postContent, setPostContent] = useState("");
 
+  // change title to race name
+  // athelte to number of categories
+
   return (
     <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
       <h1 className="text-3xl font-semibold">{t("add.new.race.title")}</h1>
@@ -162,15 +234,18 @@ const SingleRace: FC<SingleRaceParams> = ({
           name="title"
           control={control}
           rules={{ required: t("account.new.title.required") }}
-          render={({ field, fieldState: { invalid, error } }) => (
-            <Input
-              {...field}
-              isRequired
-              label={t("account.new.title.label")}
-              isInvalid={invalid}
-              errorMessage={error?.message}
-            />
-          )}
+          render={({ field, fieldState: { invalid, error } }) => {
+            return (
+              <Input
+                {...field}
+                isInvalid={invalid}
+                errorMessage={error?.message}
+                isRequired
+                type="text"
+                label={t("account.new.title.label")}
+              />
+            );
+          }}
         />
         <Controller
           name="athlete_category"
@@ -236,13 +311,66 @@ const SingleRace: FC<SingleRaceParams> = ({
       <h3 className="text-xl font-semibold">
         {t("account.new.race.timeline")}
       </h3>
-      <p>--- TO BE DISCUSSED ---</p>
+      <div className="flex gap-4 items-center flex-col md:flex-row">
+        <Controller
+          name="raceDateRange"
+          control={control}
+          render={({ fieldState: { invalid, error } }) => (
+            <DateRangePicker
+              fullWidth
+              shouldForceLeadingZeros
+              isRequired
+              granularity="minute"
+              hideTimeZone={false}
+              label={t("account.new.raceDateRange.label")}
+              onChange={(value) => {
+                console.log(typeof value?.start);
+                setValue("raceDateRange", value);
+              }}
+              isInvalid={invalid}
+              errorMessage={error?.message}
+            />
+          )}
+        />
+        <Controller
+          name="raceRegistrationDateRange"
+          control={control}
+          render={({ fieldState: { invalid, error } }) => (
+            <DateRangePicker
+              fullWidth
+              isRequired
+              shouldForceLeadingZeros
+              granularity="minute"
+              label={t("account.new.raceRegistrationDateRange.label")}
+              onChange={(value) => {
+                setValue("raceRegistrationDateRange", value);
+              }}
+              isInvalid={invalid}
+              errorMessage={error?.message}
+            />
+          )}
+        />
+        <Controller
+          name="duration"
+          control={control}
+          render={({ field, fieldState: { invalid, error } }) => (
+            <Input
+              {...field}
+              fullWidth
+              isRequired
+              label={t("account.new.duration.label")}
+              isInvalid={invalid}
+              errorMessage={error?.message}
+            />
+          )}
+        />
+      </div>
       <h3 className="text-xl font-semibold">
         {t("account.new.race.location")}
       </h3>
       <p>{t("account.new.race.locationDescription")}</p>
       <div className="flex gap-4 items-start flex-col md:flex-row">
-        <div className="w-full lg:w-3/4">
+        <div className="w-full md:w-3/4">
           <APIProvider apiKey={MAPS_KEY}>
             <LocationPicker
               onLocationChange={(location) => {
@@ -254,6 +382,8 @@ const SingleRace: FC<SingleRaceParams> = ({
                 setValue("city", location.city ?? "");
                 setValue("state", location.state ?? "");
                 setValue("placeId", location.place_id ?? "");
+                setValue("post_code", location.post_code ?? "");
+                setValue("name", location.name ?? "");
               }}
             />
           </APIProvider>

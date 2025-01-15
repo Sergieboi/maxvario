@@ -1,7 +1,21 @@
-export default async function NewsPage() {
-    return (
-        <div>
-            <h1>News Page</h1>
-        </div>
-    )
+import Blog from "@/components/blog/blog";
+import { getNews } from "@/lib/api/wp";
+import { seoContent } from "@/lib/seo/seo";
+import { Locale } from "@/lib/types/misc";
+
+type Props = {
+  params: Promise<{ locale: Locale }>;
+};
+export async function generateMetadata({ params }: Props) {
+  const locale = (await params).locale;
+  return seoContent({
+    page: "news",
+    locale,
+  });
+}
+
+export default async function NewsPage({ params }: Props) {
+  const locale = (await params).locale;
+  const news = await getNews(locale);
+  return <Blog items={news} postType="news" />;
 }

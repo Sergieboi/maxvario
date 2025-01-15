@@ -122,8 +122,12 @@ const BlogTable: FC<Props> = ({ blogs, postType }) => {
 
   const sortedItems = React.useMemo(() => {
     return [...items].sort((a: MVBlog | MVNews, b: MVBlog | MVNews) => {
-      const first = a[sortDescriptor.column as keyof MVBlog] as number;
-      const second = b[sortDescriptor.column as keyof MVBlog] as number;
+      const first = a[
+        sortDescriptor.column as keyof Omit<MVBlog, "category">
+      ] as number;
+      const second = b[
+        sortDescriptor.column as keyof Omit<MVBlog, "category">
+      ] as number;
       const cmp = first < second ? -1 : first > second ? 1 : 0;
 
       return sortDescriptor.direction === "descending" ? -cmp : cmp;
@@ -132,13 +136,18 @@ const BlogTable: FC<Props> = ({ blogs, postType }) => {
 
   const renderCell = React.useCallback(
     (article: MVBlog | MVNews, columnKey: React.Key) => {
-      const cellValue = article[columnKey as keyof MVBlog];
+      const cellValue = article[columnKey as keyof Omit<MVBlog, "category">];
 
       switch (columnKey) {
         case "category":
           return (
             <div className="flex items-center gap-2">
-              {article.categories.map((c) => c.name).join(", ")}
+              {(article.post_type === "news"
+                ? article.news_category
+                : article.category
+              )
+                .map((c) => c.name)
+                .join(", ")}
             </div>
           );
         case "status":

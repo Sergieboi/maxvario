@@ -448,5 +448,17 @@
     "tools": {
       "hyperlink": "Link"
     }
+  },
+  "news": {
+    "index": {
+      "title": "News",
+      "description": "Keep track of our sport, the athletes and the races."
+    }
+  },
+  "blog": {
+    "index": {
+      "title": "Maxvario Blog",
+      "description": "Your go to site for the latest information on races, gear and training"
+    }
   }
 }

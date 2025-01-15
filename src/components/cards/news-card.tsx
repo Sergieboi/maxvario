@@ -40,9 +40,9 @@ const NewsCard: FC<Props> = ({ news, ...props }) => {
             <p className="line-clamp-3">{news.excerpt}</p>
           </div>
 
-          {news.categories.length > 0 && (
+          {news.news_category.length > 0 && (
             <div className="flex flex-wrap gap-2 pt-2">
-              {news.categories.map((category, index) => (
+              {news.news_category.map((category, index) => (
                 <Chip key={index} variant="flat" color="success" size="sm">
                   {category.name}
                 </Chip>

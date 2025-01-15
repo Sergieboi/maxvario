@@ -20,6 +20,13 @@ type Props = CardProps & {
 
 const RaceCard: FC<Props> = ({ race, ...props }) => {
   const t = useTranslations();
+  const thumbnail = race.background_image
+    ? race.background_image
+    : race.thumbnail_lg;
+  const flag = race?.location_data?.country_short
+    ? race?.location_data?.country_short?.toLowerCase()
+    : null;
+
   return (
     <Card
       {...props}
@@ -28,11 +35,11 @@ const RaceCard: FC<Props> = ({ race, ...props }) => {
       }}
     >
       <CardBody className="px-3 pb-1 w-full">
-        {(race?.thumbnail_lg || race?.background_image) && (
+        {(thumbnail?.length ?? 0) > 0 && (
           <Image
-            alt="Card image"
+            alt={race.title}
             className="aspect-video w-full object-cover object-top"
-            src={race.background_image ?? race.thumbnail_lg}
+            src={thumbnail}
             isZoomed
           />
         )}
@@ -48,11 +55,11 @@ const RaceCard: FC<Props> = ({ race, ...props }) => {
               {race.excerpt}
             </p>
           )}
-          {race.location_data?.country_short && (
+          {flag ? (
             <div className="flex items-center gap-1 text-xs">
               <Image
-                src={`/assets/flags/${race.location_data?.country_short?.toLowerCase()}.svg`}
-                alt={race.location_data?.country_short}
+                src={`/assets/flags/${flag}.svg`}
+                alt={flag}
                 width={24}
                 height={24}
               />
@@ -61,7 +68,7 @@ const RaceCard: FC<Props> = ({ race, ...props }) => {
                 {race.location_data.country}
               </span>
             </div>
-          )}
+          ) : null}
           <div className="flex items-center gap-1 text-xs">
             {race?.athlete_category?.length > 0 && (
               <>

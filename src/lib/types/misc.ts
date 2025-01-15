@@ -151,7 +151,7 @@ export type MVNews = {
   date: string;
   excerpt?: string;
   comments: Array<Comment>;
-  categories: Array<Taxonomy>;
+  news_category: Array<Taxonomy>;
 };
 export type MVBlog = {
   id: number;
@@ -163,7 +163,7 @@ export type MVBlog = {
   date: string;
   excerpt?: string;
   comments: Array<Comment>;
-  categories: Array<Taxonomy>;
+  category: Array<Taxonomy>;
   status: PostStatus;
 };
 export type ApiResponse<T> = {

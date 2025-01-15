@@ -39,11 +39,11 @@ const BlogCard: FC<Props> = ({ blog, ...props }) => {
           <div className="flex flex-col gap-3 pt-2 text-small text-default-400">
             <p className="line-clamp-3">{blog.excerpt}</p>
           </div>
-          {blog.categories.length > 0 && (
+          {blog?.category.length > 0 && (
             <div className="flex flex-wrap gap-2 pt-2">
-              {blog.categories.map((category, index) => (
+              {blog.category.map((c, index) => (
                 <Chip key={index} variant="flat" color="success" size="sm">
-                  {category.name}
+                  {c.name}
                 </Chip>
               ))}
             </div>

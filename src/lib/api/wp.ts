@@ -79,6 +79,23 @@ export const getCategories = async (locale: Locale): Promise<ApiResponse<{
   return categories;
 };
 
+export const getNews = async (locale: Locale) => {
+  const news = await fetcher({
+    url: `${process.env.NEXT_PUBLIC_WP_API_URL}/news?lang=${locale}&order=desc&order_by=date&per_page=100`,
+    locale,
+    revalidate: 300,
+  });
+  return news;
+};
+export const getPosts = async (locale: Locale) => {
+  const posts = await fetcher({
+    url: `${process.env.NEXT_PUBLIC_WP_API_URL}/posts?lang=${locale}&order=desc&order_by=date&per_page=100`,
+    locale,
+    revalidate: 300,
+  });
+  return posts;
+};
+
 export const getRace = async (slug: string, locale: Locale) => {
   const race = await fetcher({
     url: `${process.env.NEXT_PUBLIC_WP_API_URL}/races?slug=${slug}&lang=${locale}`,

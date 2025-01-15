@@ -43,7 +43,10 @@ const SingleBlog: FC<SingleBlogParams> = ({
     defaultValues: {
       title: init?.title || "",
       content: "",
-      category: init?.categories[0]?.term_id?.toString() || "",
+      category:
+        (init?.post_type === "news"
+          ? init?.news_category?.[0]?.term_id?.toString()
+          : init?.category?.[0]?.term_id?.toString()) || "",
       thumbnail: undefined,
     },
   });

@@ -108,6 +108,30 @@ const SingleRace: FC<SingleRaceParams> = ({
       const formData = new FormData();
       formData.append("title", data.title);
       formData.append("content", JSON.stringify(postContent));
+      formData.append("fai_category", data.fai_category);
+      formData.append("athlete_category", data.athlete_category);
+      formData.append("race_format", data.race_format);
+      // formData.append("duration", data.duration);
+      // start date and end date
+      formData.append("lat", data.lat.toString());
+      formData.append("lng", data.lng.toString());
+      formData.append("address", data.address);
+      formData.append("country", data.country);
+      formData.append("countryShort", data.countryShort);
+      formData.append("city", data.city);
+      formData.append("state", data.state);
+      formData.append("placeId", data.placeId);
+      formData.append("facebook", data.facebook);
+      formData.append("instagram", data.instagram);
+      formData.append("website", data.website);
+      formData.append("x", data.x);
+      formData.append("youtube", data.youtube);
+      formData.append("tiktok", data.tiktok);
+      formData.append("trackingUrl", data.trackingUrl);
+      formData.append("resultsUrl", data.resultsUrl);
+      if (data.backgroundImage) {
+        formData.append("backgroundImage", data.backgroundImage);
+      }
 
       if (data.thumbnail) {
         formData.append("thumbnail", data.thumbnail);
@@ -115,7 +139,7 @@ const SingleRace: FC<SingleRaceParams> = ({
       formData.append("lang", locale);
       formData.append("recaptchaToken", token);
 
-      const res = await fetch("/api/account/content/blog", {
+      const res = await fetch("/api/account/content/race", {
         method: "POST",
         body: formData,
       });
@@ -421,7 +445,7 @@ const SingleRace: FC<SingleRaceParams> = ({
               {...field}
               size="sm"
               startContent={
-                <Icon icon="mingcute:instagram-fill" width="24" height="24" />
+                <Icon icon="mingcute:instagram-fill" width="16" height="16" />
               }
               label={t("account.new.instagram.label")}
               isInvalid={invalid}

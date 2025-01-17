@@ -62,7 +62,6 @@ const Navbar: FC = () => {
             {items.map((item, index) => (
               <DropdownItem
                 key={index}
-                className="p-0"
                 onPress={() => {
                   redirect(item.href);
                 }}

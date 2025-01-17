@@ -36,6 +36,7 @@ const DeleteConfirmation: FC<Props> = ({ posts, onCancel, onDelete }) => {
     });
     if (response.ok) {
       onDelete?.();
+      window.setTimeout(() => onCancel?.(), 500);
       onClose();
     } else {
       setShowAlert(true);

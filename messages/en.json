@@ -117,7 +117,11 @@
     "name": "Name",
     "email": "E-mail",
     "comment": "Comment",
-    "days": "Days"
+    "days": "Days",
+    "commentSuccess": "Comment added successfully",
+    "tryAgain": "Please try again later",
+    "addComment": "Add your comment",
+    "typehere": "Type here ..."
   },
   "latest-blog": {
     "title": "Latest Blog",
@@ -389,7 +393,8 @@
         "links": "Links",
         "media": "Media",
         "locationDescription": "Use the search input to find a place, then drag the marker to adjust the location for better accuracy. Address details will be displayed in the \"Extracted Info\" section—gray fields are automatically populated from the map, while blue fields are editable for any necessary corrections.",
-        "timeline": "Race Timeline"
+        "timeline": "Race Timeline",
+        "timelineDescription": "Please use UTC time for consistency, your current time zone seems to be <timezone></timezone>"
       },
       "address": {
         "label": "Address"
@@ -437,7 +442,7 @@
         "label": "YouTube"
       },
       "raceDateRange": {
-        "label": "Race start and end date"
+        "label": "Race start / end"
       },
       "raceRegistrationDateRange": {
         "label": "Ragistration start / end"

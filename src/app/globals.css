@@ -29,7 +29,7 @@ body {
 }
 
 .fc-col-header .fc-col-header-cell a {
-  @apply no-underline text-sm/6 font-semibold text-gray-700; /* Style the link inside the cell */
+  @apply no-underline text-sm/6 font-semibold text-gray-700;
 }
 .fc .fc-daygrid-day.fc-day-today {
   @apply bg-white;
@@ -79,15 +79,36 @@ body {
   margin: 0 !important;
   overflow: visible !important;
 }
-#editorjs-container h2 {
-  @apply text-2xl font-bold text-gray-800; /* Style the editorjs heading */
+
+/* General styles for the Tiptap editor */
+.editable-tiptap .tiptap {
+  @apply bg-gray-200 rounded-lg mt-4 py-1 px-2 min-h-48;
 }
-#editorjs-container h3 {
-  @apply text-xl font-bold text-gray-800; /* Style the editorjs subheading */
+.tiptap p {
+  @apply text-base;
 }
-#editorjs-container h6 {
-  @apply font-bold text-gray-800; /* Style the editorjs subheading */
+.tiptap a {
+  @apply text-blue-500 underline;
 }
-.codex-editor__redactor {
-  padding-bottom: 0 !important;
+.tiptap h2 {
+  @apply text-2xl font-bold;
+}
+.tiptap h3 {
+  @apply text-xl font-bold;
+}
+.tiptap h4 {
+  @apply text-lg font-bold;
+}
+.tiptap ul {
+  @apply list-disc list-inside;
+}
+.tiptap ol {
+  @apply list-decimal list-inside;
+}
+.tiptap ul li p,
+.tiptap ol li p {
+  @apply inline-block;
+}
+.tiptap img {
+  @apply mx-auto max-w-96;
 }

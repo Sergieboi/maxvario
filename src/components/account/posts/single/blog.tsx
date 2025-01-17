@@ -3,14 +3,9 @@ import ImagesPicker from "@/components/shared/images-picker";
 import { MVBlog, MVNews, Taxonomy } from "@/lib/types/misc";
 import { Button, Input, Select, SelectItem } from "@nextui-org/react";
 import { useLocale, useTranslations } from "next-intl";
-import dynamic from "next/dynamic";
 import { useParams } from "next/navigation";
 import { FC, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
-
-const Editor = dynamic(() => import("@/components/shared/editor/editor"), {
-  ssr: false,
-});
 
 interface SingleBlogProps {
   title: string;
@@ -138,11 +133,7 @@ const SingleBlog: FC<SingleBlogParams> = ({
           )}
         />
       </div>
-      <Editor
-        value={postContent}
-        onChange={setPostContent}
-        holder="editorjs-container"
-      />
+
       <div>
         <ImagesPicker
           setSelectedImages={(images) => setValue("thumbnail", images)}

@@ -25,11 +25,11 @@ const SingleBlog: FC<Props> = ({ blog }) => {
           {blog.excerpt && <p className="text-lg">{blog.excerpt}</p>}
         </Container>
       </div>
-      <Container className="py-20 flex">
+      <Container className="py-20 flex flex-col lg:flex-row gap-10">
         <div className="w-full xl:w-3/4 space-y-5">
           <div>Post content will be here</div>
           <h2 className="text-lg font-semibold">{t("blog.comments.title")}</h2>
-          {<Comments comments={blog.comments} />}
+          {<Comments comments={blog.comments} postId={blog.id} />}
         </div>
         <div className="w-full xl:w-1/4">
           <Sidebar />

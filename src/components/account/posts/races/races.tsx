@@ -31,6 +31,7 @@ import {
 } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import DeleteConfirmation from "../delete-confirmation";
+import { redirect } from "next/navigation";
 
 const statusColorMap: Record<string, ChipProps["color"]> = {
   publish: "success",
@@ -205,14 +206,13 @@ const RacesTable: FC<Props> = ({ racesList }) => {
                 </Button>
               </DropdownTrigger>
               <DropdownMenu>
-                <DropdownItem key="view">
-                  <Link
-                    className="flex w-full"
-                    href={`/races/${race.slug}`}
-                    title={race.title}
-                  >
-                    {t("account.data.options.view.title")}
-                  </Link>
+                <DropdownItem
+                  key="view"
+                  onPress={() => {
+                    redirect(`/races/${race.slug}`);
+                  }}
+                >
+                  {t("account.data.options.view.title")}
                 </DropdownItem>
                 <DropdownItem key="edit">
                   {t("account.data.options.edit.title")}

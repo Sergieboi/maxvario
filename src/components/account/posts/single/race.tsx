@@ -16,14 +16,12 @@ import { type ZonedDateTime } from "@internationalized/date";
 
 import { APIProvider } from "@vis.gl/react-google-maps";
 import { useLocale, useTranslations } from "next-intl";
-import dynamic from "next/dynamic";
 import { FC, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { Icon } from "@iconify/react";
-
-const Editor = dynamic(() => import("@/components/shared/editor/editor"), {
-  ssr: false,
-});
+import CurrentTimezone from "./current-timezone";
+import MVEditor from "@/components/shared/blocks/editor";
+import { extractBlockInnerHTML } from "@/lib/utils";
 
 const getDateTime = (date: ZonedDateTime) => {
   // eslint-disable-next-line prefer-const
@@ -87,14 +85,15 @@ const SingleRace: FC<SingleRaceParams> = ({
   fai_categories,
   race_formats,
 }) => {
-  // const formatter = useDateFormatter({ dateStyle: "long" });
+  const [postContent, setPostContent] = useState(
+    extractBlockInnerHTML(init?.content_json ?? []) || ""
+  );
 
   const {
     handleSubmit,
     control,
     getValues,
     setValue,
-    reset,
     // trigger,
     formState: { isSubmitting },
   } = useForm<SingleRaceProps>({
@@ -144,6 +143,11 @@ const SingleRace: FC<SingleRaceParams> = ({
 
       const formData = new FormData();
 
+      // timeline data
+      formData.append("duration", data.duration);
+      if (data.backgroundImage) {
+        formData.append("backgroundImage", data.backgroundImage);
+      }
       if (data.raceDateRange?.start && data.raceDateRange) {
         formData.append("start_date", getDateTime(data.raceDateRange.start));
       }
@@ -155,7 +159,7 @@ const SingleRace: FC<SingleRaceParams> = ({
         data.raceRegistrationDateRange
       ) {
         formData.append(
-          "registrations_date",
+          "registration_date",
           getDateTime(data.raceRegistrationDateRange.start)
         );
       }
@@ -164,17 +168,17 @@ const SingleRace: FC<SingleRaceParams> = ({
         data.raceRegistrationDateRange
       ) {
         formData.append(
-          "registrations_end_date",
+          "registration_end_date",
           getDateTime(data.raceRegistrationDateRange.end)
         );
       }
+      // base data
       formData.append("title", data.title);
-      formData.append("content", JSON.stringify(postContent));
+      formData.append("content", postContent);
       formData.append("fai_category", data.fai_category);
       formData.append("athlete_category", data.athlete_category);
       formData.append("race_format", data.race_format);
-      // formData.append("duration", data.duration);
-      // start date and end date
+      // location data
       formData.append("lat", data.lat.toString());
       formData.append("lng", data.lng.toString());
       formData.append("address", data.address);
@@ -183,6 +187,7 @@ const SingleRace: FC<SingleRaceParams> = ({
       formData.append("city", data.city);
       formData.append("state", data.state);
       formData.append("placeId", data.placeId);
+      // links
       formData.append("facebook", data.facebook);
       formData.append("instagram", data.instagram);
       formData.append("website", data.website);
@@ -197,11 +202,8 @@ const SingleRace: FC<SingleRaceParams> = ({
       if (data?.name) {
         formData.append("name", data.name);
       }
-      formData.append("duration", data.duration);
-      if (data.backgroundImage) {
-        formData.append("backgroundImage", data.backgroundImage);
-      }
 
+      // media
       if (data.thumbnail) {
         formData.append("thumbnail", data.thumbnail);
       }
@@ -212,16 +214,14 @@ const SingleRace: FC<SingleRaceParams> = ({
         method: "POST",
         body: formData,
       });
+
       if (res.ok) {
-        reset();
-        setValue("thumbnail", undefined);
-        setPostContent("");
+        window.location.href = "/account";
       }
     } catch (error) {
       console.error(error);
     }
   };
-  const [postContent, setPostContent] = useState("");
 
   // change title to race name
   // athelte to number of categories
@@ -303,14 +303,26 @@ const SingleRace: FC<SingleRaceParams> = ({
           )}
         />
       </div>
-      <Editor
-        value={postContent}
-        onChange={setPostContent}
-        holder="editorjs-container"
-      />
+      <div className="bg-gray-100 p-4 rounded-lg relative">
+        <MVEditor
+          content={postContent}
+          onUpdate={(content) => setPostContent(content)}
+          editable={true}
+        />
+      </div>
       <h3 className="text-xl font-semibold">
         {t("account.new.race.timeline")}
       </h3>
+      <p>
+        {t.rich("account.new.race.timelineDescription", {
+          timezone: () => (
+            <span className="font-semibold">
+              UTC
+              <CurrentTimezone />
+            </span>
+          ),
+        })}
+      </p>
       <div className="flex gap-4 items-center flex-col md:flex-row">
         <Controller
           name="raceDateRange"
@@ -324,7 +336,6 @@ const SingleRace: FC<SingleRaceParams> = ({
               hideTimeZone={false}
               label={t("account.new.raceDateRange.label")}
               onChange={(value) => {
-                console.log(typeof value?.start);
                 setValue("raceDateRange", value);
               }}
               isInvalid={invalid}

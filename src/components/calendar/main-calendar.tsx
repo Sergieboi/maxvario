@@ -19,8 +19,6 @@ import {
 } from "@nextui-org/react";
 import { FLAGS } from "@/lib/flags";
 
-import { parseDate } from "@internationalized/date";
-
 interface FilterOptions {
   dateFrom: string;
   dateTo: string;
@@ -188,9 +186,8 @@ const MainCalendar: FC<CalendarResponse> = ({ calendar, filter_options }) => {
                 lang={locale}
                 isInvalid={invalid}
                 errorMessage={error?.message}
-                defaultValue={parseDate(new Date().toISOString().split("T")[0])}
                 onChange={(dateValue) => {
-                  setValue("dateFrom", dateValue?.toString() ?? "");
+                  setValue("dateFrom", dateValue ?? "");
                 }}
               />
             )}
@@ -203,7 +200,7 @@ const MainCalendar: FC<CalendarResponse> = ({ calendar, filter_options }) => {
                 defaultValue={undefined}
                 label={t("filter.before.title")}
                 onChange={(dateValue) => {
-                  setValue("dateTo", dateValue?.toString() ?? "");
+                  setValue("dateTo", dateValue ?? "");
                 }}
               />
             )}

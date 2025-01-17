@@ -18,7 +18,6 @@ import {
 import { useLocale, useTranslations } from "next-intl";
 import { FC, useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
-import { parseDate } from "@internationalized/date";
 
 type Props = {
   visible: boolean;
@@ -161,11 +160,8 @@ const MapFilter: FC<Props> = ({ hide, filter_options, update, visible }) => {
                         lang={locale}
                         isInvalid={invalid}
                         errorMessage={error?.message}
-                        defaultValue={parseDate(
-                          new Date().toISOString().split("T")[0]
-                        )}
                         onChange={(dateValue) => {
-                          setValue("dateFrom", dateValue?.toString() ?? "");
+                          setValue("dateFrom", dateValue ?? "");
                         }}
                       />
                     )}
@@ -178,7 +174,7 @@ const MapFilter: FC<Props> = ({ hide, filter_options, update, visible }) => {
                         defaultValue={undefined}
                         label={t("calendar.filter.before.title")}
                         onChange={(dateValue) => {
-                          setValue("dateTo", dateValue?.toString() ?? "");
+                          setValue("dateTo", dateValue ?? "");
                         }}
                       />
                     )}

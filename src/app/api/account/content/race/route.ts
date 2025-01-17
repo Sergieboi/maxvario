@@ -3,6 +3,7 @@ import { auth } from "../../../../../../auth";
 
 export async function POST(request: NextRequest) {
   const session = await auth();
+  console.log("session", session?.user.token);
   try {
     const data = await request.formData();
     const response = await fetch(
@@ -20,7 +21,7 @@ export async function POST(request: NextRequest) {
     } else {
       const result = await response.json();
       return NextResponse.json(
-        { success: false, messages: result.messages },
+        { success: false, messages: result?.messages ?? [] },
         { status: response.status }
       );
     }

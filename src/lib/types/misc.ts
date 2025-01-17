@@ -47,11 +47,10 @@ export type PageName =
   | "terms";
 
 export type Comment = {
-  comment_ID: number;
-  comment_author: string;
-  comment_author_email: string;
-  comment_content: string;
-  comment_date: string;
+  id: number;
+  author_name: string;
+  content: string;
+  date: string;
 };
 export type BlockName =
   | "core/paragraph"

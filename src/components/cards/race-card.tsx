@@ -69,7 +69,7 @@ const RaceCard: FC<Props> = ({ race, ...props }) => {
               </span>
             </div>
           ) : null}
-          <div className="flex items-center gap-1 text-xs">
+          <div className="flex items-center gap-1 text-xs flex-wrap">
             {race?.athlete_category?.length > 0 && (
               <>
                 {race.athlete_category.map((category, index) => (

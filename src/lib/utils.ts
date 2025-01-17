@@ -1,4 +1,4 @@
-import { MVRace } from "./types/misc";
+import { Block, MVRace } from "./types/misc";
 
 export function groupAndSortByDate(data: MVRace[]) {
   // Step 1: Group objects by year and month
@@ -33,4 +33,8 @@ export function groupAndSortByDate(data: MVRace[]) {
 
 export function capitalize(s: string) {
   return s ? s.charAt(0).toUpperCase() + s.slice(1).toLowerCase() : "";
+}
+
+export const extractBlockInnerHTML = (blocks: Array<Block>): string => {
+  return blocks.map((block) => block.innerHTML).join(" ");
 }

@@ -9,6 +9,7 @@ import {
 } from "@nextui-org/react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
+import { redirect } from "next/navigation";
 import { FC } from "react";
 
 const Navbar: FC = () => {
@@ -59,14 +60,14 @@ const Navbar: FC = () => {
           </DropdownTrigger>
           <DropdownMenu>
             {items.map((item, index) => (
-              <DropdownItem key={index} className="p-0">
-                <Link
-                  href={item.href}
-                  title={item.title}
-                  className="flex w-full py-1.5 px-2"
-                >
-                  {item.title}
-                </Link>
+              <DropdownItem
+                key={index}
+                className="p-0"
+                onPress={() => {
+                  redirect(item.href);
+                }}
+              >
+                {item.title}
               </DropdownItem>
             ))}
           </DropdownMenu>

@@ -180,6 +180,7 @@ const RacesTable: FC<Props> = ({ racesList }) => {
         return (
           <div className="flex items-center gap-2">
             <Avatar
+              className="min-w-10 min-h-10 max-w-10 max-h-10"
               src={`/assets/flags/${race?.location_data?.country_short?.toLowerCase()}.svg`}
             />
             <span>{race?.location_data?.country}</span>

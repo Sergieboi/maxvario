@@ -24,6 +24,12 @@ import { Icon } from "@iconify/react";
 import { useTranslations } from "next-intl";
 
 const MenuBar = () => {
+  const [isMobile, setIsMobile] = useState(true);
+  useEffect(() => {
+    if (window.innerWidth > 768) {
+      setIsMobile(false);
+    }
+  }, []);
   const { editor } = useCurrentEditor();
   const setLink = useCallback(() => {
     const previousUrl = editor?.getAttributes("link").href;
@@ -70,6 +76,7 @@ const MenuBar = () => {
     <div className="control-group">
       <ButtonGroup>
         <Button
+          size={isMobile ? "sm" : "md"}
           isIconOnly
           onPress={() => editor.chain().focus().toggleBold().run()}
           disabled={!editor.can().chain().focus().toggleBold().run()}
@@ -78,6 +85,7 @@ const MenuBar = () => {
           <BoldIcon className="size-5" />
         </Button>
         <Button
+          size={isMobile ? "sm" : "md"}
           isIconOnly
           onPress={() => editor.chain().focus().toggleItalic().run()}
           disabled={!editor.can().chain().focus().toggleItalic().run()}
@@ -86,6 +94,7 @@ const MenuBar = () => {
           <ItalicIcon className="size-5" />
         </Button>
         <Button
+          size={isMobile ? "sm" : "md"}
           onPress={() => {
             if (editor.isActive("link")) {
               editor.chain().focus().unsetLink().run();
@@ -103,6 +112,7 @@ const MenuBar = () => {
           )}
         </Button>
         <Button
+          size={isMobile ? "sm" : "md"}
           isIconOnly
           onPress={() => editor.chain().focus().setParagraph().run()}
           color={editor.isActive("paragraph") ? "primary" : "default"}
@@ -110,6 +120,7 @@ const MenuBar = () => {
           <Icon icon="carbon:paragraph" width="24" height="24" />
         </Button>
         <Button
+          size={isMobile ? "sm" : "md"}
           isIconOnly
           onPress={() =>
             editor.chain().focus().toggleHeading({ level: 2 }).run()
@@ -122,6 +133,7 @@ const MenuBar = () => {
         </Button>
 
         <Button
+          size={isMobile ? "sm" : "md"}
           isIconOnly
           onPress={() =>
             editor.chain().focus().toggleHeading({ level: 3 }).run()
@@ -133,6 +145,7 @@ const MenuBar = () => {
           <Icon icon="gravity-ui:heading-3" width="20" height="20" />
         </Button>
         <Button
+          size={isMobile ? "sm" : "md"}
           isIconOnly
           onPress={() =>
             editor.chain().focus().toggleHeading({ level: 4 }).run()
@@ -145,6 +158,7 @@ const MenuBar = () => {
         </Button>
 
         <Button
+          size={isMobile ? "sm" : "md"}
           isIconOnly
           onPress={() => editor.chain().focus().toggleBulletList().run()}
           color={editor.isActive("bulletList") ? "primary" : "default"}
@@ -152,6 +166,7 @@ const MenuBar = () => {
           <ListBulletIcon className="size-5" />
         </Button>
         <Button
+          size={isMobile ? "sm" : "md"}
           isIconOnly
           onPress={() => editor.chain().focus().toggleOrderedList().run()}
           color={editor.isActive("orderedList") ? "primary" : "default"}
@@ -159,6 +174,7 @@ const MenuBar = () => {
           <NumberedListIcon className="size-5" />
         </Button>
         <Button
+          size={isMobile ? "sm" : "md"}
           isIconOnly
           className="hidden md:inline-flex"
           onPress={() => editor.chain().focus().undo().run()}
@@ -167,6 +183,7 @@ const MenuBar = () => {
           <ArrowUturnLeftIcon className="size-5" />
         </Button>
         <Button
+          size={isMobile ? "sm" : "md"}
           isIconOnly
           className="hidden md:inline-flex"
           onPress={() => editor.chain().focus().redo().run()}
@@ -174,7 +191,7 @@ const MenuBar = () => {
         >
           <ArrowUturnRightIcon className="size-5" />
         </Button>
-        <Button isIconOnly onPress={addImage}>
+        <Button size={isMobile ? "sm" : "md"} isIconOnly onPress={addImage}>
           <PhotoIcon className="size-5" />
         </Button>
       </ButtonGroup>

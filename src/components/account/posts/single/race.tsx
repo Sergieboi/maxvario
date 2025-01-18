@@ -9,7 +9,6 @@ import {
   Avatar,
   Button,
   DateRangePicker,
-  // type DateValue,
   Input,
   type RangeValue,
   Select,
@@ -18,18 +17,13 @@ import {
 
 import { APIProvider } from "@vis.gl/react-google-maps";
 import { useLocale, useTranslations } from "next-intl";
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { Icon } from "@iconify/react";
 import CurrentTimezone from "./current-timezone";
 import MVEditor from "@/components/shared/blocks/editor";
 import { extractBlockInnerHTML } from "@/lib/utils";
-import {
-  parseZonedDateTime,
-  // parseAbsoluteToLocal,
-  // parseZonedDateTime,
-  ZonedDateTime,
-} from "@internationalized/date";
+import { parseZonedDateTime, ZonedDateTime } from "@internationalized/date";
 
 const getDateTime = (date: ZonedDateTime) => {
   // eslint-disable-next-line prefer-const
@@ -55,8 +49,8 @@ interface SingleRaceProps {
   athlete_category: string;
   fai_category: string;
   race_format: string;
-  thumbnail: File | undefined;
-  backgroundImage: File | undefined;
+  thumbnail: File;
+  backgroundImage: File;
   country: string;
   countryShort: string;
   state: string;
@@ -97,14 +91,43 @@ const SingleRace: FC<SingleRaceParams> = ({
     extractBlockInnerHTML(init?.content ?? []) || ""
   );
 
+  const [isMobile, setIsMobile] = useState(true);
+  useEffect(() => {
+    if (window.innerWidth > 768) {
+      setIsMobile(false);
+    }
+  }, []);
+
+  const defaultRaceDateRange =
+    init?.start_date && init?.end_date
+      ? {
+          start: parseZonedDateTime(
+            init.start_date.replace(" ", "T") + `[UTC]`
+          ),
+          end: parseZonedDateTime(init.end_date.replace(" ", "T") + `[UTC]`),
+        }
+      : undefined;
+  const defaultRaceRegistrationDateRange =
+    init?.registration_date && init?.registration_end_date
+      ? {
+          start: parseZonedDateTime(
+            init.registration_date.replace(" ", "T") + `[UTC]`
+          ),
+          end: parseZonedDateTime(
+            init.registration_end_date.replace(" ", "T") + `[UTC]`
+          ),
+        }
+      : undefined;
+
   const {
     handleSubmit,
     control,
     getValues,
     setValue,
-    // trigger,
-    formState: { isSubmitting },
+    trigger,
+    formState: { isSubmitting, errors: formErrors },
   } = useForm<SingleRaceProps>({
+    reValidateMode: "onBlur",
     defaultValues: {
       title: init?.title || "",
       content: "",
@@ -129,9 +152,13 @@ const SingleRace: FC<SingleRaceParams> = ({
       duration: init?.duration ? (init?.duration as unknown as string) : "",
       athlete_category: init?.athlete_category?.[0]?.term_id?.toString() || "",
       fai_category: init?.fai_category?.[0]?.term_id?.toString() || "",
-      race_format: init?.race_format?.[0]?.term_id?.toString() || "",
+      race_format: init?.race_format?.[0]?.term_id
+        ? init.race_format.map((c) => c.term_id.toString()).join(",")
+        : "",
       post_code: init?.location_data?.post_code || "",
       name: init?.location_data?.name || "",
+      raceDateRange: defaultRaceDateRange,
+      raceRegistrationDateRange: defaultRaceRegistrationDateRange,
     },
   });
   const locale = useLocale();
@@ -219,22 +246,32 @@ const SingleRace: FC<SingleRaceParams> = ({
       formData.append("lang", locale);
       formData.append("recaptchaToken", token);
 
+      if (init?.id) {
+        formData.append("id", `${init.id}`);
+      }
+
       const res = await fetch("/api/account/content/race", {
-        method: "POST",
+        method: init ? "PUT" : "POST",
         body: formData,
       });
 
       if (res.ok) {
         window.location.href = "/account";
       }
-    } catch (error) {
-      console.error(error);
+      const result = await res.json();
+      if (Array.isArray(result.messages)) {
+        window.alert(result.messages[0]);
+      }
+    } catch {
+      window.alert(t("common.genericError"));
     }
   };
 
   return (
     <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
-      <h1 className="text-3xl font-semibold">{t("add.new.race.title")}</h1>
+      <h1 className="text-3xl font-semibold">
+        {init?.id ? t("add.edit.race.title") : t("add.new.race.title")}
+      </h1>
       <div className="flex gap-4 items-center flex-col md:flex-row">
         <Controller
           name="title"
@@ -244,6 +281,10 @@ const SingleRace: FC<SingleRaceParams> = ({
             return (
               <Input
                 {...field}
+                onBlur={() => {
+                  trigger("title");
+                  field.onBlur();
+                }}
                 isInvalid={invalid}
                 errorMessage={error?.message}
                 isRequired
@@ -262,6 +303,10 @@ const SingleRace: FC<SingleRaceParams> = ({
               {...field}
               label={t("account.new.athleteCategory.label")}
               isRequired
+              // onBlur={() => {
+              //   trigger("athlete_category");
+              //   field.onBlur();
+              // }}
               isInvalid={invalid}
               errorMessage={error?.message}
               defaultSelectedKeys={
@@ -285,6 +330,10 @@ const SingleRace: FC<SingleRaceParams> = ({
               {...field}
               label={t("account.new.faiCategory.label")}
               isRequired
+              // onBlur={() => {
+              //   trigger("fai_category");
+              //   field.onBlur();
+              // }}
               isInvalid={invalid}
               errorMessage={error?.message}
               defaultSelectedKeys={
@@ -306,6 +355,10 @@ const SingleRace: FC<SingleRaceParams> = ({
           render={({ field, fieldState: { invalid, error } }) => (
             <Select
               {...field}
+              // onBlur={() => {
+              //   trigger("race_format");
+              //   field.onBlur();
+              // }}
               label={t("account.new.raceFormat.label")}
               isRequired
               isInvalid={invalid}
@@ -346,30 +399,25 @@ const SingleRace: FC<SingleRaceParams> = ({
           ),
         })}
       </p>
-      <div className="flex gap-4 items-center flex-col md:flex-row">
+      <div className="gap-4 grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-5">
         <Controller
           name="raceDateRange"
           control={control}
-          render={({ fieldState: { invalid, error } }) => (
+          rules={{ required: t("account.new.raceDateRange.required") }}
+          render={({ field, fieldState: { invalid, error } }) => (
             <DateRangePicker
               fullWidth
+              className="xl:col-span-2"
               shouldForceLeadingZeros
               isRequired
+              onBlur={() => {
+                trigger("raceDateRange");
+                field.onBlur();
+              }}
               granularity="minute"
-              hideTimeZone={false}
+              hideTimeZone={isMobile}
               label={t("account.new.raceDateRange.label")}
-              defaultValue={
-                init?.start_date && init?.end_date
-                  ? {
-                      start: parseZonedDateTime(
-                        init.start_date.replace(" ", "T") + `[UTC]`
-                      ),
-                      end: parseZonedDateTime(
-                        init.end_date.replace(" ", "T") + `[UTC]`
-                      ),
-                    }
-                  : undefined
-              }
+              defaultValue={defaultRaceDateRange}
               onChange={(value) => {
                 if (value) {
                   setValue("raceDateRange", value);
@@ -386,9 +434,10 @@ const SingleRace: FC<SingleRaceParams> = ({
           render={({ fieldState: { invalid, error } }) => (
             <DateRangePicker
               fullWidth
-              isRequired
+              className="xl:col-span-2"
               shouldForceLeadingZeros
               granularity="minute"
+              hideTimeZone={isMobile}
               label={t("account.new.raceRegistrationDateRange.label")}
               defaultValue={
                 init?.registration_date && init?.registration_end_date
@@ -413,10 +462,15 @@ const SingleRace: FC<SingleRaceParams> = ({
         <Controller
           name="duration"
           control={control}
+          rules={{ required: t("account.new.duration.required") }}
           render={({ field, fieldState: { invalid, error } }) => (
             <Input
               {...field}
               fullWidth
+              onBlur={() => {
+                trigger("duration");
+                field.onBlur();
+              }}
               isRequired
               label={t("account.new.duration.label")}
               isInvalid={invalid}
@@ -459,6 +513,11 @@ const SingleRace: FC<SingleRaceParams> = ({
                 setValue("placeId", location.place_id ?? "");
                 setValue("post_code", location.post_code ?? "");
                 setValue("name", location.name ?? "");
+                trigger("lat");
+                trigger("lng");
+                trigger("address");
+                trigger("country");
+                trigger("placeId");
               }}
             />
           </APIProvider>
@@ -521,7 +580,7 @@ const SingleRace: FC<SingleRaceParams> = ({
           <Controller
             name="country"
             control={control}
-            rules={{ required: true }}
+            rules={{ required: t("account.new.country.required") }}
             render={({ field, fieldState: { invalid, error } }) => (
               <Input
                 {...field}
@@ -600,6 +659,11 @@ const SingleRace: FC<SingleRaceParams> = ({
             buttonText={t("common.logo")}
             defaultPreviews={init?.thumbnail ? [init?.thumbnail] : []}
           />
+          {formErrors.thumbnail && (
+            <span className="text-sm text-danger">
+              {formErrors.thumbnail.message}
+            </span>
+          )}
         </div>
         <div className="flex-1">
           <ImagesPicker
@@ -610,6 +674,11 @@ const SingleRace: FC<SingleRaceParams> = ({
               init?.background_image ? [init?.background_image] : []
             }
           />
+          {formErrors.backgroundImage && (
+            <span className="text-sm text-danger">
+              {formErrors.backgroundImage.message}
+            </span>
+          )}
         </div>
       </div>
       <h3 className="text-xl font-semibold">{t("account.new.race.links")}</h3>

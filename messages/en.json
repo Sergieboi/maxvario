@@ -121,7 +121,8 @@
     "commentSuccess": "Comment added successfully",
     "tryAgain": "Please try again later",
     "addComment": "Add your comment",
-    "typehere": "Type here ..."
+    "typehere": "Type here ...",
+    "genericError": "Generic error, please check your data or try again later"
   },
   "latest-blog": {
     "title": "Latest Blog",
@@ -359,7 +360,7 @@
     },
     "new": {
       "title": {
-        "required": "The title is required",
+        "required": "The race title is required",
         "label": "Race name"
       },
       "blog": {
@@ -406,7 +407,8 @@
         "label": "Longitude"
       },
       "country": {
-        "label": "Country"
+        "label": "Country",
+        "required": "Please modify your selection to recognize country name"
       },
       "city": {
         "label": "City"
@@ -442,13 +444,15 @@
         "label": "YouTube"
       },
       "raceDateRange": {
-        "label": "Race start / end"
+        "label": "Race start / end",
+        "required": "The race start/end dates are required"
       },
       "raceRegistrationDateRange": {
         "label": "Ragistration start / end"
       },
       "duration": {
-        "label": "Actual duration (days)"
+        "label": "Actual duration (days)",
+        "required": "The race duration is required"
       }
     }
   },
@@ -459,6 +463,11 @@
       },
       "race": {
         "title": "Add new race"
+      }
+    },
+    "edit": {
+      "race": {
+        "title": "Modify race details"
       }
     }
   },

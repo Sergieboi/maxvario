@@ -90,6 +90,7 @@ export type Location = {
   country_short: string;
   post_code?: string;
   name?: string;
+  place_id?: string;
 };
 export type RefLink = {
   title: string;
@@ -107,7 +108,7 @@ export type MVRace = {
   background_image?: string;
   slug: string;
   post_type: "race";
-  content_json: Array<Block>;
+  content: Array<Block>;
   excerpt?: string;
   start_date: string;
   end_date?: string;

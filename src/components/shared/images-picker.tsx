@@ -17,6 +17,7 @@ type Props = PropsWithChildren<{
   selectedImages?: File;
   preview?: boolean;
   buttonText?: string | ReactNode;
+  defaultPreviews?: Array<string>;
 }>;
 
 const ImagesPicker: FC<Props> = ({
@@ -24,15 +25,19 @@ const ImagesPicker: FC<Props> = ({
   preview = true,
   setSelectedImages,
   buttonText,
+  defaultPreviews,
 }) => {
   const t = useTranslations();
-  const [imagePreviews, setImagePreviews] = useState<Array<string>>([]);
+  const [imagePreviews, setImagePreviews] = useState<Array<string>>(
+    defaultPreviews || []
+  );
 
   // Initialize previews for already selected images
   useEffect(() => {
     const generatePreviews = async () => {
+      if (!selectedImages) return;
       const previews = await Promise.all(
-        (selectedImages ? [selectedImages] : []).map(
+        [selectedImages].map(
           (file) =>
             new Promise<string>((resolve, reject) => {
               const reader = new FileReader();

@@ -206,7 +206,9 @@ const RacesTable: FC<Props> = ({ racesList }) => {
                   <EllipsisVerticalIcon className="text-default-300" />
                 </Button>
               </DropdownTrigger>
-              <DropdownMenu>
+              <DropdownMenu
+                disabledKeys={race.status === "publish" ? [] : ["view"]}
+              >
                 <DropdownItem
                   key="view"
                   onPress={() => {
@@ -215,7 +217,12 @@ const RacesTable: FC<Props> = ({ racesList }) => {
                 >
                   {t("account.data.options.view.title")}
                 </DropdownItem>
-                <DropdownItem key="edit">
+                <DropdownItem
+                  key="edit"
+                  onPress={() => {
+                    redirect(`/account/edit/${race.id}`);
+                  }}
+                >
                   {t("account.data.options.edit.title")}
                 </DropdownItem>
                 <DropdownItem

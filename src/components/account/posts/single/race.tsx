@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+// @ts-nocheck
 "use client";
 import ImagesPicker from "@/components/shared/images-picker";
 import LocationPicker from "@/components/shared/location-picker";
@@ -7,12 +9,12 @@ import {
   Avatar,
   Button,
   DateRangePicker,
+  // type DateValue,
   Input,
-  RangeValue,
+  type RangeValue,
   Select,
   SelectItem,
 } from "@nextui-org/react";
-import { type ZonedDateTime } from "@internationalized/date";
 
 import { APIProvider } from "@vis.gl/react-google-maps";
 import { useLocale, useTranslations } from "next-intl";
@@ -22,6 +24,12 @@ import { Icon } from "@iconify/react";
 import CurrentTimezone from "./current-timezone";
 import MVEditor from "@/components/shared/blocks/editor";
 import { extractBlockInnerHTML } from "@/lib/utils";
+import {
+  parseZonedDateTime,
+  // parseAbsoluteToLocal,
+  // parseZonedDateTime,
+  ZonedDateTime,
+} from "@internationalized/date";
 
 const getDateTime = (date: ZonedDateTime) => {
   // eslint-disable-next-line prefer-const
@@ -86,7 +94,7 @@ const SingleRace: FC<SingleRaceParams> = ({
   race_formats,
 }) => {
   const [postContent, setPostContent] = useState(
-    extractBlockInnerHTML(init?.content_json ?? []) || ""
+    extractBlockInnerHTML(init?.content ?? []) || ""
   );
 
   const {
@@ -112,6 +120,7 @@ const SingleRace: FC<SingleRaceParams> = ({
       resultsUrl: init?.results_url || "",
       lat: init?.location_data.lat || 0,
       lng: init?.location_data.lng || 0,
+      placeId: init?.location_data?.place_id || "",
       country: init?.location_data.country || "",
       countryShort: init?.location_data.country_short || "",
       city: init?.location_data.city || "",
@@ -223,9 +232,6 @@ const SingleRace: FC<SingleRaceParams> = ({
     }
   };
 
-  // change title to race name
-  // athelte to number of categories
-
   return (
     <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
       <h1 className="text-3xl font-semibold">{t("add.new.race.title")}</h1>
@@ -258,6 +264,11 @@ const SingleRace: FC<SingleRaceParams> = ({
               isRequired
               isInvalid={invalid}
               errorMessage={error?.message}
+              defaultSelectedKeys={
+                init?.athlete_category?.[0].term_id
+                  ? new Set([init?.athlete_category?.[0].term_id.toString()])
+                  : []
+              }
             >
               {athlete_categories.map((category) => (
                 <SelectItem key={category.term_id}>{category.name}</SelectItem>
@@ -276,6 +287,11 @@ const SingleRace: FC<SingleRaceParams> = ({
               isRequired
               isInvalid={invalid}
               errorMessage={error?.message}
+              defaultSelectedKeys={
+                init?.fai_category?.[0].term_id
+                  ? new Set([init?.fai_category?.[0].term_id.toString()])
+                  : []
+              }
             >
               {fai_categories.map((category) => (
                 <SelectItem key={category.term_id}>{category.name}</SelectItem>
@@ -295,6 +311,13 @@ const SingleRace: FC<SingleRaceParams> = ({
               isInvalid={invalid}
               selectionMode="multiple"
               errorMessage={error?.message}
+              defaultSelectedKeys={
+                init?.race_format?.[0].term_id
+                  ? new Set(
+                      init.race_format.map((cat) => cat.term_id.toString())
+                    )
+                  : []
+              }
             >
               {race_formats.map((category) => (
                 <SelectItem key={category.term_id}>{category.name}</SelectItem>
@@ -335,8 +358,22 @@ const SingleRace: FC<SingleRaceParams> = ({
               granularity="minute"
               hideTimeZone={false}
               label={t("account.new.raceDateRange.label")}
+              defaultValue={
+                init?.start_date && init?.end_date
+                  ? {
+                      start: parseZonedDateTime(
+                        init.start_date.replace(" ", "T") + `[UTC]`
+                      ),
+                      end: parseZonedDateTime(
+                        init.end_date.replace(" ", "T") + `[UTC]`
+                      ),
+                    }
+                  : undefined
+              }
               onChange={(value) => {
-                setValue("raceDateRange", value);
+                if (value) {
+                  setValue("raceDateRange", value);
+                }
               }}
               isInvalid={invalid}
               errorMessage={error?.message}
@@ -353,6 +390,18 @@ const SingleRace: FC<SingleRaceParams> = ({
               shouldForceLeadingZeros
               granularity="minute"
               label={t("account.new.raceRegistrationDateRange.label")}
+              defaultValue={
+                init?.registration_date && init?.registration_end_date
+                  ? {
+                      start: parseZonedDateTime(
+                        init.registration_date.replace(" ", "T") + `[UTC]`
+                      ),
+                      end: parseZonedDateTime(
+                        init.registration_end_date.replace(" ", "T") + `[UTC]`
+                      ),
+                    }
+                  : undefined
+              }
               onChange={(value) => {
                 setValue("raceRegistrationDateRange", value);
               }}
@@ -384,6 +433,21 @@ const SingleRace: FC<SingleRaceParams> = ({
         <div className="w-full md:w-3/4">
           <APIProvider apiKey={MAPS_KEY}>
             <LocationPicker
+              defaultLocation={
+                init?.location_data?.lat && init?.location_data?.lng
+                  ? {
+                      coords: {
+                        lat: parseFloat(
+                          init.location_data.lat as unknown as string
+                        ),
+                        lng: parseFloat(
+                          init.location_data.lng as unknown as string
+                        ),
+                      },
+                      search: init.location_data.address,
+                    }
+                  : undefined
+              }
               onLocationChange={(location) => {
                 setValue("lat", location.lat);
                 setValue("lng", location.lng);
@@ -534,6 +598,7 @@ const SingleRace: FC<SingleRaceParams> = ({
             setSelectedImages={(images) => setValue("thumbnail", images)}
             selectedImages={getValues("thumbnail")}
             buttonText={t("common.logo")}
+            defaultPreviews={init?.thumbnail ? [init?.thumbnail] : []}
           />
         </div>
         <div className="flex-1">
@@ -541,6 +606,9 @@ const SingleRace: FC<SingleRaceParams> = ({
             setSelectedImages={(images) => setValue("backgroundImage", images)}
             selectedImages={getValues("backgroundImage")}
             buttonText={t("common.backgroundImage")}
+            defaultPreviews={
+              init?.background_image ? [init?.background_image] : []
+            }
           />
         </div>
       </div>

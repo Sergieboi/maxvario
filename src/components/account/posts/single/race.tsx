@@ -425,6 +425,9 @@ const SingleRace: FC<SingleRaceParams> = ({
               }}
               isInvalid={invalid}
               errorMessage={error?.message}
+              classNames={{
+                input: `${isMobile ? "text-xs" : ""}`,
+              }}
             />
           )}
         />
@@ -456,6 +459,9 @@ const SingleRace: FC<SingleRaceParams> = ({
               }}
               isInvalid={invalid}
               errorMessage={error?.message}
+              classNames={{
+                input: `${isMobile ? "text-xs" : ""}`,
+              }}
             />
           )}
         />

@@ -15,7 +15,7 @@ const Sidebar: FC<Props> = ({ sidebar }) => {
 
   if (!sidebar) return null;
   return (
-    <aside className="bg-gray-100 w-full rounded-lg border-1 p-2 space-y-6">
+    <aside className="bg-gray-100 w-full rounded-lg border-1 p-2 space-y-6 sticky top-28">
       {sidebar.ads.length > 0 && (
         <div className="space-y-2">
           {sidebar.ads.map((ad, index) => (

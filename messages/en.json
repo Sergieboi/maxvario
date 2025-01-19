@@ -135,7 +135,23 @@
     "description": "Keep track of our sport, the athletes and the races."
   },
   "footer": {
-    "description": "The destination website for the sport of hike and fly – the world’s toughest adventure sport."
+    "description": "The destination website for the sport of hike and fly – the world’s toughest adventure sport.",
+    "footer": {
+      "races": {
+        "title": "Races & events",
+        "calendar": "Calendar view",
+        "allRaces": "Map view",
+        "news": "News",
+        "blog": "Blog"
+      },
+      "resources": {
+        "title": "Resources",
+        "terms": "Terms",
+        "privacy": "Privacy",
+        "cookies": "Cookies",
+        "contact": "Contact"
+      }
+    }
   },
   "calendar": {
     "page": {

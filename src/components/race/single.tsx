@@ -9,6 +9,7 @@ import Sidebar from "../blog/sidebar";
 import Comments from "../blog/comments";
 import RaceSubscription from "./subscribe";
 import { formatDateRange } from "@/lib/utils";
+import SocialLinks from "./social-links";
 
 type Props = {
   race: MVRace;
@@ -109,6 +110,7 @@ const SingleRace: FC<Props> = ({ race, sidebar }) => {
       <Container className="py-20 flex flex-col lg:flex-row gap-10">
         <div className="w-full md:w-2/3 xl:w-3/4 space-y-5">
           <Blocks blocks={race?.content_json} key={race.id} />
+          <SocialLinks race={race} />
           <Comments comments={race.comments} postId={race.id} />
         </div>
         <div className="w-full md:w-1/3 xl:w-1/4">

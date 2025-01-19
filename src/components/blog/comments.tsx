@@ -87,7 +87,7 @@ const Comments: FC<Props> = ({ comments, postId }) => {
   };
   return (
     <>
-      <div className="space-y-4 pt-16">
+      <div className="space-y-4 pt-12">
         <h3 className="font-semibold">{t("common.comments")}</h3>
         {comments.length === 0 && (
           <p className="bg-gray-50 border-1 rounded-lg p-3 text-center text-default-400">

@@ -20,6 +20,7 @@ const MVToast: FC<ToastProps> = ({ message, modelType, hide }) => {
     }, 4000);
 
     return () => clearTimeout(timer); // Cleanup timer on unmount
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

@@ -125,7 +125,8 @@
     "genericError": "Generic error, please check your data or try again later",
     "comments": "Comments",
     "noComments": "No comments added so far ...",
-    "subscribeSuccess": "You have subscribed successfully."
+    "subscribeSuccess": "You have subscribed successfully.",
+    "socialLinks": "External links"
   },
   "latest-blog": {
     "title": "Latest Blog",
@@ -531,5 +532,15 @@
   "subscription": {
     "success": "Subscribed successfully",
     "error": "We could not store your subscription"
+  },
+  "social": {
+    "facebook": "Facebook Page",
+    "instagram": "Instagram",
+    "twitter": "X (Twitter)",
+    "youtube": "YouTube Channel",
+    "website": "Website",
+    "tiktok": "TikTok",
+    "tracking": "Tracking page",
+    "results": "Results page"
   }
 }

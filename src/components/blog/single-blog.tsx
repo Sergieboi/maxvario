@@ -1,16 +1,16 @@
-import { MVBlog, MVNews } from "@/lib/types/misc";
+import { MVBlog, MVNews, SidebarContent } from "@/lib/types/misc";
 import { FC } from "react";
 import Container from "../shared/container";
 import Sidebar from "./sidebar";
-import { useTranslations } from "next-intl";
 import Comments from "./comments";
+import Blocks from "../shared/blocks/blocks";
 
 type Props = {
   blog: MVNews | MVBlog;
+  sidebar?: SidebarContent | null;
 };
 
-const SingleBlog: FC<Props> = ({ blog }) => {
-  const t = useTranslations();
+const SingleBlog: FC<Props> = ({ blog, sidebar }) => {
   return (
     <div className="mt-24">
       <div
@@ -27,12 +27,11 @@ const SingleBlog: FC<Props> = ({ blog }) => {
       </div>
       <Container className="py-20 flex flex-col lg:flex-row gap-10">
         <div className="w-full xl:w-3/4 space-y-5">
-          <div>Post content will be here</div>
-          <h2 className="text-lg font-semibold">{t("blog.comments.title")}</h2>
+          <Blocks blocks={blog.content_json} />
           {<Comments comments={blog.comments} postId={blog.id} />}
         </div>
         <div className="w-full xl:w-1/4">
-          <Sidebar />
+          <Sidebar sidebar={sidebar} />
         </div>
       </Container>
     </div>

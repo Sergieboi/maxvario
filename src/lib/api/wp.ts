@@ -132,3 +132,15 @@ export const getNewsBlog = async (slug: string, locale: Locale) => {
   }
   return null;
 };
+
+export const getPostBlog = async (slug: string, locale: Locale) => {
+  const blog = await fetcher({
+    url: `${process.env.NEXT_PUBLIC_WP_API_URL}/posts?slug=${slug}&lang=${locale}`,
+    locale,
+    revalidate: 300,
+  });
+  if (Array.isArray(blog) && blog.length > 0) {
+    return blog[0];
+  }
+  return null;
+};

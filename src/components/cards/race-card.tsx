@@ -13,6 +13,7 @@ import {
 } from "@nextui-org/react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
+import { formatDateRange } from "@/lib/utils";
 
 type Props = CardProps & {
   race: MVRace;
@@ -47,8 +48,10 @@ const RaceCard: FC<Props> = ({ race, ...props }) => {
         <div className="flex flex-col gap-3 px-2">
           <h3 className="text-lg font-semibold text-black">{race.title}</h3>
           <Chip color="success" size="sm" variant="flat">
-            {race?.start_date ? race.start_date.substring(0, 10) : "N/A"} -{" "}
-            {race?.end_date ? race.end_date.substring(0, 10) : "N/A"}
+            {formatDateRange(race.start_date, race.end_date)
+              .filter((d) => d)
+              .map((d) => new Date(d).toLocaleDateString())
+              .join(" - ")}
           </Chip>
           {race.excerpt && (
             <p className="text-small text-default-600 line-clamp-3">

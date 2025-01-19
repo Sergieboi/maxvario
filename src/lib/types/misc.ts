@@ -163,7 +163,7 @@ export type MVNews = {
   slug: string;
   thumbnail?: string;
   thumbnail_full?: string;
-  content: Array<Block>;
+  content_json: Array<Block>;
   post_type: 'news';
   status: PostStatus;
   date: string;
@@ -179,7 +179,7 @@ export type MVBlog = {
   slug: string;
   thumbnail?: string;
   thumbnail_full?: string;
-  content: Array<Block>;
+  content_json: Array<Block>;
   post_type: 'post';
   date: string;
   excerpt?: string;

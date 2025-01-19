@@ -27,7 +27,10 @@ const Blocks: FC<Props> = ({ blocks }) => {
             case "core/list":
               return (
                 <ul key={index} className="list-disc list-inside">
-                  <Blocks blocks={block.innerBlocks} />
+                  <Blocks
+                    blocks={block.innerBlocks}
+                    key={`anotherloop-${index}`}
+                  />
                 </ul>
               );
             case "core/embed":
@@ -40,10 +43,10 @@ const Blocks: FC<Props> = ({ blocks }) => {
                 block.attrs?.type === "rich" &&
                 block.attrs?.providerNameSlug === "twitter"
               ) {
-                return <XEmbedBlock url={block.attrs.url} />;
+                return <XEmbedBlock key={index} url={block.attrs.url} />;
               } else {
                 if (block.attrs.url.includes("instagram")) {
-                  return <InstagramBlock url={block.attrs.url} />;
+                  return <InstagramBlock key={index} url={block.attrs.url} />;
                 }
               }
               break;

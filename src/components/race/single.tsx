@@ -7,6 +7,8 @@ import RaceAvatar from "./race-avatar";
 import Blocks from "../shared/blocks/blocks";
 import Sidebar from "../blog/sidebar";
 import Comments from "../blog/comments";
+import RaceSubscription from "./subscribe";
+import { formatDateRange } from "@/lib/utils";
 
 type Props = {
   race: MVRace;
@@ -25,15 +27,25 @@ const SingleRace: FC<Props> = ({ race, sidebar }) => {
     },
     {
       label: t("race.duration.title"),
-      content: <span className="text-sm">{race.duration ?? "N/A"}</span>,
+      content: (
+        <span className="text-sm">
+          {race.duration
+            ? t("common.days", {
+                count: race.duration,
+              })
+            : "N/A"}
+        </span>
+      ),
     },
 
     {
       label: t("race.registration.title"),
       content: (
         <span className="text-sm">
-          {race?.registration_date?.substring(0, 10) ?? "N/A"} -{" "}
-          {race?.registration_end_date?.substring(0, 10) ?? "N/A"}
+          {formatDateRange(race.registration_date, race.registration_end_date)
+            .filter((d) => d)
+            .map((d) => new Date(d).toLocaleDateString())
+            .join(" - ")}
         </span>
       ),
     },
@@ -96,10 +108,11 @@ const SingleRace: FC<Props> = ({ race, sidebar }) => {
       </div>
       <Container className="py-20 flex flex-col lg:flex-row gap-10">
         <div className="w-full md:w-2/3 xl:w-3/4 space-y-5">
-          <Blocks blocks={race?.content_json} />
+          <Blocks blocks={race?.content_json} key={race.id} />
           <Comments comments={race.comments} postId={race.id} />
         </div>
         <div className="w-full md:w-1/3 xl:w-1/4">
+          <RaceSubscription raceId={race.id} />
           <Sidebar sidebar={sidebar} />
         </div>
       </Container>

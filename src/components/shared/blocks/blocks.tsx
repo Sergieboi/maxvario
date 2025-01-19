@@ -12,8 +12,11 @@ type Props = {
 };
 
 const Blocks: FC<Props> = ({ blocks }) => {
+  if (!blocks || blocks.length === 0) {
+    return null;
+  }
   return (
-    <Fragment key={blocks?.[0].blockName}>
+    <Fragment>
       {blocks
         ?.filter(({ blockName }) => blockName !== null)
         .map((block, index) => {
@@ -51,11 +54,17 @@ const Blocks: FC<Props> = ({ blocks }) => {
               }
               break;
             case "core/heading":
-              return <>{htmlParser(block.innerContent[0])}</>;
+              return (
+                <Fragment key={index}>
+                  {htmlParser(block.innerContent[0])}
+                </Fragment>
+              );
             case "core/list-item":
-              return htmlParser(block.innerHTML);
+              return (
+                <Fragment key={index}>{htmlParser(block.innerHTML)}</Fragment>
+              );
             default:
-              console.log("Block not found", block);
+              // console.log("Block not found", block);
               return null;
           }
         })}

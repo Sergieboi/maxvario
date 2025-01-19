@@ -117,14 +117,15 @@
     "name": "Name",
     "email": "E-mail",
     "comment": "Comment",
-    "days": "Days",
+    "days": "{count, plural, =1 {One day} other {# days}}",
     "commentSuccess": "Comment added successfully",
     "tryAgain": "Please try again later",
     "addComment": "Add your comment",
     "typehere": "Type here ...",
     "genericError": "Generic error, please check your data or try again later",
     "comments": "Comments",
-    "noComments": "No comments added so far ..."
+    "noComments": "No comments added so far ...",
+    "subscribeSuccess": "You have subscribed successfully."
   },
   "latest-blog": {
     "title": "Latest Blog",
@@ -522,5 +523,13 @@
   },
   "sidebar": {
     "upcomingRaces": "Upcoming Races"
+  },
+  "subscribe": {
+    "getNotified": "Subscribe to race updates",
+    "email": "Enter your e-mail address"
+  },
+  "subscription": {
+    "success": "Subscribed successfully",
+    "error": "We could not store your subscription"
   }
 }

@@ -1,10 +1,12 @@
 "use client";
 import { MVRace } from "@/lib/types/misc";
+import { formatDateRange } from "@/lib/utils";
 import { Avatar, Chip } from "@nextui-org/react";
 import { FC } from "react";
 
 const RaceDateChip: FC<{ race: MVRace }> = ({ race }) => {
   if (!race.start_date) return null;
+  console.log(race.start_date, race.end_date);
   return (
     <Chip
       color="primary"
@@ -19,7 +21,10 @@ const RaceDateChip: FC<{ race: MVRace }> = ({ race }) => {
       }
     >
       <span className="leading-4 font-semibold">
-        {race.start_date?.substring(0, 10)}
+        {formatDateRange(race.start_date, race.end_date)
+          .filter((d) => d)
+          .map((d) => new Date(d).toLocaleDateString())
+          .join(" - ")}
       </span>
     </Chip>
   );

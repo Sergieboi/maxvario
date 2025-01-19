@@ -35,6 +35,16 @@ export function capitalize(s: string) {
   return s ? s.charAt(0).toUpperCase() + s.slice(1).toLowerCase() : "";
 }
 
+export function formatDateRange(start: string | undefined, end: string | undefined): Array<string> {
+  const startDate = start ? start.substring(0, 10) : '';
+  const endDate = end ? end.substring(0, 10)  :'';
+  const result = [startDate];
+  if (startDate !== endDate) {
+    result.push(endDate);
+  }
+  return result;
+}
+
 export const extractBlockInnerHTML = (blocks: Array<Block>): string => {
   return blocks.map((block) => block.innerHTML).join(" ");
 }

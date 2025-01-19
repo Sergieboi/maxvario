@@ -24,6 +24,7 @@ import CurrentTimezone from "./current-timezone";
 import MVEditor from "@/components/shared/blocks/editor";
 import { extractBlockInnerHTML } from "@/lib/utils";
 import { parseZonedDateTime, ZonedDateTime } from "@internationalized/date";
+import MVToast, { ToastProps } from "@/components/shared/toast";
 
 const getDateTime = (date: ZonedDateTime) => {
   // eslint-disable-next-line prefer-const
@@ -87,6 +88,11 @@ const SingleRace: FC<SingleRaceParams> = ({
   fai_categories,
   race_formats,
 }) => {
+  const [toast, setToast] = useState<ToastProps & { show: boolean }>({
+    message: "",
+    modelType: "success",
+    show: false,
+  });
   const [postContent, setPostContent] = useState(
     extractBlockInnerHTML(init?.content ?? []) || ""
   );
@@ -260,574 +266,599 @@ const SingleRace: FC<SingleRaceParams> = ({
       }
       const result = await res.json();
       if (Array.isArray(result.messages)) {
-        window.alert(result.messages[0]);
+        setToast({
+          message: result.messages.join(", "),
+          modelType: "error",
+          show: true,
+        });
       }
     } catch {
-      window.alert(t("common.genericError"));
+      setToast({
+        message: t("common.genericError"),
+        modelType: "error",
+        show: true,
+      });
     }
   };
 
   return (
-    <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
-      <h1 className="text-3xl font-semibold">
-        {init?.id ? t("add.edit.race.title") : t("add.new.race.title")}
-      </h1>
-      <div className="flex gap-4 items-center flex-col md:flex-row">
-        <Controller
-          name="title"
-          control={control}
-          rules={{ required: t("account.new.title.required") }}
-          render={({ field, fieldState: { invalid, error } }) => {
-            return (
-              <Input
+    <>
+      <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
+        <h1 className="text-3xl font-semibold">
+          {init?.id ? t("add.edit.race.title") : t("add.new.race.title")}
+        </h1>
+        <div className="flex gap-4 items-center flex-col md:flex-row">
+          <Controller
+            name="title"
+            control={control}
+            rules={{ required: t("account.new.title.required") }}
+            render={({ field, fieldState: { invalid, error } }) => {
+              return (
+                <Input
+                  {...field}
+                  onBlur={() => {
+                    trigger("title");
+                    field.onBlur();
+                  }}
+                  isInvalid={invalid}
+                  errorMessage={error?.message}
+                  isRequired
+                  type="text"
+                  label={t("account.new.title.label")}
+                />
+              );
+            }}
+          />
+          <Controller
+            name="athlete_category"
+            control={control}
+            rules={{ required: t("account.new.athleteCategory.required") }}
+            render={({ field, fieldState: { invalid, error } }) => (
+              <Select
                 {...field}
+                label={t("account.new.athleteCategory.label")}
+                isRequired
+                // onBlur={() => {
+                //   trigger("athlete_category");
+                //   field.onBlur();
+                // }}
+                isInvalid={invalid}
+                errorMessage={error?.message}
+                defaultSelectedKeys={
+                  init?.athlete_category?.[0].term_id
+                    ? new Set([init?.athlete_category?.[0].term_id.toString()])
+                    : []
+                }
+              >
+                {athlete_categories.map((category) => (
+                  <SelectItem key={category.term_id}>
+                    {category.name}
+                  </SelectItem>
+                ))}
+              </Select>
+            )}
+          />
+          <Controller
+            name="fai_category"
+            control={control}
+            rules={{ required: t("account.new.faiCategory.required") }}
+            render={({ field, fieldState: { invalid, error } }) => (
+              <Select
+                {...field}
+                label={t("account.new.faiCategory.label")}
+                isRequired
+                // onBlur={() => {
+                //   trigger("fai_category");
+                //   field.onBlur();
+                // }}
+                isInvalid={invalid}
+                errorMessage={error?.message}
+                defaultSelectedKeys={
+                  init?.fai_category?.[0].term_id
+                    ? new Set([init?.fai_category?.[0].term_id.toString()])
+                    : []
+                }
+              >
+                {fai_categories.map((category) => (
+                  <SelectItem key={category.term_id}>
+                    {category.name}
+                  </SelectItem>
+                ))}
+              </Select>
+            )}
+          />
+          <Controller
+            name="race_format"
+            control={control}
+            rules={{ required: t("account.new.raceFormat.required") }}
+            render={({ field, fieldState: { invalid, error } }) => (
+              <Select
+                {...field}
+                // onBlur={() => {
+                //   trigger("race_format");
+                //   field.onBlur();
+                // }}
+                label={t("account.new.raceFormat.label")}
+                isRequired
+                isInvalid={invalid}
+                selectionMode="multiple"
+                errorMessage={error?.message}
+                defaultSelectedKeys={
+                  init?.race_format?.[0].term_id
+                    ? new Set(
+                        init.race_format.map((cat) => cat.term_id.toString())
+                      )
+                    : []
+                }
+              >
+                {race_formats.map((category) => (
+                  <SelectItem key={category.term_id}>
+                    {category.name}
+                  </SelectItem>
+                ))}
+              </Select>
+            )}
+          />
+        </div>
+        <div className="bg-gray-100 p-4 rounded-lg relative">
+          <MVEditor
+            content={postContent}
+            onUpdate={(content) => setPostContent(content)}
+            editable={true}
+          />
+        </div>
+        <h3 className="text-xl font-semibold">
+          {t("account.new.race.timeline")}
+        </h3>
+        <p>
+          {t.rich("account.new.race.timelineDescription", {
+            timezone: () => (
+              <span className="font-semibold">
+                UTC
+                <CurrentTimezone />
+              </span>
+            ),
+          })}
+        </p>
+        <div className="gap-4 grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-5">
+          <Controller
+            name="raceDateRange"
+            control={control}
+            rules={{ required: t("account.new.raceDateRange.required") }}
+            render={({ field, fieldState: { invalid, error } }) => (
+              <DateRangePicker
+                fullWidth
+                className="xl:col-span-2"
+                shouldForceLeadingZeros
+                isRequired
                 onBlur={() => {
-                  trigger("title");
+                  trigger("raceDateRange");
                   field.onBlur();
+                }}
+                granularity="minute"
+                hideTimeZone={isMobile}
+                label={t("account.new.raceDateRange.label")}
+                defaultValue={defaultRaceDateRange}
+                onChange={(value) => {
+                  if (value) {
+                    setValue("raceDateRange", value);
+                  }
                 }}
                 isInvalid={invalid}
                 errorMessage={error?.message}
-                isRequired
-                type="text"
-                label={t("account.new.title.label")}
+                classNames={{
+                  input: `${isMobile ? "text-xs" : ""}`,
+                }}
               />
-            );
-          }}
-        />
-        <Controller
-          name="athlete_category"
-          control={control}
-          rules={{ required: t("account.new.athleteCategory.required") }}
-          render={({ field, fieldState: { invalid, error } }) => (
-            <Select
-              {...field}
-              label={t("account.new.athleteCategory.label")}
-              isRequired
-              // onBlur={() => {
-              //   trigger("athlete_category");
-              //   field.onBlur();
-              // }}
-              isInvalid={invalid}
-              errorMessage={error?.message}
-              defaultSelectedKeys={
-                init?.athlete_category?.[0].term_id
-                  ? new Set([init?.athlete_category?.[0].term_id.toString()])
-                  : []
-              }
-            >
-              {athlete_categories.map((category) => (
-                <SelectItem key={category.term_id}>{category.name}</SelectItem>
-              ))}
-            </Select>
-          )}
-        />
-        <Controller
-          name="fai_category"
-          control={control}
-          rules={{ required: t("account.new.faiCategory.required") }}
-          render={({ field, fieldState: { invalid, error } }) => (
-            <Select
-              {...field}
-              label={t("account.new.faiCategory.label")}
-              isRequired
-              // onBlur={() => {
-              //   trigger("fai_category");
-              //   field.onBlur();
-              // }}
-              isInvalid={invalid}
-              errorMessage={error?.message}
-              defaultSelectedKeys={
-                init?.fai_category?.[0].term_id
-                  ? new Set([init?.fai_category?.[0].term_id.toString()])
-                  : []
-              }
-            >
-              {fai_categories.map((category) => (
-                <SelectItem key={category.term_id}>{category.name}</SelectItem>
-              ))}
-            </Select>
-          )}
-        />
-        <Controller
-          name="race_format"
-          control={control}
-          rules={{ required: t("account.new.raceFormat.required") }}
-          render={({ field, fieldState: { invalid, error } }) => (
-            <Select
-              {...field}
-              // onBlur={() => {
-              //   trigger("race_format");
-              //   field.onBlur();
-              // }}
-              label={t("account.new.raceFormat.label")}
-              isRequired
-              isInvalid={invalid}
-              selectionMode="multiple"
-              errorMessage={error?.message}
-              defaultSelectedKeys={
-                init?.race_format?.[0].term_id
-                  ? new Set(
-                      init.race_format.map((cat) => cat.term_id.toString())
-                    )
-                  : []
-              }
-            >
-              {race_formats.map((category) => (
-                <SelectItem key={category.term_id}>{category.name}</SelectItem>
-              ))}
-            </Select>
-          )}
-        />
-      </div>
-      <div className="bg-gray-100 p-4 rounded-lg relative">
-        <MVEditor
-          content={postContent}
-          onUpdate={(content) => setPostContent(content)}
-          editable={true}
-        />
-      </div>
-      <h3 className="text-xl font-semibold">
-        {t("account.new.race.timeline")}
-      </h3>
-      <p>
-        {t.rich("account.new.race.timelineDescription", {
-          timezone: () => (
-            <span className="font-semibold">
-              UTC
-              <CurrentTimezone />
-            </span>
-          ),
-        })}
-      </p>
-      <div className="gap-4 grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-5">
-        <Controller
-          name="raceDateRange"
-          control={control}
-          rules={{ required: t("account.new.raceDateRange.required") }}
-          render={({ field, fieldState: { invalid, error } }) => (
-            <DateRangePicker
-              fullWidth
-              className="xl:col-span-2"
-              shouldForceLeadingZeros
-              isRequired
-              onBlur={() => {
-                trigger("raceDateRange");
-                field.onBlur();
-              }}
-              granularity="minute"
-              hideTimeZone={isMobile}
-              label={t("account.new.raceDateRange.label")}
-              defaultValue={defaultRaceDateRange}
-              onChange={(value) => {
-                if (value) {
-                  setValue("raceDateRange", value);
-                }
-              }}
-              isInvalid={invalid}
-              errorMessage={error?.message}
-              classNames={{
-                input: `${isMobile ? "text-xs" : ""}`,
-              }}
-            />
-          )}
-        />
-        <Controller
-          name="raceRegistrationDateRange"
-          control={control}
-          render={({ fieldState: { invalid, error } }) => (
-            <DateRangePicker
-              fullWidth
-              className="xl:col-span-2"
-              shouldForceLeadingZeros
-              granularity="minute"
-              hideTimeZone={isMobile}
-              label={t("account.new.raceRegistrationDateRange.label")}
-              defaultValue={
-                init?.registration_date && init?.registration_end_date
-                  ? {
-                      start: parseZonedDateTime(
-                        init.registration_date.replace(" ", "T") + `[UTC]`
-                      ),
-                      end: parseZonedDateTime(
-                        init.registration_end_date.replace(" ", "T") + `[UTC]`
-                      ),
-                    }
-                  : undefined
-              }
-              onChange={(value) => {
-                setValue("raceRegistrationDateRange", value);
-              }}
-              isInvalid={invalid}
-              errorMessage={error?.message}
-              classNames={{
-                input: `${isMobile ? "text-xs" : ""}`,
-              }}
-            />
-          )}
-        />
-        <Controller
-          name="duration"
-          control={control}
-          rules={{ required: t("account.new.duration.required") }}
-          render={({ field, fieldState: { invalid, error } }) => (
-            <Input
-              {...field}
-              fullWidth
-              onBlur={() => {
-                trigger("duration");
-                field.onBlur();
-              }}
-              isRequired
-              label={t("account.new.duration.label")}
-              isInvalid={invalid}
-              errorMessage={error?.message}
-            />
-          )}
-        />
-      </div>
-      <h3 className="text-xl font-semibold">
-        {t("account.new.race.location")}
-      </h3>
-      <p>{t("account.new.race.locationDescription")}</p>
-      <div className="flex gap-4 items-start flex-col md:flex-row">
-        <div className="w-full md:w-3/4">
-          <APIProvider apiKey={MAPS_KEY}>
-            <LocationPicker
-              defaultLocation={
-                init?.location_data?.lat && init?.location_data?.lng
-                  ? {
-                      coords: {
-                        lat: parseFloat(
-                          init.location_data.lat as unknown as string
-                        ),
-                        lng: parseFloat(
-                          init.location_data.lng as unknown as string
-                        ),
-                      },
-                      search: init.location_data.address,
-                    }
-                  : undefined
-              }
-              onLocationChange={(location) => {
-                setValue("lat", location.lat);
-                setValue("lng", location.lng);
-                setValue("address", location.address ?? "");
-                setValue("country", location.country ?? "");
-                setValue("countryShort", location.country_code ?? "");
-                setValue("city", location.city ?? "");
-                setValue("state", location.state ?? "");
-                setValue("placeId", location.place_id ?? "");
-                setValue("post_code", location.post_code ?? "");
-                setValue("name", location.name ?? "");
-                trigger("lat");
-                trigger("lng");
-                trigger("address");
-                trigger("country");
-                trigger("placeId");
-              }}
-            />
-          </APIProvider>
-        </div>
-        <div className="flex flex-1 flex-col gap-2">
-          <p>{t("common.extractedAddress")}</p>
+            )}
+          />
           <Controller
-            name="address"
+            name="raceRegistrationDateRange"
             control={control}
-            rules={{ required: true }}
+            render={({ fieldState: { invalid, error } }) => (
+              <DateRangePicker
+                fullWidth
+                className="xl:col-span-2"
+                shouldForceLeadingZeros
+                granularity="minute"
+                hideTimeZone={isMobile}
+                label={t("account.new.raceRegistrationDateRange.label")}
+                defaultValue={
+                  init?.registration_date && init?.registration_end_date
+                    ? {
+                        start: parseZonedDateTime(
+                          init.registration_date.replace(" ", "T") + `[UTC]`
+                        ),
+                        end: parseZonedDateTime(
+                          init.registration_end_date.replace(" ", "T") + `[UTC]`
+                        ),
+                      }
+                    : undefined
+                }
+                onChange={(value) => {
+                  setValue("raceRegistrationDateRange", value);
+                }}
+                isInvalid={invalid}
+                errorMessage={error?.message}
+                classNames={{
+                  input: `${isMobile ? "text-xs" : ""}`,
+                }}
+              />
+            )}
+          />
+          <Controller
+            name="duration"
+            control={control}
+            rules={{ required: t("account.new.duration.required") }}
             render={({ field, fieldState: { invalid, error } }) => (
               <Input
                 {...field}
+                fullWidth
+                onBlur={() => {
+                  trigger("duration");
+                  field.onBlur();
+                }}
                 isRequired
-                size="sm"
-                color="primary"
-                label={t("account.new.address.label")}
+                label={t("account.new.duration.label")}
                 isInvalid={invalid}
                 errorMessage={error?.message}
               />
             )}
           />
-          <div className="flex gap-1">
+        </div>
+        <h3 className="text-xl font-semibold">
+          {t("account.new.race.location")}
+        </h3>
+        <p>{t("account.new.race.locationDescription")}</p>
+        <div className="flex gap-4 items-start flex-col md:flex-row">
+          <div className="w-full md:w-3/4">
+            <APIProvider apiKey={MAPS_KEY}>
+              <LocationPicker
+                defaultLocation={
+                  init?.location_data?.lat && init?.location_data?.lng
+                    ? {
+                        coords: {
+                          lat: parseFloat(
+                            init.location_data.lat as unknown as string
+                          ),
+                          lng: parseFloat(
+                            init.location_data.lng as unknown as string
+                          ),
+                        },
+                        search: init.location_data.address,
+                      }
+                    : undefined
+                }
+                onLocationChange={(location) => {
+                  setValue("lat", location.lat);
+                  setValue("lng", location.lng);
+                  setValue("address", location.address ?? "");
+                  setValue("country", location.country ?? "");
+                  setValue("countryShort", location.country_code ?? "");
+                  setValue("city", location.city ?? "");
+                  setValue("state", location.state ?? "");
+                  setValue("placeId", location.place_id ?? "");
+                  setValue("post_code", location.post_code ?? "");
+                  setValue("name", location.name ?? "");
+                  trigger("lat");
+                  trigger("lng");
+                  trigger("address");
+                  trigger("country");
+                  trigger("placeId");
+                }}
+              />
+            </APIProvider>
+          </div>
+          <div className="flex flex-1 flex-col gap-2">
+            <p>{t("common.extractedAddress")}</p>
             <Controller
-              name="lat"
+              name="address"
               control={control}
               rules={{ required: true }}
               render={({ field, fieldState: { invalid, error } }) => (
                 <Input
                   {...field}
-                  value={field.value.toString()}
+                  isRequired
+                  size="sm"
+                  color="primary"
+                  label={t("account.new.address.label")}
+                  isInvalid={invalid}
+                  errorMessage={error?.message}
+                />
+              )}
+            />
+            <div className="flex gap-1">
+              <Controller
+                name="lat"
+                control={control}
+                rules={{ required: true }}
+                render={({ field, fieldState: { invalid, error } }) => (
+                  <Input
+                    {...field}
+                    value={field.value.toString()}
+                    isRequired
+                    disabled
+                    size="sm"
+                    label={t("account.new.lat.label")}
+                    isInvalid={invalid}
+                    errorMessage={error?.message}
+                  />
+                )}
+              />
+              <Controller
+                name="lng"
+                control={control}
+                rules={{ required: true }}
+                render={({ field, fieldState: { invalid, error } }) => (
+                  <Input
+                    {...field}
+                    value={field.value.toString()}
+                    isRequired
+                    disabled
+                    size="sm"
+                    label={t("account.new.lng.label")}
+                    isInvalid={invalid}
+                    errorMessage={error?.message}
+                  />
+                )}
+              />
+            </div>
+
+            <Controller
+              name="country"
+              control={control}
+              rules={{ required: t("account.new.country.required") }}
+              render={({ field, fieldState: { invalid, error } }) => (
+                <Input
+                  {...field}
                   isRequired
                   disabled
                   size="sm"
-                  label={t("account.new.lat.label")}
+                  label={t("account.new.country.label")}
+                  isInvalid={invalid}
+                  errorMessage={error?.message}
+                  endContent={
+                    getValues("countryShort") ? (
+                      <Avatar
+                        size="sm"
+                        className="min-w-8"
+                        src={`/assets/flags/${getValues(
+                          "countryShort"
+                        ).toLowerCase()}.svg`}
+                      />
+                    ) : (
+                      ""
+                    )
+                  }
+                />
+              )}
+            />
+            <Controller
+              name="state"
+              control={control}
+              render={({ field, fieldState: { invalid, error } }) => (
+                <Input
+                  {...field}
+                  color="primary"
+                  size="sm"
+                  label={t("account.new.state.label")}
                   isInvalid={invalid}
                   errorMessage={error?.message}
                 />
               )}
             />
             <Controller
-              name="lng"
+              name="city"
               control={control}
-              rules={{ required: true }}
               render={({ field, fieldState: { invalid, error } }) => (
                 <Input
                   {...field}
-                  value={field.value.toString()}
-                  isRequired
-                  disabled
+                  color="primary"
                   size="sm"
-                  label={t("account.new.lng.label")}
+                  label={t("account.new.city.label")}
+                  isInvalid={invalid}
+                  errorMessage={error?.message}
+                />
+              )}
+            />
+            <Controller
+              name="placeId"
+              control={control}
+              render={({ field, fieldState: { invalid, error } }) => (
+                <Input
+                  {...field}
+                  size="sm"
+                  disabled
+                  label={t("account.new.placeId.label")}
                   isInvalid={invalid}
                   errorMessage={error?.message}
                 />
               )}
             />
           </div>
-
+        </div>
+        <h3 className="text-xl font-semibold">{t("account.new.race.media")}</h3>
+        <div className="flex gap-4 items-start flex-col md:flex-row">
+          <div className="flex-1">
+            <ImagesPicker
+              setSelectedImages={(images) => setValue("thumbnail", images)}
+              selectedImages={getValues("thumbnail")}
+              buttonText={t("common.logo")}
+              defaultPreviews={init?.thumbnail ? [init?.thumbnail] : []}
+            />
+            {formErrors.thumbnail && (
+              <span className="text-sm text-danger">
+                {formErrors.thumbnail.message}
+              </span>
+            )}
+          </div>
+          <div className="flex-1">
+            <ImagesPicker
+              setSelectedImages={(images) =>
+                setValue("backgroundImage", images)
+              }
+              selectedImages={getValues("backgroundImage")}
+              buttonText={t("common.backgroundImage")}
+              defaultPreviews={
+                init?.background_image ? [init?.background_image] : []
+              }
+            />
+            {formErrors.backgroundImage && (
+              <span className="text-sm text-danger">
+                {formErrors.backgroundImage.message}
+              </span>
+            )}
+          </div>
+        </div>
+        <h3 className="text-xl font-semibold">{t("account.new.race.links")}</h3>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           <Controller
-            name="country"
+            name="website"
             control={control}
-            rules={{ required: t("account.new.country.required") }}
             render={({ field, fieldState: { invalid, error } }) => (
               <Input
                 {...field}
-                isRequired
-                disabled
                 size="sm"
-                label={t("account.new.country.label")}
-                isInvalid={invalid}
-                errorMessage={error?.message}
-                endContent={
-                  getValues("countryShort") ? (
-                    <Avatar
-                      size="sm"
-                      className="min-w-8"
-                      src={`/assets/flags/${getValues(
-                        "countryShort"
-                      ).toLowerCase()}.svg`}
-                    />
-                  ) : (
-                    ""
-                  )
+                startContent={
+                  <Icon icon="ic:sharp-link" width="16" height="16" />
                 }
-              />
-            )}
-          />
-          <Controller
-            name="state"
-            control={control}
-            render={({ field, fieldState: { invalid, error } }) => (
-              <Input
-                {...field}
-                color="primary"
-                size="sm"
-                label={t("account.new.state.label")}
+                label={t("account.new.website.label")}
                 isInvalid={invalid}
                 errorMessage={error?.message}
               />
             )}
           />
           <Controller
-            name="city"
+            name="facebook"
             control={control}
             render={({ field, fieldState: { invalid, error } }) => (
               <Input
                 {...field}
-                color="primary"
                 size="sm"
-                label={t("account.new.city.label")}
+                startContent={
+                  <Icon icon="ri:facebook-fill" width="16" height="16" />
+                }
+                label={t("account.new.facebook.label")}
                 isInvalid={invalid}
                 errorMessage={error?.message}
               />
             )}
           />
           <Controller
-            name="placeId"
+            name="instagram"
             control={control}
             render={({ field, fieldState: { invalid, error } }) => (
               <Input
                 {...field}
                 size="sm"
-                disabled
-                label={t("account.new.placeId.label")}
+                startContent={
+                  <Icon icon="mingcute:instagram-fill" width="16" height="16" />
+                }
+                label={t("account.new.instagram.label")}
                 isInvalid={invalid}
                 errorMessage={error?.message}
               />
             )}
           />
-        </div>
-      </div>
-      <h3 className="text-xl font-semibold">{t("account.new.race.media")}</h3>
-      <div className="flex gap-4 items-start flex-col md:flex-row">
-        <div className="flex-1">
-          <ImagesPicker
-            setSelectedImages={(images) => setValue("thumbnail", images)}
-            selectedImages={getValues("thumbnail")}
-            buttonText={t("common.logo")}
-            defaultPreviews={init?.thumbnail ? [init?.thumbnail] : []}
+          <Controller
+            name="x"
+            control={control}
+            render={({ field, fieldState: { invalid, error } }) => (
+              <Input
+                {...field}
+                size="sm"
+                label={t("account.new.x.label")}
+                startContent={
+                  <Icon icon="ri:twitter-x-line" width="16" height="16" />
+                }
+                isInvalid={invalid}
+                errorMessage={error?.message}
+              />
+            )}
           />
-          {formErrors.thumbnail && (
-            <span className="text-sm text-danger">
-              {formErrors.thumbnail.message}
-            </span>
-          )}
-        </div>
-        <div className="flex-1">
-          <ImagesPicker
-            setSelectedImages={(images) => setValue("backgroundImage", images)}
-            selectedImages={getValues("backgroundImage")}
-            buttonText={t("common.backgroundImage")}
-            defaultPreviews={
-              init?.background_image ? [init?.background_image] : []
-            }
+          <Controller
+            name="youtube"
+            control={control}
+            render={({ field, fieldState: { invalid, error } }) => (
+              <Input
+                {...field}
+                size="sm"
+                startContent={
+                  <Icon icon="iconoir:youtube-solid" width="16" height="16" />
+                }
+                label={t("account.new.youtube.label")}
+                isInvalid={invalid}
+                errorMessage={error?.message}
+              />
+            )}
           />
-          {formErrors.backgroundImage && (
-            <span className="text-sm text-danger">
-              {formErrors.backgroundImage.message}
-            </span>
-          )}
-        </div>
-      </div>
-      <h3 className="text-xl font-semibold">{t("account.new.race.links")}</h3>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-        <Controller
-          name="website"
-          control={control}
-          render={({ field, fieldState: { invalid, error } }) => (
-            <Input
-              {...field}
-              size="sm"
-              startContent={
-                <Icon icon="ic:sharp-link" width="16" height="16" />
-              }
-              label={t("account.new.website.label")}
-              isInvalid={invalid}
-              errorMessage={error?.message}
-            />
-          )}
-        />
-        <Controller
-          name="facebook"
-          control={control}
-          render={({ field, fieldState: { invalid, error } }) => (
-            <Input
-              {...field}
-              size="sm"
-              startContent={
-                <Icon icon="ri:facebook-fill" width="16" height="16" />
-              }
-              label={t("account.new.facebook.label")}
-              isInvalid={invalid}
-              errorMessage={error?.message}
-            />
-          )}
-        />
-        <Controller
-          name="instagram"
-          control={control}
-          render={({ field, fieldState: { invalid, error } }) => (
-            <Input
-              {...field}
-              size="sm"
-              startContent={
-                <Icon icon="mingcute:instagram-fill" width="16" height="16" />
-              }
-              label={t("account.new.instagram.label")}
-              isInvalid={invalid}
-              errorMessage={error?.message}
-            />
-          )}
-        />
-        <Controller
-          name="x"
-          control={control}
-          render={({ field, fieldState: { invalid, error } }) => (
-            <Input
-              {...field}
-              size="sm"
-              label={t("account.new.x.label")}
-              startContent={
-                <Icon icon="ri:twitter-x-line" width="16" height="16" />
-              }
-              isInvalid={invalid}
-              errorMessage={error?.message}
-            />
-          )}
-        />
-        <Controller
-          name="youtube"
-          control={control}
-          render={({ field, fieldState: { invalid, error } }) => (
-            <Input
-              {...field}
-              size="sm"
-              startContent={
-                <Icon icon="iconoir:youtube-solid" width="16" height="16" />
-              }
-              label={t("account.new.youtube.label")}
-              isInvalid={invalid}
-              errorMessage={error?.message}
-            />
-          )}
-        />
-        <Controller
-          name="tiktok"
-          control={control}
-          render={({ field, fieldState: { invalid, error } }) => (
-            <Input
-              {...field}
-              size="sm"
-              startContent={
-                <Icon icon="line-md:tiktok" width="16" height="16" />
-              }
-              label={t("account.new.tiktok.label")}
-              isInvalid={invalid}
-              errorMessage={error?.message}
-            />
-          )}
-        />
+          <Controller
+            name="tiktok"
+            control={control}
+            render={({ field, fieldState: { invalid, error } }) => (
+              <Input
+                {...field}
+                size="sm"
+                startContent={
+                  <Icon icon="line-md:tiktok" width="16" height="16" />
+                }
+                label={t("account.new.tiktok.label")}
+                isInvalid={invalid}
+                errorMessage={error?.message}
+              />
+            )}
+          />
 
-        <Controller
-          name="trackingUrl"
-          control={control}
-          render={({ field, fieldState: { invalid, error } }) => (
-            <Input
-              {...field}
-              size="sm"
-              startContent={
-                <Icon icon="fluent:live-24-regular" width="16" height="16" />
-              }
-              label={t("account.new.trackingUrl.label")}
-              isInvalid={invalid}
-              errorMessage={error?.message}
-            />
-          )}
+          <Controller
+            name="trackingUrl"
+            control={control}
+            render={({ field, fieldState: { invalid, error } }) => (
+              <Input
+                {...field}
+                size="sm"
+                startContent={
+                  <Icon icon="fluent:live-24-regular" width="16" height="16" />
+                }
+                label={t("account.new.trackingUrl.label")}
+                isInvalid={invalid}
+                errorMessage={error?.message}
+              />
+            )}
+          />
+          <Controller
+            name="resultsUrl"
+            control={control}
+            render={({ field, fieldState: { invalid, error } }) => (
+              <Input
+                {...field}
+                size="sm"
+                startContent={
+                  <Icon icon="carbon:result" width="16" height="16" />
+                }
+                label={t("account.new.resultsUrl.label")}
+                isInvalid={invalid}
+                errorMessage={error?.message}
+              />
+            )}
+          />
+        </div>
+        <Button
+          type="submit"
+          variant="solid"
+          color="primary"
+          isLoading={isSubmitting}
+        >
+          {t("common.submit")}
+        </Button>
+      </form>
+      {toast.show && (
+        <MVToast
+          message={toast.message}
+          modelType={toast.modelType}
+          hide={() => setToast({ ...toast, show: false })}
         />
-        <Controller
-          name="resultsUrl"
-          control={control}
-          render={({ field, fieldState: { invalid, error } }) => (
-            <Input
-              {...field}
-              size="sm"
-              startContent={
-                <Icon icon="carbon:result" width="16" height="16" />
-              }
-              label={t("account.new.resultsUrl.label")}
-              isInvalid={invalid}
-              errorMessage={error?.message}
-            />
-          )}
-        />
-      </div>
-      <Button
-        type="submit"
-        variant="solid"
-        color="primary"
-        isLoading={isSubmitting}
-      >
-        {t("common.submit")}
-      </Button>
-    </form>
+      )}
+    </>
   );
 };
 

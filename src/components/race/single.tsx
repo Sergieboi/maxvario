@@ -1,16 +1,19 @@
-import { MVRace } from "@/lib/types/misc";
+import { MVRace, SidebarContent } from "@/lib/types/misc";
 import { FC, ReactNode } from "react";
 import Container from "../shared/container";
 import RaceDateChip from "./race-date-chip";
 import { useTranslations } from "next-intl";
-
-// import Editor from "./editor";
+import RaceAvatar from "./race-avatar";
+import Blocks from "../shared/blocks/blocks";
+import Sidebar from "../blog/sidebar";
+import Comments from "../blog/comments";
 
 type Props = {
   race: MVRace;
+  sidebar?: SidebarContent | null;
 };
 
-const SingleRace: FC<Props> = ({ race }) => {
+const SingleRace: FC<Props> = ({ race, sidebar }) => {
   const t = useTranslations();
 
   const raceSummary: Array<{ label: string; content: ReactNode }> = [
@@ -69,11 +72,17 @@ const SingleRace: FC<Props> = ({ race }) => {
     <>
       <div
         className="min-h-80 bg-cover bg-center bg-fixed flex items-center mt-24 relative"
-        style={{ backgroundImage: `url(${race.thumbnail_full})` }}
+        style={{ backgroundImage: `url(${race.background_image})` }}
       >
         <div className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-70"></div>
-        <Container className="relative z-20 flex flex-col md:flex-row gap-4 items-center justify-between">
-          <h1 className="font-bold text-3xl text-white">{race.title}</h1>
+        <Container className="relative z-20 flex flex-col md:flex-row gap-4 md:items-center justify-between">
+          <div className="text-white flex flex-col gap-2">
+            {race.thumbnail_full && <RaceAvatar src={race.thumbnail_full} />}
+            <h1 className="font-bold text-3xl ">{race.title}</h1>
+            {race?.excerpt && (
+              <p className="text-lg max-w-sm">{race.excerpt}</p>
+            )}
+          </div>
           <RaceDateChip race={race} />
         </Container>
       </div>
@@ -85,9 +94,14 @@ const SingleRace: FC<Props> = ({ race }) => {
           </div>
         ))}
       </div>
-      <Container className="py-20">
-        <div className="w-full xl:w-3/4 space-y-5">{/* <Editor /> */}</div>
-        <div className="w-full xl:w-1/4"></div>
+      <Container className="py-20 flex flex-col lg:flex-row gap-10">
+        <div className="w-full xl:w-3/4 space-y-5">
+          <Blocks blocks={race?.content_json} />
+          <Comments comments={race.comments} postId={race.id} />
+        </div>
+        <div className="w-full xl:w-1/4">
+          <Sidebar sidebar={sidebar} />
+        </div>
       </Container>
     </>
   );

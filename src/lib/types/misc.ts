@@ -8,6 +8,16 @@ export interface CalendarEvent extends EventInput {
   };
 }
 
+export interface ProfileFields {
+  id: number;
+  name: string;
+  password: string;
+  passwordConfirmation: string;
+  youtube: string;
+  instagram: string;
+  url: string;
+}
+
 export interface MVUser extends User {
   token: string;
   user_email: string;
@@ -60,10 +70,11 @@ export type BlockName =
   | "core/quote"
   | "core/gallery"
   | "core/list-item"
+  | "core/embed"
   | "core/list";
 export type Block = {
   blockName: BlockName;
-  attrs: Array<unknown>;
+  attrs: Record<string, string>;
   innerBlocks: Array<Block>;
   innerHTML: string;
   innerContent: Array<string>;
@@ -109,6 +120,7 @@ export type MVRace = {
   slug: string;
   post_type: "race";
   content: Array<Block>;
+  content_json: Array<Block>;
   excerpt?: string;
   start_date: string;
   end_date?: string;
@@ -141,6 +153,9 @@ export type MVRace = {
 export type MVAd = {
   id: number;
   title: string;
+  content: string;
+  thumbnail?: string;
+  url: string;
 };
 export type MVNews = {
   id: number;
@@ -197,3 +212,9 @@ export type CalendarResponse = {
   calendar: Array<MVRace>;
   filter_options: FilterOptions;
 };
+
+export type SidebarContent = {
+  ads: Array<MVAd>;
+  upcoming: Array<MVRace>;
+  blogs: Array<MVBlog>;
+}

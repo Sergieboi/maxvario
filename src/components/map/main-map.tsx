@@ -54,7 +54,7 @@ const MainMap: FC<CalendarResponse> = ({ calendar, filter_options }) => {
                   <SummaryCard
                     race={race}
                     key={race.id}
-                    onClick={() => setSelectedRace(race)}
+                    cardClick={(r) => setSelectedRace(r)}
                   />
                 ))}
               </Fragment>

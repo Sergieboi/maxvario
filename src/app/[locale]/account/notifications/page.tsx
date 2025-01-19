@@ -1,4 +1,3 @@
-import AccountProfile from "@/components/account/profile/profile";
 import { seoContent } from "@/lib/seo/seo";
 import { Locale } from "@/lib/types/misc";
 import { Metadata } from "next";
@@ -15,5 +14,5 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function AccountNotificationsPage() {
-  return <AccountProfile />;
+  return <>notifications</>;
 }

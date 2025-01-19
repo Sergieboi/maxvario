@@ -33,6 +33,13 @@ const htmlParser = (html: string): ReactNode => {
           case "figure": {
             return figureParser(domNode);
           }
+          case "h2": {
+            return (
+              <h2 className="text-2xl font-semibold">
+                {domToReact(domNode.children as Array<DOMNode>)}
+              </h2>
+            );
+          }
         }
       }
     },

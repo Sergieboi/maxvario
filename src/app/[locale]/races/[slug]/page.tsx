@@ -1,5 +1,5 @@
 import SingleRace from "@/components/race/single";
-import { getRace } from "@/lib/api/wp";
+import { getRace, getSidebarContent } from "@/lib/api/wp";
 import { seoContent } from "@/lib/seo/seo";
 import { Locale, MVRace } from "@/lib/types/misc";
 import { Metadata } from "next";
@@ -23,6 +23,7 @@ export default async function SingleRacePage({ params }: Props) {
   const locale = (await params).locale;
   const slug = (await params).slug;
   const race: MVRace | null = await getRace(slug, locale);
+  const sidebar = await getSidebarContent("race", locale);
   if (!race) {
     return notFound();
   }
@@ -33,7 +34,7 @@ export default async function SingleRacePage({ params }: Props) {
           {JSON.stringify(race.yoast_head_json)}
         </script>
       )}
-      <SingleRace race={race} />
+      <SingleRace race={race} sidebar={sidebar?.data} />
     </>
   );
 }

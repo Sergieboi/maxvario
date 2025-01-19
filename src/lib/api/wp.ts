@@ -1,5 +1,5 @@
 import { DEFAULT_LOCALE } from "../constants";
-import { ApiResponse, CalendarResponse, Locale, Taxonomy } from "../types/misc";
+import { ApiResponse, CalendarResponse, Locale, SidebarContent, Taxonomy } from "../types/misc";
 
 type Fetcher = {
   url: string;
@@ -100,6 +100,15 @@ export const getPosts = async (locale: Locale) => {
   return posts;
 };
 
+export const getSidebarContent = async (postType = '', locale: Locale): Promise<null | ApiResponse<SidebarContent>> => {
+  const content = await fetcher({
+    url: `${process.env.NEXT_PUBLIC_MAXVARIO_API}/sidebar?lang=${locale}&post_type=${postType}`,
+    locale,
+    revalidate: 6 * 60 * 60,
+  });
+  return content;
+};
+
 export const getRace = async (slug: string, locale: Locale) => {
   const race = await fetcher({
     url: `${process.env.NEXT_PUBLIC_WP_API_URL}/races?slug=${slug}&lang=${locale}`,
@@ -113,13 +122,13 @@ export const getRace = async (slug: string, locale: Locale) => {
 };
 
 export const getNewsBlog = async (slug: string, locale: Locale) => {
-  const race = await fetcher({
+  const blog = await fetcher({
     url: `${process.env.NEXT_PUBLIC_WP_API_URL}/news?slug=${slug}&lang=${locale}`,
     locale,
     revalidate: 300,
   });
-  if (Array.isArray(race) && race.length > 0) {
-    return race[0];
+  if (Array.isArray(blog) && blog.length > 0) {
+    return blog[0];
   }
   return null;
 };

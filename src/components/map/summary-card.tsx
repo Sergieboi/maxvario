@@ -8,16 +8,20 @@ import { MVRace } from "@/lib/types/misc";
 
 export type SummaryCardProps = CardProps & {
   race: MVRace;
-  onClick: (race: MVRace) => void;
+  cardClick?: (race: MVRace) => void;
 };
 
-const SummaryCard: FC<SummaryCardProps> = ({ race, onClick, ...props }) => {
+const SummaryCard: FC<SummaryCardProps> = ({ race, cardClick, ...props }) => {
   return (
     <Card
       isPressable
       className="bg-cover bg-no-repeat bg-center min-h-32"
       style={{ backgroundImage: `url(${race.background_image})` }}
-      onPress={() => onClick(race)}
+      onPress={() => {
+        if (cardClick) {
+          cardClick(race);
+        }
+      }}
       {...props}
     >
       <div className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-70 z-10"></div>

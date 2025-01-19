@@ -122,7 +122,9 @@
     "tryAgain": "Please try again later",
     "addComment": "Add your comment",
     "typehere": "Type here ...",
-    "genericError": "Generic error, please check your data or try again later"
+    "genericError": "Generic error, please check your data or try again later",
+    "comments": "Comments",
+    "noComments": "No comments added so far ..."
   },
   "latest-blog": {
     "title": "Latest Blog",
@@ -454,6 +456,16 @@
         "label": "Actual duration (days)",
         "required": "The race duration is required"
       }
+    },
+    "profile": {
+      "name": "Name",
+      "website": "Website",
+      "youtube": "YouTube",
+      "instagram": "Instagram",
+      "passwordConfirmation": "Password confirmation",
+      "password": "Password",
+      "passwordsDoNotMatch": "Passwords do not match",
+      "success": "Your data is successfully updated"
     }
   },
   "add": {
@@ -491,5 +503,8 @@
     "comments": {
       "title": "Comments"
     }
+  },
+  "sidebar": {
+    "upcomingRaces": "Upcoming Races"
   }
 }

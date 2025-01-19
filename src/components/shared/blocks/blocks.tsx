@@ -1,8 +1,11 @@
 import { Block } from "@/lib/types/misc";
-import { FC } from "react";
+import { FC, Fragment } from "react";
 import ParagraphBlock from "./paragraph";
 import MVImage from "./image";
 import htmlParser from "./html-parser";
+import YoutubeBlock from "./youtube";
+import XEmbedBlock from "./xembed";
+import InstagramBlock from "./instagram";
 
 type Props = {
   blocks: Array<Block>;
@@ -10,7 +13,7 @@ type Props = {
 
 const Blocks: FC<Props> = ({ blocks }) => {
   return (
-    <>
+    <Fragment key={blocks?.[0].blockName}>
       {blocks
         ?.filter(({ blockName }) => blockName !== null)
         .map((block, index) => {
@@ -25,20 +28,35 @@ const Blocks: FC<Props> = ({ blocks }) => {
               return (
                 <ul key={index} className="list-disc list-inside">
                   <Blocks blocks={block.innerBlocks} />
-                  {/* {block.innerBlocks.map((innerBlock, innerIndex) => (
-                    <li key={innerIndex}>
-                      {innerBlock.innerContent.join(" ")}
-                    </li>
-                  ))} */}
                 </ul>
               );
+            case "core/embed":
+              if (
+                block.attrs?.type === "video" &&
+                block.attrs?.providerNameSlug === "youtube"
+              ) {
+                return <YoutubeBlock key={index} url={block.attrs.url} />;
+              } else if (
+                block.attrs?.type === "rich" &&
+                block.attrs?.providerNameSlug === "twitter"
+              ) {
+                return <XEmbedBlock url={block.attrs.url} />;
+              } else {
+                if (block.attrs.url.includes("instagram")) {
+                  return <InstagramBlock url={block.attrs.url} />;
+                }
+              }
+              break;
+            case "core/heading":
+              return <>{htmlParser(block.innerContent[0])}</>;
             case "core/list-item":
               return htmlParser(block.innerHTML);
             default:
+              console.log("Block not found", block);
               return null;
           }
         })}
-    </>
+    </Fragment>
   );
 };
 

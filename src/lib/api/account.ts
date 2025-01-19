@@ -1,4 +1,5 @@
-import { ApiResponse, MVBlog, MVNews, MVRace } from "../types/misc";
+import { auth } from "../../../auth";
+import { ApiResponse, MVBlog, MVNews, MVRace, ProfileFields } from "../types/misc";
 
 export const loginWithCredentials = async (email: string, password: string) => {
   const response = await fetch(
@@ -63,3 +64,17 @@ export const editPost = async (
   }
   return null;
 };
+
+export const getUsreProfile = async (): Promise<null | ApiResponse<ProfileFields>> => {
+  const session = await auth();
+  const response = await fetch(`${process.env.NEXT_PUBLIC_MAXVARIO_API}/me`, {
+    headers: {
+      Authorization: `Bearer ${session?.user.token}`,
+    },
+  });
+  if (response.ok) {
+    const data = await response.json();
+    return data;
+  }
+  return null;
+}

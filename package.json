@@ -43,7 +43,8 @@
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-editor-js": "^2.1.0",
-    "react-hook-form": "^7.54.2"
+    "react-hook-form": "^7.54.2",
+    "react-social-media-embed": "^2.5.17"
   },
   "devDependencies": {
     "@editorjs/checklist": "^1.6.0",

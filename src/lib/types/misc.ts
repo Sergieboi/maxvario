@@ -228,3 +228,11 @@ export type UserSubscription = {
   created_at: string;
   deleted_at: string;
 }
+
+export type SearchResult = {
+  title: string;
+  slug: string;
+  type: "post" | "news" | "race";
+  thumbnail?: string;
+  language: keyof typeof LOCALES;
+}

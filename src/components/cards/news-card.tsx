@@ -12,7 +12,6 @@ type Props = CardProps & {
 };
 
 const NewsCard: FC<Props> = ({ news, ...props }) => {
-  console.log(news);
   return (
     <Card className="w-full max-w-[720px]" {...props}>
       <CardBody className="flex p-0 flex-nowrap">

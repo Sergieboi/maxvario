@@ -129,7 +129,15 @@
     "socialLinks": "External links",
     "shareOn": "Share on",
     "active": "Active",
-    "inactive": "Inactive"
+    "inactive": "Inactive",
+    "fullSearch": {
+      "title": "Website search",
+      "placeholder": "Search term",
+      "multilingual": "Search in all languages"
+    },
+    "races": "Races",
+    "posts": "Blog",
+    "news": "News"
   },
   "latest-blog": {
     "title": "Latest Blog",

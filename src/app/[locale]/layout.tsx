@@ -11,6 +11,8 @@ import Footer from "@/components/shared/footer/footer";
 import { SessionProvider } from "next-auth/react";
 import { auth } from "../../../auth";
 import Script from "next/script";
+import { GoogleAnalytics } from "@next/third-parties/google";
+import { GOOGLE_ANALYTICS_ID } from "@/lib/constants";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -38,6 +40,7 @@ export default async function RootLayout({
   return (
     <SessionProvider session={session}>
       <html lang={locale}>
+        <GoogleAnalytics debugMode gaId={GOOGLE_ANALYTICS_ID} />
         <Script
           async
           defer

@@ -109,11 +109,23 @@ export const getSidebarContent = async (postType = '', locale: Locale): Promise<
   return content;
 };
 
+export const getStaticPage = async (slug: string, locale: Locale) => {
+  const page = await fetcher({
+    url: `${process.env.NEXT_PUBLIC_WP_API_URL}/pages?slug=${slug}&lang=${locale}`,
+    locale,
+    revalidate: 86400,
+  });
+  if (Array.isArray(page) && page.length > 0) {
+    return page[0];
+  }
+  return null;
+};
+
 export const getRace = async (slug: string, locale: Locale) => {
   const race = await fetcher({
     url: `${process.env.NEXT_PUBLIC_WP_API_URL}/races?slug=${slug}&lang=${locale}`,
     locale,
-    revalidate: 300,
+    revalidate: 600,
   });
   if (Array.isArray(race) && race.length > 0) {
     return race[0];
@@ -125,7 +137,7 @@ export const getNewsBlog = async (slug: string, locale: Locale) => {
   const blog = await fetcher({
     url: `${process.env.NEXT_PUBLIC_WP_API_URL}/news?slug=${slug}&lang=${locale}`,
     locale,
-    revalidate: 300,
+    revalidate: 600,
   });
   if (Array.isArray(blog) && blog.length > 0) {
     return blog[0];
@@ -137,7 +149,7 @@ export const getPostBlog = async (slug: string, locale: Locale) => {
   const blog = await fetcher({
     url: `${process.env.NEXT_PUBLIC_WP_API_URL}/posts?slug=${slug}&lang=${locale}`,
     locale,
-    revalidate: 300,
+    revalidate: 600,
   });
   if (Array.isArray(blog) && blog.length > 0) {
     return blog[0];

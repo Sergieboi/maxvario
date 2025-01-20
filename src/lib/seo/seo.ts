@@ -57,6 +57,15 @@ export const seoContent = async ({
       };
       md.openGraph.images = [];
       break;
+    case "single-page":
+      md.title += ` - ${(data as MVBlog)?.title}`;
+      md.robots = {
+        index: true,
+        follow: true,
+        "max-image-preview": "large",
+      };
+      md.openGraph.images = [];
+      break;
   }
   md.openGraph.title = md.title;
   md.openGraph.description = md.description;

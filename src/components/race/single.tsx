@@ -2,7 +2,7 @@ import { MVRace, SidebarContent } from "@/lib/types/misc";
 import { FC, ReactNode } from "react";
 import Container from "../shared/container";
 import RaceDateChip from "./race-date-chip";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import RaceAvatar from "./race-avatar";
 import Blocks from "../shared/blocks/blocks";
 import Sidebar from "../blog/sidebar";
@@ -10,6 +10,8 @@ import Comments from "../blog/comments";
 import RaceSubscription from "./subscribe";
 import { formatDateRange } from "@/lib/utils";
 import SocialLinks from "./social-links";
+import ShareButtons from "../shared/share";
+import { SITE_URL } from "@/lib/constants";
 
 type Props = {
   race: MVRace;
@@ -18,6 +20,7 @@ type Props = {
 
 const SingleRace: FC<Props> = ({ race, sidebar }) => {
   const t = useTranslations();
+  const locale = useLocale();
 
   const raceSummary: Array<{ label: string; content: ReactNode }> = [
     {
@@ -110,6 +113,7 @@ const SingleRace: FC<Props> = ({ race, sidebar }) => {
       <Container className="py-20 flex flex-col lg:flex-row gap-10">
         <div className="w-full md:w-2/3 xl:w-3/4 space-y-5">
           <Blocks blocks={race?.content_json} key={race.id} />
+          <ShareButtons url={`${SITE_URL}/${locale}/races/${race.slug}`} />
           <SocialLinks race={race} />
           <Comments comments={race.comments} postId={race.id} />
         </div>

@@ -4,6 +4,9 @@ import Container from "../shared/container";
 import Sidebar from "./sidebar";
 import Comments from "./comments";
 import Blocks from "../shared/blocks/blocks";
+import ShareButtons from "../shared/share";
+import { SITE_URL } from "@/lib/constants";
+import { useLocale } from "next-intl";
 
 type Props = {
   blog: MVNews | MVBlog;
@@ -11,6 +14,7 @@ type Props = {
 };
 
 const SingleBlog: FC<Props> = ({ blog, sidebar }) => {
+  const locale = useLocale();
   return (
     <div className="mt-24">
       <div
@@ -28,6 +32,11 @@ const SingleBlog: FC<Props> = ({ blog, sidebar }) => {
       <Container className="py-20 flex flex-col lg:flex-row gap-10">
         <div className="w-full xl:w-3/4 space-y-5">
           <Blocks blocks={blog.content_json} />
+          <ShareButtons
+            url={`${SITE_URL}/${locale}/${
+              blog.post_type === "news" ? "news" : "blog"
+            }/${blog.slug}`}
+          />
           {<Comments comments={blog.comments} postId={blog.id} />}
         </div>
         <div className="w-full xl:w-1/4">

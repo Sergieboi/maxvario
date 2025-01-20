@@ -73,7 +73,10 @@ const Header: FC = () => {
       )}
     >
       <Container className="flex justify-between items-center py-4">
-        <Link href="/" className="text-xl font-bold">
+        <Link
+          href="/"
+          className="text-xl font-bold flex items-end gap-2 text-white"
+        >
           <svg
             width="62.012"
             height="50.682"
@@ -90,6 +93,7 @@ const Header: FC = () => {
               d="m618.78,205.57l-4.63,-20.02c-58.22,-164.38 -291.07,-196.26 -437.61,-149.64c-77.72,24.72 -164.13,82.37 -174.91,169.66c-2.33,-0.35 -1.51,-7.02 -1.38,-8.72c5.77,-75.68 72.73,-133.31 137.78,-162.13c104.29,-46.2 238.82,-46.38 343.05,0c68.37,30.43 136.7,90.46 137.71,170.85l-0.01,0z"
             />
           </svg>
+          <span className="leading-4">axvario</span>
         </Link>
         <div className="flex gap-4 items-center">
           <Navbar />

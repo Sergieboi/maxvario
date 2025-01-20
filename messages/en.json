@@ -126,7 +126,8 @@
     "comments": "Comments",
     "noComments": "No comments added so far ...",
     "subscribeSuccess": "You have subscribed successfully.",
-    "socialLinks": "External links"
+    "socialLinks": "External links",
+    "shareOn": "Share on"
   },
   "latest-blog": {
     "title": "Latest Blog",
@@ -151,7 +152,9 @@
         "terms": "Terms",
         "privacy": "Privacy",
         "cookies": "Cookies",
-        "contact": "Contact"
+        "contact": "Contact",
+        "termsSlug": "terms",
+        "privacySlug": "privacy"
       }
     }
   },

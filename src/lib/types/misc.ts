@@ -54,6 +54,7 @@ export type PageName =
   | "signin"
   | "signup"
   | 'single-blog'
+  | 'single-page'
   | "terms";
 
 export type Comment = {

@@ -6,7 +6,6 @@ import { FC } from "react";
 
 const RaceDateChip: FC<{ race: MVRace }> = ({ race }) => {
   if (!race.start_date) return null;
-  console.log(race.start_date, race.end_date);
   return (
     <Chip
       color="primary"

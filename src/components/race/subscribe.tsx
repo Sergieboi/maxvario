@@ -14,6 +14,7 @@ import { useTranslations } from "next-intl";
 import { FC, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import MVToast, { ToastProps } from "../shared/toast";
+import { useSession } from "next-auth/react";
 
 type Props = {
   raceId: number;
@@ -25,6 +26,7 @@ interface SubscribeInterface {
 }
 
 const RaceSubscription: FC<Props> = ({ raceId }) => {
+  const session = useSession();
   const [toast, setToast] = useState<ToastProps & { show: boolean }>({
     message: "",
     modelType: "success",
@@ -40,7 +42,7 @@ const RaceSubscription: FC<Props> = ({ raceId }) => {
   } = useForm<SubscribeInterface>({
     reValidateMode: "onChange",
     defaultValues: {
-      email: "",
+      email: session?.data?.user?.user.email ?? "",
       raceId: raceId,
     },
   });

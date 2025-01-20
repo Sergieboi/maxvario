@@ -24,7 +24,7 @@ const Navbar: FC = () => {
       title: t("nav.calendar"),
     },
     {
-      href: "/about",
+      href: "/pages/about",
       title: t("nav.about"),
     },
     {

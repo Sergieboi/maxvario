@@ -3,6 +3,7 @@ import { FC } from "react";
 import Container from "../container";
 import { useTranslations } from "next-intl";
 import { Icon } from "@iconify/react";
+import { INSTAGRAM } from "@/lib/constants";
 
 const Footer: FC = () => {
   const t = useTranslations("footer");
@@ -32,17 +33,28 @@ const Footer: FC = () => {
               </Link>
             </div>
             <p className="text-small text-default-200">{t("description")}</p>
-            <div className="flex space-x-6">
+            <div className="flex space-x-4">
               <Link
                 className="relative inline-flex items-center tap-highlight-transparent outline-none data-[focus-visible=true]:z-10 data-[focus-visible=true]:outline-2 data-[focus-visible=true]:outline-focus data-[focus-visible=true]:outline-offset-2 text-medium no-underline hover:opacity-80 active:opacity-disabled transition-opacity text-default-400"
-                href="https://www.instagram.com/maxvariohq/"
+                href={INSTAGRAM}
                 target="_blank"
                 rel="noopener noreferrer"
                 tabIndex={0}
                 role="link"
               >
                 <span className="sr-only">Maxvario Instagram</span>
-                <Icon icon="ri:instagram-fill" width="24" height="24" />
+                <Icon icon="akar-icons:instagram-fill" width="24" height="24" />
+              </Link>
+              <Link
+                className="relative inline-flex items-center tap-highlight-transparent outline-none data-[focus-visible=true]:z-10 data-[focus-visible=true]:outline-2 data-[focus-visible=true]:outline-focus data-[focus-visible=true]:outline-offset-2 text-medium no-underline hover:opacity-80 active:opacity-disabled transition-opacity text-default-400"
+                href={INSTAGRAM}
+                target="_blank"
+                rel="noopener noreferrer"
+                tabIndex={0}
+                role="link"
+              >
+                <span className="sr-only">Maxvario Email</span>
+                <Icon icon="uil:envelope-alt" width="28" height="28" />
               </Link>
             </div>
           </div>
@@ -107,7 +119,7 @@ const Footer: FC = () => {
                   <li>
                     <Link
                       className="relative inline-flex items-center tap-highlight-transparent outline-none data-[focus-visible=true]:z-10 data-[focus-visible=true]:outline-2 data-[focus-visible=true]:outline-focus data-[focus-visible=true]:outline-offset-2 text-small no-underline hover:opacity-80 active:opacity-disabled transition-opacity text-default-400"
-                      href="/pages/terms"
+                      href={`/pages/${t("footer.resources.termsSlug")}`}
                       target="_self"
                       tabIndex={0}
                       role="link"
@@ -118,34 +130,12 @@ const Footer: FC = () => {
                   <li>
                     <Link
                       className="relative inline-flex items-center tap-highlight-transparent outline-none data-[focus-visible=true]:z-10 data-[focus-visible=true]:outline-2 data-[focus-visible=true]:outline-focus data-[focus-visible=true]:outline-offset-2 text-small no-underline hover:opacity-80 active:opacity-disabled transition-opacity text-default-400"
-                      href="/pages/privacy"
+                      href={`/pages/${t("footer.resources.privacySlug")}`}
                       target="_self"
                       tabIndex={0}
                       role="link"
                     >
                       {t("footer.resources.privacy")}
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      className="relative inline-flex items-center tap-highlight-transparent outline-none data-[focus-visible=true]:z-10 data-[focus-visible=true]:outline-2 data-[focus-visible=true]:outline-focus data-[focus-visible=true]:outline-offset-2 text-small no-underline hover:opacity-80 active:opacity-disabled transition-opacity text-default-400"
-                      href="/pages/terms"
-                      target="_self"
-                      tabIndex={0}
-                      role="link"
-                    >
-                      {t("footer.resources.cookies")}
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      className="relative inline-flex items-center tap-highlight-transparent outline-none data-[focus-visible=true]:z-10 data-[focus-visible=true]:outline-2 data-[focus-visible=true]:outline-focus data-[focus-visible=true]:outline-offset-2 text-small no-underline hover:opacity-80 active:opacity-disabled transition-opacity text-default-400"
-                      href="/pages/terms"
-                      target="_self"
-                      tabIndex={0}
-                      role="link"
-                    >
-                      {t("footer.resources.contact")}
                     </Link>
                   </li>
                 </ul>

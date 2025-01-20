@@ -13,13 +13,12 @@ export async function POST(request: NextRequest) {
         },
         body: JSON.stringify(data)
     });
-    const aa = await res.text();
-    console.log(aa);
+    await res.json();
     if (res.ok) {
-        // const result = await res.json();
-        // if (Array.isArray(result.messages) && result.messages.length) {
-        //     return NextResponse.json({ success: false, messages: result.messages }, { status: res.status });
-        // }
+        const result = await res.json();
+        if (Array.isArray(result.messages) && result.messages.length) {
+            return NextResponse.json({ success: false, messages: result.messages }, { status: res.status });
+        }
         return NextResponse.json({ success: true });
     }
     return NextResponse.json({ success: false }, { status: res.status });

@@ -262,7 +262,7 @@ const SingleRace: FC<SingleRaceParams> = ({
       });
 
       if (res.ok) {
-        window.location.href = "/account";
+        window.location.href = "/account/my-content";
       }
       const result = await res.json();
       if (Array.isArray(result.messages)) {

@@ -30,6 +30,7 @@ export interface MVUser extends User {
     first_name: string;
     last_name: string;
     avatar: string;
+    roles: Array<string>;
   }
 }
 
@@ -218,4 +219,12 @@ export type SidebarContent = {
   ads: Array<MVAd>;
   upcoming: Array<MVRace>;
   blogs: Array<MVBlog>;
+}
+
+export type UserSubscription = {
+  post_title: string;
+  post_id: string;
+  subscription_id: string;
+  created_at: string;
+  deleted_at: string;
 }

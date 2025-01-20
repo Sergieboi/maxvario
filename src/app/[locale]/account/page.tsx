@@ -1,9 +1,8 @@
-import AccountPosts from "@/components/account/posts/posts";
-import { myPosts } from "@/lib/api/account";
+import AccountProfile from "@/components/account/profile/profile";
+import { getUsreProfile } from "@/lib/api/account";
 import { seoContent } from "@/lib/seo/seo";
 import { Locale } from "@/lib/types/misc";
 import { Metadata } from "next";
-import { auth } from "../../../../auth";
 import { notFound } from "next/navigation";
 
 type Props = {
@@ -17,11 +16,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   });
 }
 
-export default async function AccountPostsPage() {
-  const session = await auth();
-  const posts = await myPosts(session?.user.token as string);
-  if (!posts) {
+export default async function AccountProfilePage() {
+  const user = await getUsreProfile();
+  if (!user) {
     return notFound();
   }
-  return <AccountPosts data={posts.data} />;
+  return <AccountProfile user={user?.data} />;
 }

@@ -127,7 +127,9 @@
     "noComments": "No comments added so far ...",
     "subscribeSuccess": "You have subscribed successfully.",
     "socialLinks": "External links",
-    "shareOn": "Share on"
+    "shareOn": "Share on",
+    "active": "Active",
+    "inactive": "Inactive"
   },
   "latest-blog": {
     "title": "Latest Blog",
@@ -486,7 +488,14 @@
       "passwordConfirmation": "Password confirmation",
       "password": "Password",
       "passwordsDoNotMatch": "Passwords do not match",
-      "success": "Your data is successfully updated"
+      "success": "Your data is successfully updated",
+      "title": "My profile",
+      "description": "Here you can modify your basic profile details"
+    },
+    "notifications": {
+      "title": "My subscriptions",
+      "description": "Here you will find your subscriptions to race updates, you can switch on or off any subscription at any time",
+      "updateSuccess": "Subscription status updated"
     }
   },
   "add": {

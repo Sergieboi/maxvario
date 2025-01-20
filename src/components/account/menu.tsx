@@ -4,40 +4,44 @@ import { FC } from "react";
 import Container from "../shared/container";
 import { useTranslations } from "next-intl";
 import { Button, cn } from "@nextui-org/react";
-import { signOut } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import { usePathname } from "next/navigation";
 
 const AccountMenu: FC = () => {
   const t = useTranslations();
   const path = usePathname();
+  const session = useSession();
   return (
     <div className="bg-primary text-white py-4 flex items-center">
       <Container className="flex justify-between items-center">
         <ul className="flex text-sm font-medium">
           <li>
             <Link
-              href="/account/"
-              title={t("account.menu.posts")}
+              href="/account"
+              title={t("account.menu.profile")}
               className={cn(
                 "py-2 px-3 rounded-lg",
                 path.endsWith("account") && "bg-white text-primary border-0"
               )}
             >
-              {t("account.menu.posts")}
-            </Link>
-          </li>
-          <li>
-            <Link
-              href="/account/profile"
-              title={t("account.menu.profile")}
-              className={cn(
-                "py-2 px-3 rounded-lg",
-                path.endsWith("profile") && "bg-white text-primary border-0"
-              )}
-            >
               {t("account.menu.profile")}
             </Link>
           </li>
+          {session.data?.user.user?.roles?.includes("contributor") && (
+            <li>
+              <Link
+                href="/account/my-content"
+                title={t("account.menu.posts")}
+                className={cn(
+                  "py-2 px-3 rounded-lg",
+                  path.endsWith("my-content") &&
+                    "bg-white text-primary border-0"
+                )}
+              >
+                {t("account.menu.posts")}
+              </Link>
+            </li>
+          )}
           <li>
             <Link
               href="/account/notifications"

@@ -2,6 +2,7 @@
 import { languages } from "@/lib/constants";
 import { UserIcon } from "@heroicons/react/24/outline";
 import {
+  Avatar,
   Button,
   Dropdown,
   DropdownItem,
@@ -13,8 +14,8 @@ import Link from "next/link";
 import { FC } from "react";
 
 const HeaderActions: FC = () => {
-    const locale = useLocale();
-    
+  const locale = useLocale();
+
   return (
     <div className="flex items-center gap-4">
       <Button size="sm" as={Link} href="/account" variant="flat" isIconOnly>
@@ -22,19 +23,33 @@ const HeaderActions: FC = () => {
       </Button>
       <Dropdown>
         <DropdownTrigger>
-            <Button size="sm" variant="flat" className="text-white uppercase" isIconOnly>{locale}</Button>
+          <Button
+            size="sm"
+            variant="flat"
+            className="text-white uppercase"
+            isIconOnly
+          >
+            {locale}
+          </Button>
         </DropdownTrigger>
         <DropdownMenu aria-label="Static Actions">
-          {
-            Object.keys(languages).map((lang) => (
-              <DropdownItem classNames={{
-                title:'flex items-center gap-2 uppercase'
-              }} key={lang} href={`/${lang}`}>
-                <span>{languages[lang as keyof typeof languages].flag}</span>
-                <span>{lang}</span>
-              </DropdownItem>
-            ))
-          }
+          {Object.keys(languages).map((lang) => (
+            <DropdownItem
+              classNames={{
+                title: "flex items-center gap-2 capitalize",
+              }}
+              key={lang}
+              href={`/${lang}`}
+            >
+              <Avatar
+                size="sm"
+                src={`/assets/flags/${
+                  languages[lang as keyof typeof languages].flag
+                }.svg`}
+              />
+              <span>{languages[lang as keyof typeof languages].label}</span>
+            </DropdownItem>
+          ))}
         </DropdownMenu>
       </Dropdown>
     </div>

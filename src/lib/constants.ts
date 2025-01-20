@@ -7,23 +7,23 @@ export const LOCALES = ['de', 'en', 'es', 'fr', 'it'] as const;
 export const languages: Record<Locale, {label: string; flag: string}> = {
     de: {
         label: 'Deutsch',
-        flag: '🇩🇪',
+        flag: 'de',
     },
     en: {
         label: 'English',
-        flag: '🇺🇸',
+        flag: 'us',
     },
     es: {
         label: 'Español',
-        flag: '🇪🇸',
+        flag: 'es',
     },
     fr: {
         label: 'Français',
-        flag: '🇫🇷',
+        flag: 'fr',
     },
     it: {
         label: 'Italiano',
-        flag: '🇮🇹',
+        flag: 'it',
     },
 }
 export const DEFAULT_LOCALE = 'en';

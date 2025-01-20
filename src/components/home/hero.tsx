@@ -139,7 +139,7 @@ const Hero: FC = () => {
             </Button>
             <Button
               as={Link}
-              href="/races"
+              href="/calendar"
               variant="solid"
               color="primary"
               className="bg-white text-primary"

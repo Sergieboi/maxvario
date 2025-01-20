@@ -54,15 +54,17 @@ const Subscription: FC<Props> = ({ subscription }) => {
       <div>
         <p className="text-lg font-semibold">{subscription.post_title}</p>
         <p className="text-sm text-gray-500">
-          {new Intl.DateTimeFormat("en-US", {
-            timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone, // Ensures the date/time is adjusted to the user's timezone
-            year: "numeric",
-            month: "long",
-            day: "2-digit",
-            hour: "2-digit",
-            minute: "2-digit",
-            hour12: true,
-          }).format(new Date(`${subscription.created_at}Z`))}
+          {t("account.notifications.subscribedAt", {
+            time: new Intl.DateTimeFormat(undefined, {
+              timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone, // Ensures the date/time is adjusted to the user's timezone
+              year: "numeric",
+              month: "long",
+              day: "2-digit",
+              hour: "2-digit",
+              minute: "2-digit",
+              hour12: true,
+            }).format(new Date(`${subscription.created_at}Z`)),
+          })}
         </p>
       </div>
       <Switch

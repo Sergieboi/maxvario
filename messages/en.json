@@ -72,7 +72,7 @@
     },
     "cta": {
       "races": "Explore Races",
-      "events": "Worldwide Events"
+      "events": "Check the calendar"
     },
     "ready": "Ready?",
     "go": "GO"
@@ -495,7 +495,8 @@
     "notifications": {
       "title": "My subscriptions",
       "description": "Here you will find your subscriptions to race updates, you can switch on or off any subscription at any time",
-      "updateSuccess": "Subscription status updated"
+      "updateSuccess": "Subscription status updated",
+      "subscribedAt": "Subscribed at: {time}"
     }
   },
   "add": {

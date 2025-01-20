@@ -12,13 +12,14 @@ type Props = CardProps & {
 };
 
 const NewsCard: FC<Props> = ({ news, ...props }) => {
+  console.log(news);
   return (
     <Card className="w-full max-w-[720px]" {...props}>
-      <CardBody className="flex flex-row p-0 flex-nowrap">
-        {news.thumbnail && (
+      <CardBody className="flex p-0 flex-nowrap">
+        {(news.thumbnail || news.thumbnail_full) && (
           <Link
             href={`/news/${news.slug}`}
-            className="w-full min-w-48 max-w-48 flex"
+            className="w-full min-w-48 max-h-40 flex"
             title={news.title}
           >
             <Image
@@ -26,7 +27,7 @@ const NewsCard: FC<Props> = ({ news, ...props }) => {
               isBlurred
               alt={news.title}
               className="h-auto w-full flex-none object-cover object-top"
-              src={news.thumbnail}
+              src={news.thumbnail ?? news.thumbnail_full}
             />
           </Link>
         )}

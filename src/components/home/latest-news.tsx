@@ -20,12 +20,10 @@ const LatestNews: FC<Props> = ({ news }) => {
           {t("title")}
         </h1>
         <p className="text-lg mb-8 text-blue-700">{t("description")}</p>
-        <div className="flex flex-wrap gap-4">
-        {news.map((post, index) => (
-          <div key={index} className="flex w-full md:w-[calc(50%-8px)] 2xl:w-[calc(33.3333%-16px)]">
-            <NewsCard news={post} />
-          </div>
-        ))}
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5 gap-4">
+          {news.map((post, index) => (
+            <NewsCard news={post} key={index} />
+          ))}
         </div>
       </Container>
     </div>

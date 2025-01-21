@@ -1,5 +1,5 @@
 import Blog from "@/components/blog/blog";
-import { getPosts } from "@/lib/api/wp";
+import { getCategories, getPosts } from "@/lib/api/wp";
 import { seoContent } from "@/lib/seo/seo";
 import { Locale } from "@/lib/types/misc";
 
@@ -17,5 +17,6 @@ export async function generateMetadata({ params }: Props) {
 export default async function BlogPage({ params }: Props) {
   const locale = (await params).locale;
   const posts = await getPosts(locale);
-  return <Blog items={posts} postType="post" />;
+  const categories = await getCategories(locale);
+  return <Blog items={posts} postType="post" categories={categories.data} />;
 }

@@ -236,3 +236,11 @@ export type SearchResult = {
   thumbnail?: string;
   language: keyof typeof LOCALES;
 }
+
+export type SiteTaxonomies = {
+    categories: Array<Taxonomy>;
+    news_categories: Array<Taxonomy>;
+    fai_categories: Array<Taxonomy>;
+    race_formats: Array<Taxonomy>;
+    athlete_categories: Array<Taxonomy>;
+}

@@ -1,5 +1,5 @@
 import { DEFAULT_LOCALE } from "../constants";
-import { ApiResponse, CalendarResponse, Locale, SidebarContent, Taxonomy } from "../types/misc";
+import { ApiResponse, CalendarResponse, Locale, SidebarContent, SiteTaxonomies } from "../types/misc";
 
 type Fetcher = {
   url: string;
@@ -68,13 +68,7 @@ export const getCalendar = async (
 export const getCategories = async (
   locale: Locale
 ): Promise<
-  ApiResponse<{
-    categories: Array<Taxonomy>;
-    news_categories: Array<Taxonomy>;
-    fai_categories: Array<Taxonomy>;
-    race_formats: Array<Taxonomy>;
-    athlete_categories: Array<Taxonomy>;
-  }>
+  ApiResponse<SiteTaxonomies>
 > => {
   const categories = await fetcher({
     url: `${process.env.NEXT_PUBLIC_MAXVARIO_API}/categories?lang=${locale}`,

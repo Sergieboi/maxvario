@@ -24,7 +24,7 @@ const Navbar: FC = () => {
       title: t("nav.calendar"),
     },
     {
-      href: "/pages/about",
+      href: `/pages/${t("nav.aboutSlug")}`,
       title: t("nav.about"),
     },
     {
@@ -40,7 +40,7 @@ const Navbar: FC = () => {
     <nav>
       <ul className="hidden lg:flex space-x-4">
         {items.map((item, index) => (
-          <li key={index}>
+          <li key={index} className="relative">
             <Link
               href={item.href}
               title={item.title}

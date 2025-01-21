@@ -108,7 +108,7 @@ const MainCalendar: FC<CalendarResponse> = ({ calendar, filter_options }) => {
         className="relative pt-48 pb-32 bg-cover bg-center bg-no-repeat bg-fixed"
         style={{
           backgroundImage:
-            "url(/assets/maxvario-events-runners-on-the-street-healthy-lifestyle-jogging.jpg)",
+            "url(/assets/adventurous-woman-learning-to-fly-a-paraglider.jpg)",
         }}
       >
         <div className="absolute w-full h-full bg-black top-0 bg-opacity-70"></div>

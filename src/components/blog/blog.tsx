@@ -1,21 +1,23 @@
-import { MVBlog, MVNews } from "@/lib/types/misc";
+import { MVBlog, MVNews, SiteTaxonomies } from "@/lib/types/misc";
 import { FC, Fragment } from "react";
 import Container from "../shared/container";
 import { useTranslations } from "next-intl";
 import NewsCard from "../cards/news-card";
 import BlogCard from "../cards/blog-card";
+import Link from "next/link";
 
 type Props = {
   items: Array<MVBlog | MVNews>;
   postType: "news" | "post";
+  categories: SiteTaxonomies;
 };
 
-const Blog: FC<Props> = ({ items, postType }) => {
+const Blog: FC<Props> = ({ items, postType, categories }) => {
   const t = useTranslations();
   return (
     <div className="mt-24">
       <div
-        className="flex items-center bg-cover bg-center bg-no-repeat bg-fixed min-h-60 relative"
+        className="flex items-center bg-cover bg-center bg-no-repeat bg-fixed min-h-64 relative"
         style={{
           backgroundImage:
             "url(/assets/tourist-making-a-sip-from-bottle-during-hiking-tour.jpg)",
@@ -33,6 +35,24 @@ const Blog: FC<Props> = ({ items, postType }) => {
               ? t("news.index.description")
               : t("blog.index.description")}
           </p>
+        </Container>
+      </div>
+      <div className="bg-primary py-4">
+        <Container className="flex items-center gap-3">
+          {(postType === "news"
+            ? categories.news_categories
+            : categories.categories
+          ).map((cat) => {
+            return (
+              <Link
+                href={`/category/${cat.slug}`}
+                key={cat.term_id}
+                className="text-white text-sm hover:underline border-1 border-white/20 px-2 py-1 rounded-md"
+              >
+                {cat.name}
+              </Link>
+            );
+          })}
         </Container>
       </div>
 

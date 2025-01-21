@@ -61,7 +61,8 @@
       "news": "News",
       "about": "About",
       "blog": "Blog",
-      "races": "Races"
+      "races": "Races",
+      "aboutSlug": "about"
     }
   },
   "home": {

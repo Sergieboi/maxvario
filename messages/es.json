@@ -1,43 +1,569 @@
 {
   "seo": {
+    "404": {
+      "title": "Página no encontrada"
+    },
     "title": "Maxvario",
-    "description": "Maxvario meta description",
-    "keywords": "Maxvario meta keywords",
+    "description": "Descripción meta de Maxvario",
+    "keywords": "Palabras clave meta de Maxvario",
     "races": {
-      "title": "Races"
+      "title": "Carreras"
     },
     "events": {
-      "title": "Events"
+      "title": "Eventos"
     },
     "news": {
-      "title": "News"
+      "title": "Noticias"
     },
     "blog": {
       "title": "Blog"
     },
     "contact": {
-      "title": "Contact"
+      "title": "Contacto"
     },
     "signin": {
-      "title": "Sign in"
+      "title": "Iniciar sesión"
     },
     "account": {
-      "title": "Account"
+      "title": "Cuenta"
     },
     "home": {
-      "title": "Home"
+      "title": "Inicio"
     },
     "about": {
-      "title": "About us"
-    },
-    "404": {
-      "title": "Page not found"
+      "title": "Acerca de nosotros"
     },
     "privacy": {
-      "title": "Privacy policy"
+      "title": "Política de privacidad"
     },
     "terms": {
-      "title": "Terms of use"
+      "title": "Términos de uso"
+    },
+    "calendar": {
+      "title": "Calendario"
+    },
+    "map": {
+      "title": "Mapa"
+    },
+    "forgotPassword": {
+      "title": "Olvidé la contraseña"
+    },
+    "signup": {
+      "title": "Registrarse"
+    },
+    "resetPassword": {
+      "title": "Restablecer la contraseña"
     }
+  },
+  "header": {
+    "nav": {
+      "calendar": "Calendario",
+      "news": "Noticias",
+      "about": "Acerca de",
+      "blog": "Blog",
+      "races": "Carreras",
+      "aboutSlug": "acerca"
+    }
+  },
+  "home": {
+    "hero": {
+      "title": "Bienvenido a Maxvario",
+      "description": "La Casa de Hike and Fly",
+      "longText": "El sitio web de destino para el deporte de hike and fly – el deporte de aventura más duro del mundo. Todo lo que necesitas para los atletas de hike and fly y los organizadores de eventos de hike and fly.​"
+    },
+    "cta": {
+      "races": "Explorar las carreras",
+      "events": "Consultar el calendario"
+    },
+    "ready": "¿Listo?",
+    "go": "VAMOS"
+  },
+  "homeIntro": {
+    "introTitle": "Eventos y Carreras Populares",
+    "introDescription": "Todo lo que necesitas para encontrar una carrera, registrarte, entrenar, organizar, apoyar o competir en el deporte de Hike and Fly",
+    "cta": {
+      "title": "Encuentra tu próximo desafío"
+    }
+  },
+  "upcoming": {
+    "title": "Carreras Próximas",
+    "description": "Encuentra tu carrera, optimiza tu entrenamiento, prepárate para tu equipo y únete a la comunidad de Hike and Fly."
+  },
+  "common": {
+    "details": "Ver detalles",
+    "cancel": "Cancelar",
+    "or": "O",
+    "agreeterms": "Estoy de acuerdo con los <terms>términos</terms> y la <privacy>política de privacidad</privacy>",
+    "error": "Error",
+    "status": "Estado",
+    "tableColumns": "Columnas de la tabla",
+    "columns": "Columnas",
+    "add": "Añadir",
+    "rowsPerPage": "Filas por página",
+    "previous": "Anterior",
+    "next": "Siguiente",
+    "allSelected": "Todos los elementos seleccionados",
+    "xItemsSelected": "Seleccionados {selected} de {all}",
+    "searchByTitle": "Buscar por título",
+    "submit": "Enviar",
+    "selectImage": "Seleccionar miniatura de la publicación",
+    "delete": "Eliminar",
+    "noContent": "Nada añadido hasta ahora ...",
+    "search": "buscar",
+    "searchPlace": "Encontrar un lugar",
+    "extractedAddress": "Información extraída",
+    "backgroundImage": "Seleccionar imagen de fondo",
+    "logo": "Seleccionar logo de la carrera",
+    "requiredField": "Este campo es obligatorio",
+    "name": "Nombre",
+    "email": "Correo electrónico",
+    "comment": "Comentario",
+    "days": "{count, plural, =1 {Un día} other {# días}}",
+    "commentSuccess": "Comentario añadido con éxito",
+    "tryAgain": "Por favor, inténtalo de nuevo más tarde",
+    "addComment": "Añadir tu comentario",
+    "typehere": "Escribe aquí ...",
+    "genericError": "Error genérico, por favor verifica tus datos o inténtalo de nuevo más tarde",
+    "comments": "Comentarios",
+    "noComments": "No se han añadido comentarios hasta ahora ...",
+    "subscribeSuccess": "Te has suscrito correctamente.",
+    "socialLinks": "Enlaces externos",
+    "shareOn": "Compartir en",
+    "active": "Activo",
+    "inactive": "Inactivo",
+    "fullSearch": {
+      "title": "Búsqueda en el sitio web",
+      "placeholder": "Término de búsqueda",
+      "multilingual": "Buscar en todos los idiomas"
+    },
+    "races": "Carreras",
+    "posts": "Blog",
+    "news": "Noticias"
+  },
+  "latest-blog": {
+    "title": "Último Blog",
+    "description": "Tu sitio de referencia para la información más reciente sobre carreras, equipo y entrenamiento"
+  },
+  "latest-news": {
+    "title": "Noticias Recientes",
+    "description": "Sigue nuestro deporte, los atletas y las carreras."
+  },
+  "footer": {
+    "description": "El sitio web de destino para el deporte de hike and fly, el deporte de aventura más difícil del mundo.",
+    "footer": {
+      "races": {
+        "title": "Carreras y eventos",
+        "calendar": "Vista del calendario",
+        "allRaces": "Vista del mapa",
+        "news": "Noticias",
+        "blog": "Blog"
+      },
+      "resources": {
+        "title": "Recursos",
+        "terms": "Términos",
+        "privacy": "Privacidad",
+        "cookies": "Cookies",
+        "contact": "Contacto",
+        "termsSlug": "terminos",
+        "privacySlug": "privacidad"
+      }
+    }
+  },
+  "calendar": {
+    "page": {
+      "title": "Calendario Maxvario",
+      "description": "¡Planifica tu próxima aventura con facilidad! Nuestro calendario integral te permite explorar los próximos eventos de hike-and-fly por fecha, ubicación y dificultad. Mantente al día con los detalles de los eventos, enlaces de registro y todo lo que necesitas para unirte a la acción. Ya sea que busques reuniones locales o desafíos internacionales, nuestro calendario te mantiene conectado con la emoción del deporte."
+    },
+    "filter": {
+      "title": "Filtro de eventos",
+      "country": {
+        "title": "País",
+        "all": "--- Cualquiera ---"
+      },
+      "city": {
+        "title": "Ciudad"
+      },
+      "after": {
+        "title": "Desde"
+      },
+      "before": {
+        "title": "Hasta"
+      },
+      "name": {
+        "title": "Nombre"
+      },
+      "submit": "Filtrar",
+      "raceCategory": {
+        "title": "Categoría de carrera"
+      },
+      "faiCategory": {
+        "title": "Categoría FAI"
+      },
+      "athleteCategory": {
+        "title": "Categoría de atleta"
+      },
+      "eventCategory": {
+        "title": "Categoría de evento"
+      },
+      "within": {
+        "title": "Dentro de"
+      },
+      "raceFormat": {
+        "title": "Formato de carrera"
+      }
+    },
+    "resultsfound": "{count} resultados encontrados"
+  },
+  "map": {
+    "filter": {
+      "title": "Filtrar carreras y eventos"
+    },
+    "listView": "Vista de lista"
+  },
+  "race": {
+    "duration": {
+      "title": "Duración",
+      "location": "Ubicación"
+    },
+    "location": {
+      "title": "Ubicación"
+    },
+    "athleteCategory": {
+      "title": "Categoría de atleta"
+    },
+    "faiCategory": {
+      "title": "Categoría FAI"
+    },
+    "raceFormat": {
+      "title": "Formato de carrera"
+    },
+    "registration": {
+      "title": "Registro"
+    }
+  },
+  "auth": {
+    "signup": {
+      "title": "Regístrate",
+      "email": {
+        "title": "Dirección de correo electrónico",
+        "placeholder": "Introduce tu dirección de correo electrónico",
+        "required": "Se requiere la dirección de correo electrónico"
+      },
+      "password": {
+        "title": "Contraseña",
+        "placeholder": "Introduce tu contraseña",
+        "required": "Por favor, ingresa tu contraseña"
+      },
+      "button": "Registrarse",
+      "google": "Iniciar sesión con Google",
+      "name": {
+        "title": "Nombre",
+        "required": "El nombre es requerido",
+        "placeholder": "Introduce tu nombre"
+      },
+      "passwordConfirmation": {
+        "required": "Por favor, confirma tu contraseña",
+        "title": "Confirmación de contraseña",
+        "error": "La confirmación de la contraseña no coincide"
+      },
+      "genericError": "Error genérico, por favor intenta nuevamente más tarde",
+      "success": "Hecho",
+      "successDescription": "Cuenta creada con éxito"
+    },
+    "alreadyHaveAccount": "¿Ya tienes una cuenta?",
+    "signin": {
+      "title": "Iniciar sesión",
+      "button": "Iniciar sesión",
+      "password": {
+        "title": "Contraseña",
+        "placeholder": "Introduce tu contraseña",
+        "required": "Por favor, ingresa tu contraseña"
+      },
+      "email": {
+        "title": "Dirección de correo electrónico",
+        "placeholder": "Introduce tu dirección de correo electrónico",
+        "required": "Se requiere la dirección de correo electrónico"
+      },
+      "error": {
+        "invalidcredentials": "Credenciales inválidas, no se pudo iniciar sesión"
+      },
+      "forgot": "¿Olvidaste tu contraseña?"
+    },
+    "noAccount": "¿No tienes cuenta?",
+    "forgotPassword": {
+      "title": "¿Olvidaste tu contraseña?",
+      "button": "Enviar enlace de restablecimiento",
+      "backToSignin": "Volver a iniciar sesión",
+      "successDescription": "Por favor, sigue las instrucciones que te enviamos a tu correo electrónico"
+    },
+    "resetPassword": {
+      "title": "Restablecer contraseña",
+      "password": {
+        "title": "Nueva contraseña",
+        "placeholder": "Introduce tu nueva contraseña",
+        "required": "Se requiere la contraseña"
+      },
+      "confirmPassword": {
+        "required": "Por favor, ingresa la confirmación de la contraseña",
+        "placeholder": "Confirma tu nueva contraseña",
+        "title": "Confirmación de contraseña"
+      },
+      "button": "Cambiar mi contraseña",
+      "success": "Hecho",
+      "successDescription": "Tu contraseña ha sido restablecida con éxito",
+      "genericError": "Error genérico, por favor intenta nuevamente más tarde"
+    }
+  },
+  "pages": {
+    "terms": {
+      "slug": "terminos"
+    },
+    "privacy": {
+      "slug": "privacidad"
+    }
+  },
+  "account": {
+    "title": "Mi cuenta",
+    "menu": {
+      "profile": "Perfil",
+      "posts": "Mis publicaciones",
+      "subscriptions": "Suscripciones",
+      "signout": "Cerrar sesión",
+      "notifications": "Notificaciones"
+    },
+    "posts": {
+      "races": {
+        "title": "Carreras"
+      },
+      "news": {
+        "title": "Noticias"
+      },
+      "blog": {
+        "title": "Blog"
+      }
+    },
+    "races": {
+      "column": {
+        "id": "ID",
+        "title": "Título",
+        "country": "País",
+        "fai": "FAI",
+        "format": "Formato",
+        "athlete": "Atleta",
+        "status": "Estado",
+        "actions": "Acciones",
+        "date": "Fecha",
+        "registration": "Inscripción"
+      },
+      "total": "Total {count, plural, =1 {una carrera} other {# carreras}}."
+    },
+    "data": {
+      "status": {
+        "publish": {
+          "title": "Publicado"
+        },
+        "draft": {
+          "title": "Borrador"
+        }
+      },
+      "options": {
+        "view": {
+          "title": "Ver"
+        },
+        "edit": {
+          "title": "Editar"
+        },
+        "delete": {
+          "title": "Eliminar"
+        }
+      },
+      "deletion": {
+        "confirmation": {
+          "title": "Confirmación de eliminación"
+        },
+        "description": "¿Está seguro de que desea eliminar el siguiente contenido?"
+      }
+    },
+    "blog": {
+      "column": {
+        "title": "Título",
+        "category": "Categoría",
+        "status": "Estado",
+        "actions": "Acciones"
+      },
+      "total": "Total {count, plural, =1 {un artículo} other {# artículos}}."
+    },
+    "new": {
+      "title": {
+        "required": "El título de la carrera es obligatorio",
+        "label": "Nombre de la carrera"
+      },
+      "blog": {
+        "title": "Añadir nueva publicación"
+      },
+      "category": {
+        "label": "Categoría",
+        "required": "La categoría es obligatoria"
+      },
+      "thumbnail": {
+        "required": "La miniatura es obligatoria"
+      },
+      "content": {
+        "required": "El contenido es obligatorio",
+        "label": "Contenido"
+      },
+      "athleteCategory": {
+        "required": "La categoría del atleta es obligatoria",
+        "label": "Categoría del atleta"
+      },
+      "faiCategory": {
+        "required": "La categoría FAI es obligatoria",
+        "label": "Categoría FAI"
+      },
+      "raceFormat": {
+        "required": "El formato de la carrera es obligatorio",
+        "label": "Formatos de carrera"
+      },
+      "race": {
+        "location": "Datos de ubicación",
+        "links": "Enlaces",
+        "media": "Medios",
+        "locationDescription": "Utilice el campo de búsqueda para encontrar un lugar, luego arrastre el marcador para ajustar la ubicación con mayor precisión. Los detalles de la dirección se mostrarán en la sección \"Información extraída\"—los campos grises se completan automáticamente desde el mapa, mientras que los campos azules son editables para cualquier corrección necesaria.",
+        "timeline": "Cronología de la carrera",
+        "timelineDescription": "Por favor, use la hora UTC para consistencia, su zona horaria actual parece ser <timezone></timezone>"
+      },
+      "address": {
+        "label": "Dirección"
+      },
+      "lat": {
+        "label": "Latitud"
+      },
+      "lng": {
+        "label": "Longitud"
+      },
+      "country": {
+        "label": "País",
+        "required": "Por favor, modifique su selección para reconocer el nombre del país"
+      },
+      "city": {
+        "label": "Ciudad"
+      },
+      "state": {
+        "label": "Estado"
+      },
+      "placeId": {
+        "label": "ID de lugar"
+      },
+      "website": {
+        "label": "Sitio web"
+      },
+      "facebook": {
+        "label": "Facebook"
+      },
+      "instagram": {
+        "label": "Instagram"
+      },
+      "x": {
+        "label": "X (Twitter)"
+      },
+      "tiktok": {
+        "label": "TikTok"
+      },
+      "trackingUrl": {
+        "label": "URL de seguimiento"
+      },
+      "resultsUrl": {
+        "label": "URL de resultados"
+      },
+      "youtube": {
+        "label": "YouTube"
+      },
+      "raceDateRange": {
+        "label": "Inicio / fin de la carrera",
+        "required": "Las fechas de inicio/fin de la carrera son obligatorias"
+      },
+      "raceRegistrationDateRange": {
+        "label": "Inicio / fin de la inscripción"
+      },
+      "duration": {
+        "label": "Duración real (días)",
+        "required": "La duración de la carrera es obligatoria"
+      }
+    },
+    "profile": {
+      "name": "Nombre",
+      "website": "Sitio web",
+      "youtube": "YouTube",
+      "instagram": "Instagram",
+      "passwordConfirmation": "Confirmación de contraseña",
+      "password": "Contraseña",
+      "passwordsDoNotMatch": "Las contraseñas no coinciden",
+      "success": "Tus datos se han actualizado correctamente",
+      "title": "Mi perfil",
+      "description": "Aquí puedes modificar los detalles básicos de tu perfil"
+    },
+    "notifications": {
+      "title": "Mis suscripciones",
+      "description": "Aquí encontrarás tus suscripciones a actualizaciones de carreras, puedes activar o desactivar cualquier suscripción en cualquier momento",
+      "updateSuccess": "Estado de la suscripción actualizado",
+      "subscribedAt": "Suscrito a: {time}"
+    }
+  },
+  "add": {
+    "new": {
+      "news": {
+        "title": "Agregar noticias nuevas"
+      },
+      "race": {
+        "title": "Agregar nueva carrera"
+      }
+    },
+    "edit": {
+      "race": {
+        "title": "Modificar detalles de la carrera"
+      }
+    }
+  },
+  "editor": {
+    "placeholder": "Por favor, escribe contenido aquí",
+    "tools": {
+      "hyperlink": "Enlace"
+    }
+  },
+  "news": {
+    "index": {
+      "title": "Noticias",
+      "description": "Mantente al tanto de nuestro deporte, los atletas y las carreras."
+    }
+  },
+  "blog": {
+    "index": {
+      "title": "Blog de Maxvario",
+      "description": "Tu sitio para la última información sobre carreras, equipo y entrenamiento"
+    },
+    "comments": {
+      "title": "Comentarios"
+    }
+  },
+  "sidebar": {
+    "upcomingRaces": "Próximas carreras"
+  },
+  "subscribe": {
+    "getNotified": "Suscríbete a las actualizaciones de las carreras",
+    "email": "Ingresa tu dirección de correo electrónico"
+  },
+  "subscription": {
+    "success": "Te has suscrito con éxito",
+    "error": "No pudimos almacenar tu suscripción"
+  },
+  "social": {
+    "facebook": "Página de Facebook",
+    "instagram": "Instagram",
+    "twitter": "X (Twitter)",
+    "youtube": "Canal de YouTube",
+    "website": "Sitio web",
+    "tiktok": "TikTok",
+    "tracking": "Página de seguimiento",
+    "results": "Página de resultados"
   }
 }

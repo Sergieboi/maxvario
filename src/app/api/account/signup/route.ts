@@ -17,9 +17,7 @@ export async function POST(request: NextRequest) {
   }
 
   const register = await fetch(
-    `${process.env.NEXT_PUBLIC_MAXVARIO_API}/register?lang=${
-      body?.locale ?? "en"
-    }`,
+    `${process.env.NEXT_PUBLIC_MAXVARIO_API}/register`,
     {
       method: "POST",
       headers: {

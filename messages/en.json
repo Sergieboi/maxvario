@@ -71,7 +71,7 @@
       "longText": "The destination website for the sport of hike and fly – the world’s toughest adventure sport. Everything for the hike and fly athletes and hike and fly event organisers.​"
     },
     "cta": {
-      "races": "Explore Races",
+      "races": "Explore the races",
       "events": "Check the calendar"
     },
     "ready": "Ready?",
@@ -267,7 +267,7 @@
       },
       "genericError": "Generic error, please try again later",
       "success": "Done",
-      "successDescription": "Please follow the link we sent to your email"
+      "successDescription": "Account created successfully"
     },
     "alreadyHaveAccount": "Already have an account",
     "signin": {
@@ -292,7 +292,8 @@
     "forgotPassword": {
       "title": "Forgot Password",
       "button": "Send reset link",
-      "backToSignin": "Back to login"
+      "backToSignin": "Back to login",
+      "successDescription": "Please follow the instructions we sent to your email"
     },
     "resetPassword": {
       "title": "Reset Password",

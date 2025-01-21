@@ -77,7 +77,7 @@ const AuthSignin: FC = () => {
         reset();
         window.setTimeout(() => {
           redirect("/auth/signin");
-        }, 5000);
+        }, 3000);
         return; // Stop further execution if successful
       }
       // Handle errors

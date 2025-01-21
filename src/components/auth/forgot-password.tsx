@@ -55,7 +55,7 @@ const AuthForgotPassword: FC = () => {
         setShowAlert(true);
         setAlertType("success");
         setAlertTitle(t("auth.signup.success"));
-        setAlertMessage(t("auth.signup.successDescription"));
+        setAlertMessage(t("auth.forgotPassword.successDescription"));
         reset();
         return; // Stop further execution if successful
       }
@@ -63,7 +63,7 @@ const AuthForgotPassword: FC = () => {
       setAlertMessage((result?.messages ?? []).join(", "));
     } catch (error) {
       // Handle unexpected errors
-      console.error("Error during signup:", error);
+      console.error("Error during resetting password:", error);
       setAlertMessage(t("auth.signup.genericError"));
     }
     setAlertTitle(t("common.error"));

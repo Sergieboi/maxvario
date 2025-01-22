@@ -38,14 +38,16 @@ const Blog: FC<Props> = ({ items, postType, categories }) => {
         </Container>
       </div>
       <div className="bg-primary py-4">
-        <Container className="flex items-center gap-3">
+        <Container className="flex items-center gap-3 flex-wrap">
           {(postType === "news"
             ? categories.news_categories
             : categories.categories
           ).map((cat) => {
             return (
               <Link
-                href={`/category/${cat.slug}`}
+                href={`/${postType === "news" ? "news-category" : "category"}/${
+                  cat.slug
+                }`}
                 key={cat.term_id}
                 className="text-white text-sm hover:underline border-1 border-white/20 px-2 py-1 rounded-md"
               >

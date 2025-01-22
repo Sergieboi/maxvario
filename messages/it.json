@@ -1,6 +1,569 @@
 {
   "seo": {
-    "title": "Messaggi",
-    "description": "Messaggi"
+    "404": {
+      "title": "Pagina non trovata"
+    },
+    "title": "Maxvario",
+    "description": "Meta descrizione di Maxvario",
+    "keywords": "Parole chiave meta di Maxvario",
+    "races": {
+      "title": "Gare"
+    },
+    "events": {
+      "title": "Eventi"
+    },
+    "news": {
+      "title": "Notizie"
+    },
+    "blog": {
+      "title": "Blog"
+    },
+    "contact": {
+      "title": "Contatti"
+    },
+    "signin": {
+      "title": "Accedi"
+    },
+    "account": {
+      "title": "Account"
+    },
+    "home": {
+      "title": "Home"
+    },
+    "about": {
+      "title": "Chi siamo"
+    },
+    "privacy": {
+      "title": "Politica sulla privacy"
+    },
+    "terms": {
+      "title": "Termini di utilizzo"
+    },
+    "calendar": {
+      "title": "Calendario"
+    },
+    "map": {
+      "title": "Mappa"
+    },
+    "forgotPassword": {
+      "title": "Password dimenticata"
+    },
+    "signup": {
+      "title": "Registrati"
+    },
+    "resetPassword": {
+      "title": "Resetta la password"
+    }
+  },
+  "header": {
+    "nav": {
+      "calendar": "Calendario",
+      "news": "Notizie",
+      "about": "Chi siamo",
+      "blog": "Blog",
+      "races": "Gare",
+      "aboutSlug": "chi-siamo"
+    }
+  },
+  "home": {
+    "hero": {
+      "title": "Benvenuto su Maxvario",
+      "description": "La casa di Hike and Fly",
+      "longText": "Il sito di riferimento per lo sport di hike and fly – lo sport di avventura più difficile al mondo. Tutto per gli atleti di hike and fly e gli organizzatori di eventi di hike and fly.​"
+    },
+    "cta": {
+      "races": "Esplora le gare",
+      "events": "Controlla il calendario"
+    },
+    "ready": "Pronto?",
+    "go": "VAI"
+  },
+  "homeIntro": {
+    "introTitle": "Eventi e Gare Popolari",
+    "introDescription": "Tutto ciò che ti serve per trovare una gara, registrarti, allenarti, organizzare, supportare o gareggiare nello sport di Hike and Fly",
+    "cta": {
+      "title": "Trova la tua prossima sfida"
+    }
+  },
+  "upcoming": {
+    "title": "Gare in arrivo",
+    "description": "Trova la tua gara, ottimizza il tuo allenamento, prepara l'attrezzatura e unisciti alla community di Hike and Fly."
+  },
+  "common": {
+    "details": "Vedi i dettagli",
+    "cancel": "Annulla",
+    "or": "OPPURE",
+    "agreeterms": "Accetto i <terms>termini</terms> e la <privacy>politica sulla privacy</privacy>",
+    "error": "Errore",
+    "status": "Stato",
+    "tableColumns": "Colonne della tabella",
+    "columns": "Colonne",
+    "add": "Aggiungi",
+    "rowsPerPage": "Righe per pagina",
+    "previous": "Precedente",
+    "next": "Successivo",
+    "allSelected": "Tutti gli elementi selezionati",
+    "xItemsSelected": "{selected} di {all} selezionati",
+    "searchByTitle": "Cerca per titolo",
+    "submit": "Invia",
+    "selectImage": "Seleziona immagine in evidenza",
+    "delete": "Elimina",
+    "noContent": "Nessun contenuto aggiunto finora ...",
+    "search": "Cerca",
+    "searchPlace": "Trova un posto",
+    "extractedAddress": "Info estratte",
+    "backgroundImage": "Seleziona immagine di sfondo",
+    "logo": "Seleziona logo della gara",
+    "requiredField": "Questo campo è obbligatorio",
+    "name": "Nome",
+    "email": "E-mail",
+    "comment": "Commento",
+    "days": "{count, plural, =1 {Un giorno} other {# giorni}}",
+    "commentSuccess": "Commento aggiunto con successo",
+    "tryAgain": "Per favore prova di nuovo più tardi",
+    "addComment": "Aggiungi il tuo commento",
+    "typehere": "Scrivi qui ...",
+    "genericError": "Errore generico, per favore controlla i tuoi dati o riprova più tardi",
+    "comments": "Commenti",
+    "noComments": "Nessun commento aggiunto finora ...",
+    "subscribeSuccess": "Ti sei iscritto con successo.",
+    "socialLinks": "Link esterni",
+    "shareOn": "Condividi su",
+    "active": "Attivo",
+    "inactive": "Inattivo",
+    "fullSearch": {
+      "title": "Ricerca nel sito",
+      "placeholder": "Termine di ricerca",
+      "multilingual": "Cerca in tutte le lingue"
+    },
+    "races": "Gare",
+    "posts": "Blog",
+    "news": "Notizie"
+  },
+  "latest-blog": {
+    "title": "Ultimo Blog",
+    "description": "Il tuo sito di riferimento per le ultime informazioni su gare, attrezzature e allenamenti"
+  },
+  "latest-news": {
+    "title": "Notizie Recenti",
+    "description": "Tieniti aggiornato sul nostro sport, sugli atleti e sulle gare."
+  },
+  "footer": {
+    "description": "Il sito di riferimento per lo sport del hike and fly – lo sport d'avventura più duro al mondo.",
+    "footer": {
+      "races": {
+        "title": "Gare & eventi",
+        "calendar": "Vista calendario",
+        "allRaces": "Vista mappa",
+        "news": "Notizie",
+        "blog": "Blog"
+      },
+      "resources": {
+        "title": "Risorse",
+        "terms": "Termini",
+        "privacy": "Privacy",
+        "cookies": "Cookies",
+        "contact": "Contatti",
+        "termsSlug": "termini",
+        "privacySlug": "privacy"
+      }
+    }
+  },
+  "calendar": {
+    "page": {
+      "title": "Calendario Maxvario",
+      "description": "Pianifica la tua prossima avventura con facilità! Il nostro calendario completo ti consente di esplorare gli eventi di hike-and-fly in arrivo per data, luogo e difficoltà. Rimani aggiornato con i dettagli degli eventi, i link per la registrazione e tutto ciò di cui hai bisogno per unirti all'azione. Che tu stia cercando incontri locali o sfide internazionali, il nostro calendario ti mantiene connesso al brivido dello sport."
+    },
+    "filter": {
+      "title": "Filtra eventi",
+      "country": {
+        "title": "Paese",
+        "all": "--- Qualsiasi ---"
+      },
+      "city": {
+        "title": "Città"
+      },
+      "after": {
+        "title": "Da"
+      },
+      "before": {
+        "title": "A"
+      },
+      "name": {
+        "title": "Nome"
+      },
+      "submit": "Filtra",
+      "raceCategory": {
+        "title": "Categoria Gara"
+      },
+      "faiCategory": {
+        "title": "Categoria FAI"
+      },
+      "athleteCategory": {
+        "title": "Categoria Atleta"
+      },
+      "eventCategory": {
+        "title": "Categoria Evento"
+      },
+      "within": {
+        "title": "Entro"
+      },
+      "raceFormat": {
+        "title": "Formato Gara"
+      }
+    },
+    "resultsfound": "{count} risultati trovati"
+  },
+  "map": {
+    "filter": {
+      "title": "Filtra Gare & Eventi"
+    },
+    "listView": "Vista Lista"
+  },
+  "race": {
+    "duration": {
+      "title": "Durata",
+      "location": "Posizione"
+    },
+    "location": {
+      "title": "Posizione"
+    },
+    "athleteCategory": {
+      "title": "Categoria Atleta"
+    },
+    "faiCategory": {
+      "title": "Categoria FAI"
+    },
+    "raceFormat": {
+      "title": "Formato Gara"
+    },
+    "registration": {
+      "title": "Registrazione"
+    }
+  },
+  "auth": {
+    "signup": {
+      "title": "Registrati",
+      "email": {
+        "title": "Indirizzo e-mail",
+        "placeholder": "Inserisci il tuo indirizzo e-mail",
+        "required": "L'indirizzo e-mail è obbligatorio"
+      },
+      "password": {
+        "title": "Password",
+        "placeholder": "Inserisci la tua password",
+        "required": "Inserisci la tua password"
+      },
+      "button": "Registrati",
+      "google": "Accedi con Google",
+      "name": {
+        "title": "Nome",
+        "required": "Il nome è obbligatorio",
+        "placeholder": "Inserisci il tuo nome"
+      },
+      "passwordConfirmation": {
+        "required": "Conferma la tua password",
+        "title": "Conferma password",
+        "error": "La conferma della password non corrisponde"
+      },
+      "genericError": "Errore generico, per favore riprova più tardi",
+      "success": "Fatto",
+      "successDescription": "Account creato con successo"
+    },
+    "alreadyHaveAccount": "Hai già un account",
+    "signin": {
+      "title": "Accedi",
+      "button": "Accedi",
+      "password": {
+        "title": "Password",
+        "placeholder": "Inserisci la tua password",
+        "required": "Inserisci la tua password"
+      },
+      "email": {
+        "title": "Indirizzo e-mail",
+        "placeholder": "Inserisci il tuo indirizzo e-mail",
+        "required": "L'indirizzo e-mail è obbligatorio"
+      },
+      "error": {
+        "invalidcredentials": "Credenziali non valide, impossibile accedere"
+      },
+      "forgot": "Password dimenticata"
+    },
+    "noAccount": "Non hai un account?",
+    "forgotPassword": {
+      "title": "Password Dimenticata",
+      "button": "Invia link di reset",
+      "backToSignin": "Torna al login",
+      "successDescription": "Segui le istruzioni che ti abbiamo inviato via email"
+    },
+    "resetPassword": {
+      "title": "Resetta la Password",
+      "password": {
+        "title": "Nuova Password",
+        "placeholder": "Inserisci la tua nuova password",
+        "required": "La password è obbligatoria"
+      },
+      "confirmPassword": {
+        "required": "Conferma la password",
+        "placeholder": "Conferma la tua nuova password",
+        "title": "Conferma password"
+      },
+      "button": "Cambia la mia password",
+      "success": "Fatto",
+      "successDescription": "La tua password è stata impostata correttamente",
+      "genericError": "Errore generico, per favore riprova più tardi"
+    }
+  },
+  "pages": {
+    "terms": {
+      "slug": "termini"
+    },
+    "privacy": {
+      "slug": "privacy"
+    }
+  },
+  "account": {
+    "title": "Il mio account",
+    "menu": {
+      "profile": "Profilo",
+      "posts": "I miei post",
+      "subscriptions": "Abbonamenti",
+      "signout": "Esci",
+      "notifications": "Notifiche"
+    },
+    "posts": {
+      "races": {
+        "title": "Corse"
+      },
+      "news": {
+        "title": "Notizie"
+      },
+      "blog": {
+        "title": "Blog"
+      }
+    },
+    "races": {
+      "column": {
+        "id": "ID",
+        "title": "Titolo",
+        "country": "Paese",
+        "fai": "FAI",
+        "format": "Formato",
+        "athlete": "Atleta",
+        "status": "Stato",
+        "actions": "Azioni",
+        "date": "Data",
+        "registration": "Registrazione"
+      },
+      "total": "Totale {count, plural, =1 {una corsa} other {# corse}}."
+    },
+    "data": {
+      "status": {
+        "publish": {
+          "title": "Pubblicato"
+        },
+        "draft": {
+          "title": "Bozza"
+        }
+      },
+      "options": {
+        "view": {
+          "title": "Visualizza"
+        },
+        "edit": {
+          "title": "Modifica"
+        },
+        "delete": {
+          "title": "Elimina"
+        }
+      },
+      "deletion": {
+        "confirmation": {
+          "title": "Conferma eliminazione"
+        },
+        "description": "Sei sicuro di voler eliminare il seguente contenuto"
+      }
+    },
+    "blog": {
+      "column": {
+        "title": "Titolo",
+        "category": "Categoria",
+        "status": "Stato",
+        "actions": "Azioni"
+      },
+      "total": "Totale {count, plural, =1 {un articolo} other {# articoli}}."
+    },
+    "new": {
+      "title": {
+        "required": "Il titolo della corsa è obbligatorio",
+        "label": "Nome della corsa"
+      },
+      "blog": {
+        "title": "Aggiungi nuovo post"
+      },
+      "category": {
+        "label": "Categoria",
+        "required": "La categoria è obbligatoria"
+      },
+      "thumbnail": {
+        "required": "La miniatura è obbligatoria"
+      },
+      "content": {
+        "required": "Il contenuto è obbligatorio",
+        "label": "Contenuto"
+      },
+      "athleteCategory": {
+        "required": "La categoria dell'atleta è obbligatoria",
+        "label": "Categoria dell'atleta"
+      },
+      "faiCategory": {
+        "required": "La categoria FAI è obbligatoria",
+        "label": "Categoria FAI"
+      },
+      "raceFormat": {
+        "required": "Il formato della corsa è obbligatorio",
+        "label": "Formati della corsa"
+      },
+      "race": {
+        "location": "Dati sulla posizione",
+        "links": "Collegamenti",
+        "media": "Media",
+        "locationDescription": "Usa la ricerca per trovare un posto, quindi trascina il marcatore per regolare la posizione per una maggiore precisione. I dettagli dell'indirizzo verranno visualizzati nella sezione \"Informazioni estratte\"—i campi grigi sono popolati automaticamente dalla mappa, mentre i campi blu sono modificabili per eventuali correzioni.",
+        "timeline": "Timeline della corsa",
+        "timelineDescription": "Si prega di usare l'orario UTC per coerenza, il tuo fuso orario attuale sembra essere <timezone></timezone>"
+      },
+      "address": {
+        "label": "Indirizzo"
+      },
+      "lat": {
+        "label": "Latitudine"
+      },
+      "lng": {
+        "label": "Longitudine"
+      },
+      "country": {
+        "label": "Paese",
+        "required": "Modifica la tua selezione per riconoscere il nome del paese"
+      },
+      "city": {
+        "label": "Città"
+      },
+      "state": {
+        "label": "Stato"
+      },
+      "placeId": {
+        "label": "ID del posto"
+      },
+      "website": {
+        "label": "Sito web"
+      },
+      "facebook": {
+        "label": "Facebook"
+      },
+      "instagram": {
+        "label": "Instagram"
+      },
+      "x": {
+        "label": "X (Twitter)"
+      },
+      "tiktok": {
+        "label": "TikTok"
+      },
+      "trackingUrl": {
+        "label": "URL di tracciamento"
+      },
+      "resultsUrl": {
+        "label": "URL dei risultati"
+      },
+      "youtube": {
+        "label": "YouTube"
+      },
+      "raceDateRange": {
+        "label": "Inizio / fine corsa",
+        "required": "Le date di inizio/fine corsa sono obbligatorie"
+      },
+      "raceRegistrationDateRange": {
+        "label": "Inizio / fine registrazione"
+      },
+      "duration": {
+        "label": "Durata effettiva (giorni)",
+        "required": "La durata della corsa è obbligatoria"
+      }
+    },
+    "profile": {
+      "name": "Nome",
+      "website": "Sito web",
+      "youtube": "YouTube",
+      "instagram": "Instagram",
+      "passwordConfirmation": "Conferma password",
+      "password": "Password",
+      "passwordsDoNotMatch": "Le password non corrispondono",
+      "success": "I tuoi dati sono stati aggiornati con successo",
+      "title": "Il mio profilo",
+      "description": "Qui puoi modificare i tuoi dettagli di profilo di base"
+    },
+    "notifications": {
+      "title": "I miei abbonamenti",
+      "description": "Qui troverai i tuoi abbonamenti agli aggiornamenti delle corse, puoi attivare o disattivare qualsiasi abbonamento in qualsiasi momento",
+      "updateSuccess": "Stato dell'abbonamento aggiornato",
+      "subscribedAt": "Abbonato il: {time}"
+    }
+  },
+  "add": {
+    "new": {
+      "news": {
+        "title": "Aggiungi nuove notizie"
+      },
+      "race": {
+        "title": "Aggiungi nuova corsa"
+      }
+    },
+    "edit": {
+      "race": {
+        "title": "Modifica dettagli corsa"
+      }
+    }
+  },
+  "editor": {
+    "placeholder": "Per favore inserisci il contenuto qui",
+    "tools": {
+      "hyperlink": "Link"
+    }
+  },
+  "news": {
+    "index": {
+      "title": "Notizie",
+      "description": "Tieni traccia del nostro sport, degli atleti e delle corse."
+    }
+  },
+  "blog": {
+    "index": {
+      "title": "Blog Maxvario",
+      "description": "Il tuo sito di riferimento per le ultime informazioni su corse, attrezzature e allenamenti"
+    },
+    "comments": {
+      "title": "Commenti"
+    }
+  },
+  "sidebar": {
+    "upcomingRaces": "Prossime corse"
+  },
+  "subscribe": {
+    "getNotified": "Iscriviti per ricevere aggiornamenti sulle corse",
+    "email": "Inserisci il tuo indirizzo e-mail"
+  },
+  "subscription": {
+    "success": "Iscrizione avvenuta con successo",
+    "error": "Non siamo riusciti a memorizzare il tuo abbonamento"
+  },
+  "social": {
+    "facebook": "Pagina Facebook",
+    "instagram": "Instagram",
+    "twitter": "X (Twitter)",
+    "youtube": "Canale YouTube",
+    "website": "Sito web",
+    "tiktok": "TikTok",
+    "tracking": "Pagina di tracciamento",
+    "results": "Pagina dei risultati"
   }
 }

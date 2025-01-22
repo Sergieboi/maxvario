@@ -5,7 +5,10 @@ import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { FC } from "react";
 
-const SearchResults: FC<{ results: Array<SearchResult> }> = ({ results }) => {
+const SearchResults: FC<{
+  results: Array<SearchResult>;
+  closeFn: VoidFunction;
+}> = ({ results, closeFn }) => {
   const t = useTranslations();
   const races = (results ?? []).filter((p) => p.type === "race");
   const posts = (results ?? []).filter((p) => p.type === "post");
@@ -23,6 +26,7 @@ const SearchResults: FC<{ results: Array<SearchResult> }> = ({ results }) => {
               href={`/${String(race.language)}/races/${race.slug}`}
               key={index}
               className="flex items-center gap-3"
+              onClick={closeFn}
             >
               <Avatar src={race.thumbnail} />
               <span>{race.title}</span>
@@ -41,6 +45,7 @@ const SearchResults: FC<{ results: Array<SearchResult> }> = ({ results }) => {
               href={`/${String(post.language)}/blog/${post.slug}`}
               key={index}
               className="flex items-center gap-3"
+              onClick={closeFn}
             >
               <Avatar src={post.thumbnail} />
               <span>{post.title}</span>
@@ -59,6 +64,7 @@ const SearchResults: FC<{ results: Array<SearchResult> }> = ({ results }) => {
               href={`/${String(n.language)}/news/${n.slug}`}
               key={index}
               className="flex items-center gap-3"
+              onClick={closeFn}
             >
               <Avatar src={n.thumbnail} />
               <span>{n.title}</span>

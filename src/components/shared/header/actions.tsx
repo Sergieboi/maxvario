@@ -167,7 +167,9 @@ const HeaderActions: FC = () => {
                     )}
                   />
                 </form>
-                {isSubmitted && <SearchResults results={searchResults} />}
+                {isSubmitted && (
+                  <SearchResults closeFn={onClose} results={searchResults} />
+                )}
               </DrawerBody>
               <DrawerFooter>
                 <Button onPress={onClose} color="danger" fullWidth>

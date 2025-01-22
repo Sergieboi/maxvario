@@ -7,10 +7,15 @@ import { useTranslations } from "next-intl";
 import { ScrollSmoother } from "gsap/ScrollSmoother";
 import { Button, Image } from "@nextui-org/react";
 import Link from "next/link";
+import { HomePhoto } from "@/lib/types/misc";
 
 gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
 
-const HomeIntro: FC = () => {
+type Props = {
+  images: Array<HomePhoto>;
+};
+
+const HomeIntro: FC<Props> = ({ images }) => {
   const t = useTranslations("homeIntro");
   const introTitleRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
@@ -51,7 +56,10 @@ const HomeIntro: FC = () => {
     <div id="images-grid">
       <div className="text-white pt-10 pb-24">
         <Container className="flex items-start justify-between flex-wrap">
-          <div ref={introTitleRef} className="w-full lg:w-1/3 2xl:w-1/4 mb-6 pe-4">
+          <div
+            ref={introTitleRef}
+            className="w-full lg:w-1/3 2xl:w-1/4 mb-6 pe-4"
+          >
             <h1 className="text-2xl lg:text-4xl font-semibold mb-6">
               {t("introTitle")}
             </h1>
@@ -77,14 +85,19 @@ const HomeIntro: FC = () => {
               >
                 {Array.from({ length: 2 }).map((_, i) => (
                   <div key={i} className="relative overflow-hidden">
-                    <Image
-                      isZoomed
-                      src={`/assets/intro-${number + i}.jpg`}
-                      alt={`Random ${index}`}
-                      className="w-full h-auto rounded-xl shadow object-cover grayscale-[0.7]"
-                      width={300}
-                      height={300}
-                    />
+                    <Link
+                      href={`${images?.[number + i]?.pathname}`}
+                      title={`${images?.[number + i]?.title}`}
+                    >
+                      <Image
+                        isZoomed
+                        src={`${images?.[number + i]?.thumbnail}`}
+                        alt={`${images?.[number + i]?.title}`}
+                        className="w-full h-auto rounded-xl shadow object-cover grayscale-[0.7]"
+                        width={300}
+                        height={300}
+                      />
+                    </Link>
                   </div>
                 ))}
               </div>

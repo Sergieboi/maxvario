@@ -70,6 +70,5 @@ export const seoContent = async ({
   md.openGraph.title = md.title;
   md.openGraph.description = md.description;
   md.openGraph.locale = locale;
-
   return md;
 };

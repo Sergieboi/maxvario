@@ -72,8 +72,8 @@
       "longText": "Die Zielseite für den Sport Hike and Fly – der härtesten Abenteuersportart der Welt. Alles für Hike and Fly Athleten und Hike and Fly Veranstalter.​"
     },
     "cta": {
-      "races": "Entdecken Sie die Rennen",
-      "events": "Schauen Sie sich den Kalender an"
+      "races": "Rennkarte",
+      "events": "Rennkalender"
     },
     "ready": "Bereit?",
     "go": "LOS"
@@ -216,7 +216,8 @@
   },
   "map": {
     "filter": {
-      "title": "Rennen & Veranstaltungen filtern"
+      "title": "Rennen & Veranstaltungen filtern",
+      "filter": "Filter"
     },
     "listView": "Listenansicht"
   },
@@ -545,7 +546,6 @@
       "title": "Reacties"
     }
   },
-
   "sidebar": {
     "upcomingRaces": "Aankomende Races"
   },

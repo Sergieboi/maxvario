@@ -20,6 +20,7 @@ const MVAd: FC<Props> = ({ ad }) => {
           ad_id: ad.id,
           ad_title: ad.title,
           user_id: session?.data?.user?.id ?? "N/A",
+          debug_mode: true,
         });
         // open in a new tab
         if (ad.url) {

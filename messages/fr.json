@@ -72,7 +72,7 @@
       "longText": "Le site de référence pour le sport de hike and fly – le sport d'aventure le plus exigeant au monde. Tout pour les athlètes de hike and fly et les organisateurs d'événements de hike and fly.​"
     },
     "cta": {
-      "races": "Explorer les courses",
+      "races": "Carte des courses",
       "events": "Consulter le calendrier"
     },
     "ready": "Prêt ?",
@@ -216,7 +216,8 @@
   },
   "map": {
     "filter": {
-      "title": "Filtrer les courses et événements"
+      "title": "Filtrer les courses et événements",
+      "filter": "Filtre"
     },
     "listView": "Vue liste"
   },

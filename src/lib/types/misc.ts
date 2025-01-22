@@ -199,11 +199,17 @@ export type RegistrationResponse = {
   success: boolean;
   messages: Array<string>;
 };
+export type HomePhoto = {
+  title: string;
+  thumbnail: string;
+  pathname: string;
+}
 export type HomeResponse = {
   upcoming: Array<MVRace>;
   ads: Array<MVAd>;
   news: Array<MVNews>;
   blog: Array<MVBlog>;
+  images: Array<HomePhoto>;
 };
 export type FilterOptions = {
   athlete_categories: Array<Taxonomy>;

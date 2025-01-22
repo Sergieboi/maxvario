@@ -72,8 +72,8 @@
       "longText": "The destination website for the sport of hike and fly – the world’s toughest adventure sport. Everything for the hike and fly athletes and hike and fly event organisers.​"
     },
     "cta": {
-      "races": "Explore the races",
-      "events": "Check the calendar"
+      "races": "Race Map",
+      "events": "Race Calendar"
     },
     "ready": "Ready?",
     "go": "GO"
@@ -216,7 +216,8 @@
   },
   "map": {
     "filter": {
-      "title": "Filter Races & Events"
+      "title": "Filter Races & Events",
+      "filter": "Filter"
     },
     "listView": "List View"
   },
@@ -326,7 +327,7 @@
     "title": "My account",
     "menu": {
       "profile": "Profile",
-      "posts": "My posts",
+      "posts": "My races",
       "subscriptions": "Subscriptions",
       "signout": "Sign out",
       "notifications": "Notifications"

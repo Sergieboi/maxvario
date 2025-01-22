@@ -72,8 +72,8 @@
       "longText": "El sitio web de destino para el deporte de hike and fly – el deporte de aventura más duro del mundo. Todo lo que necesitas para los atletas de hike and fly y los organizadores de eventos de hike and fly.​"
     },
     "cta": {
-      "races": "Explorar las carreras",
-      "events": "Consultar el calendario"
+      "races": "Mapa de carreras",
+      "events": "Calendario de carreras"
     },
     "ready": "¿Listo?",
     "go": "VAMOS"
@@ -216,7 +216,8 @@
   },
   "map": {
     "filter": {
-      "title": "Filtrar carreras y eventos"
+      "title": "Filtrar carreras y eventos",
+      "filter": "Filtrar"
     },
     "listView": "Vista de lista"
   },

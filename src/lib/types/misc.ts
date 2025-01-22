@@ -56,6 +56,7 @@ export type PageName =
   | "signup"
   | 'single-blog'
   | 'single-page'
+  | 'taxonomy'
   | "terms";
 
 export type Comment = {
@@ -249,4 +250,14 @@ export type SiteTaxonomies = {
     fai_categories: Array<Taxonomy>;
     race_formats: Array<Taxonomy>;
     athlete_categories: Array<Taxonomy>;
+}
+
+export type TaxonomyPage = {
+  taxonomy: {
+    name: string;
+    term: string;
+    image: string;
+    description: string;  
+  };
+  data: Array<MVNews | MVBlog>
 }

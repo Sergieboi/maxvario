@@ -6,6 +6,7 @@ import Upcoming from "./upcoming";
 import { HomeResponse } from "@/lib/types/misc";
 import LatestBlog from "./latest-blog";
 import LatestNews from "./latest-news";
+// import Cta from "../shared/cta";
 
 type Props = {
   data: HomeResponse;

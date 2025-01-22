@@ -566,5 +566,8 @@
     "tiktok": "TikTok",
     "tracking": "Pagina di tracciamento",
     "results": "Pagina dei risultati"
+  },
+  "site": {
+    "shortDescription": "The destination website for the sport of hike and fly"
   }
 }

@@ -1,5 +1,5 @@
 import { DEFAULT_LOCALE } from "../constants";
-import { ApiResponse, CalendarResponse, Locale, SidebarContent, SiteTaxonomies } from "../types/misc";
+import { ApiResponse, CalendarResponse, Locale, SidebarContent, SiteTaxonomies, TaxonomyPage } from "../types/misc";
 
 type Fetcher = {
   url: string;
@@ -147,6 +147,18 @@ export const getPostBlog = async (slug: string, locale: Locale) => {
   });
   if (Array.isArray(blog) && blog.length > 0) {
     return blog[0];
+  }
+  return null;
+};
+
+export const getTaxonomy = async (tax: string, term: string, locale: Locale): Promise<null|ApiResponse<TaxonomyPage>> => {
+  const taxonomy = await fetcher({
+    url: `${process.env.NEXT_PUBLIC_MAXVARIO_API}/taxonomy?taxonomy=${tax}&term=${term}&lang=${locale}`,
+    locale,
+    revalidate: 600,
+  });
+  if (taxonomy) {
+    return taxonomy;
   }
   return null;
 };

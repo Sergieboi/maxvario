@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import { Locale, MVBlog, MVNews, MVRace, PageName } from "../types/misc";
+import { Locale, MVBlog, MVNews, MVRace, PageName, TaxonomyPage } from "../types/misc";
 import { getTranslations } from "next-intl/server";
 import { DEFAULT_LOCALE } from "../constants";
 
@@ -65,6 +65,10 @@ export const seoContent = async ({
         "max-image-preview": "large",
       };
       md.openGraph.images = [];
+      break;
+    case 'taxonomy':
+      md.title += ` - ${(data as TaxonomyPage)?.taxonomy?.term}`;
+      md.description = (data as TaxonomyPage)?.taxonomy?.description;
       break;
   }
   md.openGraph.title = md.title;

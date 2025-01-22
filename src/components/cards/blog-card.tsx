@@ -43,7 +43,7 @@ const BlogCard: FC<Props> = ({ blog, ...props }) => {
             <div className="flex flex-wrap gap-2 pt-2">
               {blog.category.map((c, index) => (
                 <Chip key={index} variant="flat" color="success" size="sm">
-                  {c.name}
+                  <Link href={`/category/${c.slug}`}>{c.name}</Link>
                 </Chip>
               ))}
             </div>

@@ -44,7 +44,9 @@ const NewsCard: FC<Props> = ({ news, ...props }) => {
             <div className="flex flex-wrap gap-2 pt-2">
               {news.news_category.map((category, index) => (
                 <Chip key={index} variant="flat" color="success" size="sm">
-                  {category.name}
+                  <Link href={`/news-category/${category.slug}`}>
+                    {category.name}
+                  </Link>
                 </Chip>
               ))}
             </div>

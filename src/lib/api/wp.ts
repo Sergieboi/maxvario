@@ -58,7 +58,7 @@ export const getCalendar = async (
   locale: Locale
 ): Promise<ApiResponse<CalendarResponse> | null> => {
   const response = await fetcher({
-    url: `${process.env.NEXT_PUBLIC_MAXVARIO_API}/calendar`,
+    url: `${process.env.NEXT_PUBLIC_MAXVARIO_API}/calendar?lang=${locale}`,
     data,
     locale,
   });

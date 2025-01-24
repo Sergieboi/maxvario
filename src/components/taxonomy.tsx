@@ -1,17 +1,25 @@
-import { MVBlog, MVNews, SiteTaxonomies, TaxonomyPage } from "@/lib/types/misc";
+import {
+  MVBlog,
+  MVNews,
+  SidebarContent,
+  SiteTaxonomies,
+  TaxonomyPage,
+} from "@/lib/types/misc";
 import { FC, Fragment } from "react";
 import Container from "./shared/container";
 import NewsCard from "./cards/news-card";
 import BlogCard from "./cards/blog-card";
 import Link from "next/link";
+import Sidebar from "./blog/sidebar";
 
 type Props = {
   data: TaxonomyPage;
   postType: "news" | "post";
   categories: SiteTaxonomies;
+  sidebar?: SidebarContent | null;
 };
 
-const Taxonomy: FC<Props> = ({ data, postType, categories }) => {
+const Taxonomy: FC<Props> = ({ data, postType, categories, sidebar }) => {
   return (
     <div className="mt-24">
       <div
@@ -46,17 +54,22 @@ const Taxonomy: FC<Props> = ({ data, postType, categories }) => {
           })}
         </Container>
       </div>
-      <Container className="py-12">
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5 gap-4">
-          {data.data.map((item) => (
-            <Fragment key={item.id}>
-              {postType === "news" ? (
-                <NewsCard news={item as MVNews} />
-              ) : (
-                <BlogCard blog={item as MVBlog} />
-              )}
-            </Fragment>
-          ))}
+      <Container className="py-20 flex flex-col lg:flex-row gap-4">
+        <div className="w-full xl:w-3/4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 2xl:grid-cols-4 gap-4">
+            {data.data.map((item) => (
+              <Fragment key={item.id}>
+                {postType === "news" ? (
+                  <NewsCard news={item as MVNews} />
+                ) : (
+                  <BlogCard blog={item as MVBlog} />
+                )}
+              </Fragment>
+            ))}
+          </div>
+        </div>
+        <div className="w-full xl:w-1/4">
+          {sidebar && <Sidebar sidebar={sidebar} />}
         </div>
       </Container>
     </div>

@@ -1,18 +1,25 @@
-import { MVBlog, MVNews, SiteTaxonomies } from "@/lib/types/misc";
+import {
+  MVBlog,
+  MVNews,
+  SidebarContent,
+  SiteTaxonomies,
+} from "@/lib/types/misc";
 import { FC, Fragment } from "react";
 import Container from "../shared/container";
 import { useTranslations } from "next-intl";
 import NewsCard from "../cards/news-card";
 import BlogCard from "../cards/blog-card";
 import Link from "next/link";
+import Sidebar from "./sidebar";
 
 type Props = {
   items: Array<MVBlog | MVNews>;
   postType: "news" | "post";
   categories: SiteTaxonomies;
+  sidebar?: SidebarContent | null;
 };
 
-const Blog: FC<Props> = ({ items, postType, categories }) => {
+const Blog: FC<Props> = ({ items, postType, categories, sidebar }) => {
   const t = useTranslations();
   return (
     <div className="mt-24">
@@ -58,17 +65,23 @@ const Blog: FC<Props> = ({ items, postType, categories }) => {
         </Container>
       </div>
 
-      <Container className="py-12">
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5 gap-4">
-          {items.map((item) => (
-            <Fragment key={item.id}>
-              {postType === "news" ? (
-                <NewsCard news={item as MVNews} />
-              ) : (
-                <BlogCard blog={item as MVBlog} />
-              )}
-            </Fragment>
-          ))}
+      <Container className="py-20 flex flex-col lg:flex-row gap-4">
+        <div className=" w-full xl:w-3/4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 2xl:grid-cols-4 gap-4">
+            {items.map((item) => (
+              <Fragment key={item.id}>
+                {postType === "news" ? (
+                  <NewsCard news={item as MVNews} />
+                ) : (
+                  <BlogCard blog={item as MVBlog} />
+                )}
+              </Fragment>
+            ))}
+          </div>
+        </div>
+
+        <div className="w-full xl:w-1/4">
+          {sidebar && <Sidebar sidebar={sidebar} />}
         </div>
       </Container>
     </div>

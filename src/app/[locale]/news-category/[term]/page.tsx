@@ -1,5 +1,5 @@
 import Taxonomy from "@/components/taxonomy";
-import { getTaxonomy } from "@/lib/api/wp";
+import { getCategories, getSidebarContent, getTaxonomy } from "@/lib/api/wp";
 import { seoContent } from "@/lib/seo/seo";
 import { Locale } from "@/lib/types/misc";
 import { Metadata } from "next";
@@ -23,8 +23,17 @@ export default async function TermPage({ params }: Props) {
   const locale = (await params).locale;
   const term = (await params).term;
   const tax = await getTaxonomy("news-category", term, locale);
+  const categories = await getCategories(locale);
+  const sidebar = await getSidebarContent("news", locale);
   if (!tax) {
     return notFound();
   }
-  return <Taxonomy data={tax.data} postType="news" />;
+  return (
+    <Taxonomy
+      data={tax.data}
+      postType="news"
+      categories={categories.data}
+      sidebar={sidebar?.data}
+    />
+  );
 }

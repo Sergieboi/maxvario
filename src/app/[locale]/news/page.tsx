@@ -1,7 +1,7 @@
 import Blog from "@/components/blog/blog";
-import { getCategories, getNews } from "@/lib/api/wp";
+import { getCategories, getNews, getSidebarContent } from "@/lib/api/wp";
 import { seoContent } from "@/lib/seo/seo";
-import { Locale } from "@/lib/types/misc";
+import { Locale, SidebarContent } from "@/lib/types/misc";
 
 type Props = {
   params: Promise<{ locale: Locale }>;
@@ -18,6 +18,14 @@ export default async function NewsPage({ params }: Props) {
   const locale = (await params).locale;
   const news = await getNews(locale);
   const categories = await getCategories(locale);
+  const sidebar = await getSidebarContent("post", locale);
 
-  return <Blog items={news} postType="news" categories={categories.data} />;
+  return (
+    <Blog
+      items={news}
+      postType="news"
+      categories={categories.data}
+      sidebar={sidebar?.data as SidebarContent}
+    />
+  );
 }

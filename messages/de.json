@@ -62,7 +62,7 @@
       "about": "Über uns",
       "blog": "Blog",
       "races": "Rennen",
-      "aboutSlug": "über-uns"
+      "aboutSlug": "uber-uns"
     }
   },
   "home": {
@@ -330,7 +330,8 @@
       "posts": "Meine Beiträge",
       "subscriptions": "Abonnements",
       "signout": "Abmelden",
-      "notifications": "Benachrichtigungen"
+      "notifications": "Benachrichtigungen",
+      "postsTooltip": "Hier können Sie Ihre Rennen hinzufügen und verwalten"
     },
     "posts": {
       "races": {

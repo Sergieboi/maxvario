@@ -330,7 +330,8 @@
       "posts": "Mis publicaciones",
       "subscriptions": "Suscripciones",
       "signout": "Cerrar sesión",
-      "notifications": "Notificaciones"
+      "notifications": "Notificaciones",
+      "postsTooltip": "Aquí agregas y administras tus carreras."
     },
     "posts": {
       "races": {

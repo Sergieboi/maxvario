@@ -330,7 +330,8 @@
       "posts": "I miei post",
       "subscriptions": "Abbonamenti",
       "signout": "Esci",
-      "notifications": "Notifiche"
+      "notifications": "Notifiche",
+      "postsTooltip": "Qui puoi aggiungere e gestire le tue gare"
     },
     "posts": {
       "races": {

@@ -330,7 +330,8 @@
       "posts": "My races",
       "subscriptions": "Subscriptions",
       "signout": "Sign out",
-      "notifications": "Notifications"
+      "notifications": "Notifications",
+      "postsTooltip": "Here you add and manage your races"
     },
     "posts": {
       "races": {

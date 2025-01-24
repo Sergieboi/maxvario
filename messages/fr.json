@@ -165,7 +165,7 @@
         "cookies": "Cookies",
         "contact": "Contact",
         "termsSlug": "conditions",
-        "privacySlug": "confidentialité"
+        "privacySlug": "confidentialite"
       }
     }
   },
@@ -330,7 +330,8 @@
       "posts": "Mes publications",
       "subscriptions": "Abonnements",
       "signout": "Déconnexion",
-      "notifications": "Notifications"
+      "notifications": "Notifications",
+      "postsTooltip": "Ici, vous ajoutez et gérez vos courses"
     },
     "posts": {
       "races": {

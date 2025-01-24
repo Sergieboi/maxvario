@@ -1,15 +1,17 @@
-import { MVBlog, MVNews, TaxonomyPage } from "@/lib/types/misc";
+import { MVBlog, MVNews, SiteTaxonomies, TaxonomyPage } from "@/lib/types/misc";
 import { FC, Fragment } from "react";
 import Container from "./shared/container";
 import NewsCard from "./cards/news-card";
 import BlogCard from "./cards/blog-card";
+import Link from "next/link";
 
 type Props = {
   data: TaxonomyPage;
   postType: "news" | "post";
+  categories: SiteTaxonomies;
 };
 
-const Taxonomy: FC<Props> = ({ data, postType }) => {
+const Taxonomy: FC<Props> = ({ data, postType, categories }) => {
   return (
     <div className="mt-24">
       <div
@@ -22,6 +24,26 @@ const Taxonomy: FC<Props> = ({ data, postType }) => {
         <Container className="relative z-20 text-white">
           <h1 className="text-4xl  font-bold">{data.taxonomy.term}</h1>
           <p className="text-lg">{data.taxonomy.description}</p>
+        </Container>
+      </div>
+      <div className="bg-primary py-4">
+        <Container className="flex items-center gap-3 flex-wrap">
+          {(postType === "news"
+            ? categories.news_categories
+            : categories.categories
+          ).map((cat) => {
+            return (
+              <Link
+                href={`/${postType === "news" ? "news-category" : "category"}/${
+                  cat.slug
+                }`}
+                key={cat.term_id}
+                className="text-white text-sm hover:underline border-1 border-white/20 px-2 py-1 rounded-md"
+              >
+                {cat.name}
+              </Link>
+            );
+          })}
         </Container>
       </div>
       <Container className="py-12">

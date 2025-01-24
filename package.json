@@ -9,15 +9,6 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@editorjs/code": "^2.9.3",
-    "@editorjs/editorjs": "^2.30.7",
-    "@editorjs/embed": "^2.7.6",
-    "@editorjs/header": "^2.8.8",
-    "@editorjs/image": "^2.10.1",
-    "@editorjs/inline-code": "^1.5.1",
-    "@editorjs/list": "^2.0.2",
-    "@editorjs/paragraph": "^2.11.7",
-    "@editorjs/quote": "^2.7.6",
     "@fullcalendar/daygrid": "^6.1.15",
     "@fullcalendar/react": "^6.1.15",
     "@gsap/react": "^2.1.1",
@@ -33,7 +24,6 @@
     "@tiptap/react": "^2.11.2",
     "@tiptap/starter-kit": "^2.11.2",
     "@vis.gl/react-google-maps": "^1.4.3",
-    "editorjs-hyperlink": "^1.0.6",
     "framer-motion": "^11.15.0",
     "gsap": "npm:@gsap/shockingly@^3.12.5",
     "html-react-parser": "^5.2.2",
@@ -48,7 +38,6 @@
     "react-social-media-embed": "^2.5.17"
   },
   "devDependencies": {
-    "@editorjs/checklist": "^1.6.0",
     "@eslint/eslintrc": "^3",
     "@types/node": "^20",
     "@types/react": "^19",

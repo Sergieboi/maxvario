@@ -569,5 +569,10 @@
   },
   "site": {
     "shortDescription": "The destination website for the sport of hike and fly"
+  },
+  "newsletter": {
+    "title": "Abonnieren Sie den Newsletter",
+    "success": "Erfolgreich abonniert",
+    "error": "Wir konnten Sie nicht anmelden, bitte versuchen Sie es später erneut"
   }
 }

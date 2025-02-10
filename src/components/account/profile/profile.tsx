@@ -1,21 +1,16 @@
 "use client";
-import MVToast, { ToastProps } from "@/components/shared/toast";
 import { ProfileFields } from "@/lib/types/misc";
 import { Button, Card, CardBody, Input } from "@nextui-org/react";
 import { useTranslations } from "next-intl";
-import { FC, useState } from "react";
+import { FC } from "react";
 import { Controller, useForm } from "react-hook-form";
+import { toast } from "sonner";
 
 type Props = {
   user: ProfileFields;
 };
 
 const AccountProfile: FC<Props> = ({ user }) => {
-  const [toast, setToast] = useState<ToastProps & { show: boolean }>({
-    message: "",
-    modelType: "success",
-    show: false,
-  });
   const t = useTranslations();
   const {
     handleSubmit,
@@ -51,17 +46,9 @@ const AccountProfile: FC<Props> = ({ user }) => {
     if (res.ok) {
       const result = await res.json();
       if (Array.isArray(result.messages) && result.messages.length) {
-        setToast({
-          show: true,
-          message: result.messages[0],
-          modelType: "error",
-        });
+        toast.error(result.messages[0]);
       } else {
-        setToast({
-          show: true,
-          message: t("account.profile.success"),
-          modelType: "success",
-        });
+        toast.success(t("account.profile.success"));
       }
     }
   };
@@ -162,13 +149,6 @@ const AccountProfile: FC<Props> = ({ user }) => {
           </form>
         </CardBody>
       </Card>
-      {toast.show && (
-        <MVToast
-          message={toast.message}
-          modelType={toast.modelType}
-          hide={() => setToast({ ...toast, show: false })}
-        />
-      )}
     </>
   );
 };

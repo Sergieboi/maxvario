@@ -2,19 +2,14 @@
 import { PaperAirplaneIcon } from "@heroicons/react/24/outline";
 import { Button, Input } from "@nextui-org/react";
 import { useTranslations } from "next-intl";
-import { FC, useState } from "react";
+import { FC } from "react";
 import { Controller, useForm } from "react-hook-form";
-import MVToast, { ToastProps } from "../shared/toast";
+import { toast } from "sonner";
 
 interface NLForm {
   email: string;
 }
 const NewsletterForm: FC = () => {
-  const [toast, setToast] = useState<ToastProps & { show: boolean }>({
-    message: "",
-    modelType: "success",
-    show: false,
-  });
   const {
     handleSubmit,
     control,
@@ -47,20 +42,12 @@ const NewsletterForm: FC = () => {
       if (response.ok) {
         const json = await response.json();
         if (json.success) {
-          setToast({
-            show: true,
-            message: t("newsletter.success"),
-            modelType: "success",
-          });
+          toast.success(t("newsletter.success"));
           return;
         }
       }
     } catch {}
-    setToast({
-      show: true,
-      message: t("newsletter.error"),
-      modelType: "error",
-    });
+    toast.error(t("newsletter.error"));
   };
   return (
     <form onSubmit={handleSubmit(subscribe)}>
@@ -91,13 +78,6 @@ const NewsletterForm: FC = () => {
           />
         )}
       />
-      {toast.show && (
-        <MVToast
-          message={toast.message}
-          modelType={toast.modelType}
-          hide={() => setToast({ ...toast, show: false })}
-        />
-      )}
     </form>
   );
 };

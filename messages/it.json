@@ -62,7 +62,9 @@
       "about": "Chi siamo",
       "blog": "Blog",
       "races": "Gare",
-      "aboutSlug": "chi-siamo"
+      "aboutSlug": "chi-siamo",
+      "account": "Account",
+"signin": "Accedi"
     }
   },
   "home": {
@@ -166,7 +168,8 @@
         "contact": "Contatti",
         "termsSlug": "termini",
         "privacySlug": "privacy"
-      }
+      },
+      "account":"Account"
     }
   },
   "calendar": {
@@ -219,7 +222,8 @@
       "title": "Filtra Gare & Eventi",
       "filter": "Filtro"
     },
-    "listView": "Vista Lista"
+    "listView": "Vista Lista",
+    "clickOnMarker": "Clicca su un marcatore per visualizzare i dettagli"
   },
   "race": {
     "duration": {

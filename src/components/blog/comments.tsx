@@ -2,10 +2,9 @@
 import { Comment } from "@/lib/types/misc";
 import { Avatar, Button, Input, Textarea } from "@nextui-org/react";
 import { useLocale, useTranslations } from "next-intl";
-import { FC, useState } from "react";
+import { FC } from "react";
 import { Controller, useForm } from "react-hook-form";
-import MVToast, { ToastProps } from "../shared/toast";
-
+import { toast } from "sonner";
 type Props = {
   comments: Array<Comment>;
   postId: number | string;
@@ -18,11 +17,6 @@ interface CommentForm {
 }
 
 const Comments: FC<Props> = ({ comments, postId }) => {
-  const [toast, setToast] = useState<ToastProps & { show: boolean }>({
-    message: "",
-    modelType: "success",
-    show: false,
-  });
   const locale = useLocale();
   const t = useTranslations();
   const {
@@ -64,25 +58,13 @@ const Comments: FC<Props> = ({ comments, postId }) => {
       });
       const result = await res.json();
       if (result.success) {
-        setToast({
-          message: t("common.commentSuccess"),
-          modelType: "success",
-          show: true,
-        });
+        toast.success(t("common.commentSuccess"));
         reset();
       } else {
-        setToast({
-          message: result.messages?.[0],
-          modelType: "error",
-          show: true,
-        });
+        toast.error(result.messages?.[0]);
       }
     } catch {
-      setToast({
-        message: t("common.error") + " " + t("common.tryAgain"),
-        modelType: "error",
-        show: true,
-      });
+      toast.error(t("common.error") + " " + t("common.tryAgain"));
     }
   };
   return (
@@ -157,13 +139,6 @@ const Comments: FC<Props> = ({ comments, postId }) => {
           {t("common.submit")}
         </Button>
       </form>
-      {toast.show && (
-        <MVToast
-          message={toast.message}
-          modelType={toast.modelType}
-          hide={() => setToast({ ...toast, show: false })}
-        />
-      )}
     </>
   );
 };

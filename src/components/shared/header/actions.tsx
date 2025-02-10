@@ -82,7 +82,14 @@ const HeaderActions: FC = () => {
       <Button size="sm" variant="flat" isIconOnly onPress={onOpen}>
         <MagnifyingGlassIcon width={20} height={20} className="text-white" />
       </Button>
-      <Button size="sm" as={Link} href="/account" variant="flat" isIconOnly>
+      <Button
+        size="sm"
+        as={Link}
+        href="/account"
+        className="flex lg:hidden"
+        variant="flat"
+        isIconOnly
+      >
         <UserIcon width={20} height={20} className="text-white" />
       </Button>
       <Dropdown>

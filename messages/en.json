@@ -62,7 +62,9 @@
       "about": "About",
       "blog": "Blog",
       "races": "Races",
-      "aboutSlug": "about"
+      "aboutSlug": "about",
+      "account": "Account",
+      "signin": "Sign in"
     }
   },
   "home": {
@@ -166,7 +168,8 @@
         "contact": "Contact",
         "termsSlug": "terms",
         "privacySlug": "privacy"
-      }
+      },
+      "account": "Account"
     }
   },
   "calendar": {
@@ -219,7 +222,10 @@
       "title": "Filter Races & Events",
       "filter": "Filter"
     },
-    "listView": "List View"
+    "listView": "List View",
+    "map": {
+      "clickOnMarker": "Click on any race to subscribe for updates."
+    }
   },
   "race": {
     "duration": {
@@ -269,7 +275,18 @@
       },
       "genericError": "Generic error, please try again later",
       "success": "Done",
-      "successDescription": "Account created successfully"
+      "successDescription": "Account created successfully",
+      "type": {
+        "title": "Sign up as",
+        "contributor": {
+          "description": "Add/Manage your own events",
+          "title": "Events organizer"
+        },
+        "subscriber": {
+          "title": "Athlete",
+          "description": "Subscribe to events and news"
+        }
+      }
     },
     "alreadyHaveAccount": "Already have an account",
     "signin": {
@@ -551,12 +568,13 @@
     "upcomingRaces": "Upcoming Races"
   },
   "subscribe": {
-    "getNotified": "Subscribe to race updates",
+    "getNotified": "Subscribe for race updates",
     "email": "Enter your e-mail address"
   },
   "subscription": {
     "success": "Subscribed successfully",
-    "error": "We could not store your subscription"
+    "error": "We could not store your subscription",
+    "Guestsuccess": "Subscription successful! Please check your email to confirm and manage your subscriptions."
   },
   "social": {
     "facebook": "Facebook Page",

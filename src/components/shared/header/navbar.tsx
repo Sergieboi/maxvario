@@ -7,6 +7,7 @@ import {
   DropdownMenu,
   DropdownTrigger,
 } from "@nextui-org/react";
+import { useSession } from "next-auth/react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { redirect } from "next/navigation";
@@ -14,6 +15,7 @@ import { FC } from "react";
 
 const Navbar: FC = () => {
   const t = useTranslations("header");
+  const session = useSession();
   const items = [
     {
       href: "/races",
@@ -34,6 +36,11 @@ const Navbar: FC = () => {
     {
       href: "/blog",
       title: t("nav.blog"),
+    },
+    {
+      href: session.status === "authenticated" ? "/account" : "/auth/signin",
+      title:
+        session.status === "authenticated" ? t("nav.account") : t("nav.signin"),
     },
   ];
   return (

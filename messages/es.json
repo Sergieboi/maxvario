@@ -62,7 +62,9 @@
       "about": "Acerca de",
       "blog": "Blog",
       "races": "Carreras",
-      "aboutSlug": "acerca"
+      "aboutSlug": "acerca",
+      "account": "Cuenta",
+"signin": "Iniciar sesión"
     }
   },
   "home": {
@@ -166,7 +168,8 @@
         "contact": "Contacto",
         "termsSlug": "terminos",
         "privacySlug": "privacidad"
-      }
+      },
+      "account": "Cuenta"
     }
   },
   "calendar": {
@@ -219,7 +222,8 @@
       "title": "Filtrar carreras y eventos",
       "filter": "Filtrar"
     },
-    "listView": "Vista de lista"
+    "listView": "Vista de lista",
+    "clickOnMarker": "Haz clic en un marcador para ver más detalles"
   },
   "race": {
     "duration": {

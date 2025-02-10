@@ -62,7 +62,9 @@
       "about": "Über uns",
       "blog": "Blog",
       "races": "Rennen",
-      "aboutSlug": "uber-uns"
+      "aboutSlug": "uber-uns",
+      "account": "Konto",
+"signin": "Anmelden"
     }
   },
   "home": {
@@ -166,7 +168,8 @@
         "contact": "Kontakt",
         "termsSlug": "bedingungen",
         "privacySlug": "datenschutz"
-      }
+      },
+      "account": "Konto"
     }
   },
   "calendar": {
@@ -219,7 +222,8 @@
       "title": "Rennen & Veranstaltungen filtern",
       "filter": "Filter"
     },
-    "listView": "Listenansicht"
+    "listView": "Listenansicht",
+    "clickOnMarker": "Klicke auf einen Marker, um mehr über das Rennen zu erfahren"
   },
   "race": {
     "duration": {

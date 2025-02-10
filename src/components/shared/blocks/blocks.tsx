@@ -64,7 +64,6 @@ const Blocks: FC<Props> = ({ blocks }) => {
                 <Fragment key={index}>{htmlParser(block.innerHTML)}</Fragment>
               );
             default:
-              // console.log("Block not found", block);
               return null;
           }
         })}

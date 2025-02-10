@@ -13,8 +13,8 @@ import {
 import { useTranslations } from "next-intl";
 import { FC, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
-import MVToast, { ToastProps } from "../shared/toast";
 import { useSession } from "next-auth/react";
+import { toast } from "sonner";
 
 type Props = {
   raceId: number;
@@ -27,11 +27,6 @@ interface SubscribeInterface {
 
 const RaceSubscription: FC<Props> = ({ raceId }) => {
   const session = useSession();
-  const [toast, setToast] = useState<ToastProps & { show: boolean }>({
-    message: "",
-    modelType: "success",
-    show: false,
-  });
   const [isOpen, setIsOpen] = useState(false);
   const t = useTranslations();
   const {
@@ -73,24 +68,16 @@ const RaceSubscription: FC<Props> = ({ raceId }) => {
       setIsOpen(false);
 
       if (result.success) {
-        setToast({
-          message: t("subscription.success"),
-          modelType: "success",
-          show: true,
-        });
+        toast.success(
+          session.status === "authenticated"
+            ? t("subscription.success")
+            : t("subscription.Guestsuccess")
+        );
       } else {
-        setToast({
-          message: result.messages.join(", "),
-          modelType: "error",
-          show: true,
-        });
+        toast.error(result.messages.join(", "));
       }
     } catch {
-      setToast({
-        message: t("subscription.error"),
-        modelType: "error",
-        show: true,
-      });
+      toast.error(t("subscription.error"));
     }
   };
   return (
@@ -158,13 +145,6 @@ const RaceSubscription: FC<Props> = ({ raceId }) => {
           </form>
         </PopoverContent>
       </Popover>
-      {toast.show && (
-        <MVToast
-          message={toast.message}
-          modelType={toast.modelType}
-          hide={() => setToast({ ...toast, show: false })}
-        />
-      )}
     </>
   );
 };

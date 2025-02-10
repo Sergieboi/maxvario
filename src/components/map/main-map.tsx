@@ -62,6 +62,9 @@ const MainMap: FC<CalendarResponse> = ({ calendar, filter_options }) => {
             );
           })}
         </div>
+        <div className="absolute bottom-6 z-10 right-16 bg-primary text-white p-2 rounded-lg">
+          {t("map.clickOnMarker")}
+        </div>
         <div className="h-full w-full bg-gray-50 relative">
           <Map
             className="w-full h-full"

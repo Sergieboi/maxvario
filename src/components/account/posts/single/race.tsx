@@ -24,7 +24,7 @@ import CurrentTimezone from "./current-timezone";
 import MVEditor from "@/components/shared/blocks/editor";
 import { extractBlockInnerHTML } from "@/lib/utils";
 import { parseZonedDateTime, ZonedDateTime } from "@internationalized/date";
-import MVToast, { ToastProps } from "@/components/shared/toast";
+import { toast } from "sonner";
 
 const getDateTime = (date: ZonedDateTime) => {
   // eslint-disable-next-line prefer-const
@@ -88,11 +88,6 @@ const SingleRace: FC<SingleRaceParams> = ({
   fai_categories,
   race_formats,
 }) => {
-  const [toast, setToast] = useState<ToastProps & { show: boolean }>({
-    message: "",
-    modelType: "success",
-    show: false,
-  });
   const [postContent, setPostContent] = useState(
     extractBlockInnerHTML(init?.content ?? []) || ""
   );
@@ -266,18 +261,10 @@ const SingleRace: FC<SingleRaceParams> = ({
       }
       const result = await res.json();
       if (Array.isArray(result.messages)) {
-        setToast({
-          message: result.messages.join(", "),
-          modelType: "error",
-          show: true,
-        });
+        toast.error(result.messages.join(", "));
       }
     } catch {
-      setToast({
-        message: t("common.genericError"),
-        modelType: "error",
-        show: true,
-      });
+      toast.error(t("common.genericError"));
     }
   };
 
@@ -851,13 +838,6 @@ const SingleRace: FC<SingleRaceParams> = ({
           {t("common.submit")}
         </Button>
       </form>
-      {toast.show && (
-        <MVToast
-          message={toast.message}
-          modelType={toast.modelType}
-          hide={() => setToast({ ...toast, show: false })}
-        />
-      )}
     </>
   );
 };

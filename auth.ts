@@ -1,12 +1,15 @@
 import { loginWithCredentials } from "@/lib/api/account";
-import { MVUser } from "@/lib/types/misc";
+import { MVUser as BaseMVUser } from "@/lib/types/misc";
+
+interface MVUser extends BaseMVUser {
+  emailVerified: Date | null;
+}
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
-import { AdapterUser } from "next-auth/adapters";
 
 declare module "next-auth" {
   interface Session {
-    user: AdapterUser & MVUser;
+    user: MVUser;
   }
 }
 
@@ -16,15 +19,14 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       type: "credentials",
       name: "credentials",
       credentials: {
-        email: {},
-        password: {},
+        email: { label: "Email", type: "text" },
+        password: { label: "Password", type: "password" },
       },
       authorize: async (credentials): Promise<MVUser | null> => {
-        let user = null;
-        user = await loginWithCredentials(
-          credentials.email as string,
-          credentials.password as string
-        );
+        if (!credentials?.email || !credentials?.password) {
+          throw new Error("Missing credentials.");
+        }
+        const user = await loginWithCredentials(credentials.email as string, credentials.password as string);
         if (!user) {
           throw new Error("Invalid credentials.");
         }
@@ -32,14 +34,14 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       },
     }),
   ],
-  pages: {
-    signIn: "/auth/signin",
+  session: {
+    strategy: "jwt",
+    maxAge: 6 * 24 * 60 * 60,
   },
   callbacks: {
     async session({ session, token }) {
-      // Add custom user data to session object
       if (token.user) {
-        session.user = token.user as AdapterUser & MVUser; // Ensure user in session is AdapterUser & MVUser
+        session.user = token.user as MVUser;
       }
       return session;
     },

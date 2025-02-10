@@ -6,11 +6,61 @@ import { FC, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { redirect } from "next/navigation";
 
+import React from "react";
+import {
+  RadioGroup,
+  useRadio,
+  VisuallyHidden,
+  RadioProps,
+  cn,
+} from "@nextui-org/react";
+
+export const CustomRadio = (props: RadioProps) => {
+  const {
+    Component,
+    children,
+    description,
+    getBaseProps,
+    getWrapperProps,
+    getInputProps,
+    getLabelProps,
+    getLabelWrapperProps,
+    getControlProps,
+  } = useRadio(props);
+
+  return (
+    <Component
+      {...getBaseProps()}
+      className={cn(
+        "group inline-flex items-center justify-between hover:bg-content2 flex-row-reverse",
+        "max-w-[300px] cursor-pointer border-2 border-default rounded-xl gap-4 p-2",
+        "data-[selected=true]:border-primary"
+      )}
+    >
+      <VisuallyHidden>
+        <input {...getInputProps()} />
+      </VisuallyHidden>
+      <span {...getWrapperProps()}>
+        <span {...getControlProps()} />
+      </span>
+      <div {...getLabelWrapperProps()}>
+        {children && <span {...getLabelProps()}>{children}</span>}
+        {description && (
+          <span className="text-xs text-foreground opacity-70">
+            {description}
+          </span>
+        )}
+      </div>
+    </Component>
+  );
+};
+
 interface AuthSignupProps {
   name: string;
   email: string;
   password: string;
   passwordConfirmation: string;
+  signupType: "contributor" | "subscriber";
 }
 
 const AuthSignin: FC = () => {
@@ -172,6 +222,32 @@ const AuthSignin: FC = () => {
               isInvalid={invalid}
               errorMessage={error?.message}
             />
+          )}
+        />
+        <Controller
+          name="signupType"
+          defaultValue="contributor"
+          control={control}
+          rules={{ required: true }}
+          render={({ field }) => (
+            <RadioGroup
+              {...field}
+              label={t("auth.signup.type.title")}
+              name="signupType"
+            >
+              <CustomRadio
+                description={t("auth.signup.type.contributor.description")}
+                value="contributor"
+              >
+                {t("auth.signup.type.contributor.title")}
+              </CustomRadio>
+              <CustomRadio
+                description={t("auth.signup.type.subscriber.description")}
+                value="subscriber"
+              >
+                {t("auth.signup.type.subscriber.title")}
+              </CustomRadio>
+            </RadioGroup>
           )}
         />
         <Button color="primary" type="submit" isLoading={isSubmitting}>

@@ -108,6 +108,17 @@ const Footer: FC = () => {
                     {t("footer.races.blog")}
                   </Link>
                 </li>
+                <li>
+                  <Link
+                    className="relative inline-flex items-center tap-highlight-transparent outline-none data-[focus-visible=true]:z-10 data-[focus-visible=true]:outline-2 data-[focus-visible=true]:outline-focus data-[focus-visible=true]:outline-offset-2 text-small no-underline hover:opacity-80 active:opacity-disabled transition-opacity text-default-400"
+                    href={"/account"}
+                    target="_self"
+                    tabIndex={0}
+                    role="link"
+                  >
+                    {t("footer.account")}
+                  </Link>
+                </li>
               </ul>
             </div>
             <div className="mt-10 md:mt-0">

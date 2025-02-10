@@ -19,6 +19,8 @@ export interface ProfileFields {
 }
 
 export interface MVUser extends User {
+  id: string;
+  email: string;
   token: string;
   user_email: string;
   user_nicename: string;

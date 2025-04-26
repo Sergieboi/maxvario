@@ -1,5 +1,12 @@
 import { DEFAULT_LOCALE } from "../constants";
-import { ApiResponse, CalendarResponse, Locale, SidebarContent, SiteTaxonomies, TaxonomyPage } from "../types/misc";
+import {
+  ApiResponse,
+  CalendarResponse,
+  Locale,
+  SidebarContent,
+  SiteTaxonomies,
+  TaxonomyPage,
+} from "../types/misc";
 
 type Fetcher = {
   url: string;
@@ -26,9 +33,11 @@ export const fetcher = async ({
         Authorization: token ? `Bearer ${token}` : "",
       },
       body: data ? JSON.stringify(data) : undefined,
-      cache: "force-cache",
+      cache: token ? "no-store" : "force-cache",
       next: {
-        revalidate: revalidate || 1,
+        // revalidate: revalidate || 1,
+        // limit the cache to 120 seconds maximum
+        revalidate: revalidate ? 120 : 1,
       },
     });
     const result = await response.json();
@@ -67,9 +76,7 @@ export const getCalendar = async (
 
 export const getCategories = async (
   locale: Locale
-): Promise<
-  ApiResponse<SiteTaxonomies>
-> => {
+): Promise<ApiResponse<SiteTaxonomies>> => {
   const categories = await fetcher({
     url: `${process.env.NEXT_PUBLIC_MAXVARIO_API}/categories?lang=${locale}`,
     revalidate: 300,
@@ -94,11 +101,17 @@ export const getPosts = async (locale: Locale) => {
   return posts;
 };
 
-export const getSidebarContent = async (postType = '', locale: Locale): Promise<null | ApiResponse<SidebarContent>> => {
+export const getSidebarContent = async (
+  postType = "",
+  locale: Locale
+): Promise<null | ApiResponse<SidebarContent>> => {
+  console.log(
+    `${process.env.NEXT_PUBLIC_MAXVARIO_API}/sidebar?lang=${locale}&post_type=${postType}`
+  );
   const content = await fetcher({
     url: `${process.env.NEXT_PUBLIC_MAXVARIO_API}/sidebar?lang=${locale}&post_type=${postType}`,
     locale,
-    revalidate: 6 * 60 * 60,
+    revalidate: 120,
   });
   return content;
 };
@@ -107,7 +120,7 @@ export const getStaticPage = async (slug: string, locale: Locale) => {
   const page = await fetcher({
     url: `${process.env.NEXT_PUBLIC_WP_API_URL}/pages?slug=${slug}&lang=${locale}`,
     locale,
-    revalidate: 86400,
+    revalidate: 120,
   });
   if (Array.isArray(page) && page.length > 0) {
     return page[0];
@@ -119,7 +132,7 @@ export const getRace = async (slug: string, locale: Locale) => {
   const race = await fetcher({
     url: `${process.env.NEXT_PUBLIC_WP_API_URL}/races?slug=${slug}&lang=${locale}`,
     locale,
-    revalidate: 600,
+    revalidate: 120,
   });
   if (Array.isArray(race) && race.length > 0) {
     return race[0];
@@ -151,7 +164,11 @@ export const getPostBlog = async (slug: string, locale: Locale) => {
   return null;
 };
 
-export const getTaxonomy = async (tax: string, term: string, locale: Locale): Promise<null|ApiResponse<TaxonomyPage>> => {
+export const getTaxonomy = async (
+  tax: string,
+  term: string,
+  locale: Locale
+): Promise<null | ApiResponse<TaxonomyPage>> => {
   const taxonomy = await fetcher({
     url: `${process.env.NEXT_PUBLIC_MAXVARIO_API}/taxonomy?taxonomy=${tax}&term=${term}&lang=${locale}`,
     locale,

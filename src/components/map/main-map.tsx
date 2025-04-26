@@ -78,19 +78,25 @@ const MainMap: FC<CalendarResponse> = ({ calendar, filter_options }) => {
             fullscreenControl={false}
           >
             {(data ?? [])
-              .filter((e) => e.location_data?.lat && e.location_data.lng)
-              .map((race) => (
-                <MarkerWithInfoWindow
-                  selected={selectedRace?.id === race.id}
-                  key={race.id}
-                  race={race}
-                  onClick={(race) => setSelectedRace(race)}
-                  position={{
-                    lat: race.location_data?.lat as number,
-                    lng: race.location_data?.lng as number,
-                  }}
-                />
-              ))}
+              .filter((e) => !!e.location_data && !!e.location_data?.lat && !!e.location_data.lng)
+              .map((race) => {
+                if (!race.location_data?.lat || !race.location_data?.lng) {
+                  console.error(race.title)
+                  return null;
+                }
+                return (
+                  <MarkerWithInfoWindow
+                    selected={selectedRace?.id === race.id}
+                    key={race.id}
+                    race={race}
+                    onClick={(race) => setSelectedRace(race)}
+                    position={{
+                      lat: race.location_data?.lat as number ?? 0,
+                      lng: race.location_data?.lng as number ?? 0,
+                    }}
+                  />
+                )
+              })}
           </Map>
           <div className="flex items-center gap-2 absolute top-2 right-2 z-10">
             <Button

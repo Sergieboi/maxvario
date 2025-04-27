@@ -8,7 +8,7 @@ import { CalendarResponse } from "@/lib/types/misc";
 const MapProvider: FC<CalendarResponse> = ({ calendar, filter_options }) => {
   return (
     <APIProvider apiKey={MAPS_KEY}>
-      <MainMap calendar={calendar} filter_options={filter_options} />
+      <MainMap calendar={calendar} filter_options={filter_options} key='races-map' />
     </APIProvider>
   );
 };

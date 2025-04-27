@@ -30,7 +30,10 @@ const MarkerWithInfoWindow: FC<Props> = ({
   return (
     <AdvancedMarker
       ref={markerRef}
-      position={position}
+      position={new google.maps.LatLng(
+        position.lat,
+        position.lng
+      )}
       clickable
       onClick={() => onClick(race)}
     >

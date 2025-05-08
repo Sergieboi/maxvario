@@ -21,7 +21,7 @@ export const fetcher = async ({
   method,
   data,
   locale,
-  revalidate,
+  // revalidate,
   token,
 }: Fetcher) => {
   try {
@@ -33,12 +33,13 @@ export const fetcher = async ({
         Authorization: token ? `Bearer ${token}` : "",
       },
       body: data ? JSON.stringify(data) : undefined,
-      cache: token ? "no-store" : "force-cache",
-      next: {
-        // revalidate: revalidate || 1,
-        // limit the cache to 120 seconds maximum
-        revalidate: revalidate ? 120 : 1,
-      },
+      // completely disable cache
+      cache: "no-cache",
+      // next: {
+      // revalidate: revalidate || 1,
+      // limit the cache to 120 seconds maximum
+      // revalidate: revalidate ? 120 : 1,
+      // },
     });
     const result = await response.json();
     if (response.ok) {

@@ -34,7 +34,7 @@ export const fetcher = async ({
       },
       body: data ? JSON.stringify(data) : undefined,
       // completely disable cache
-      cache: "no-cache",
+      cache: "no-store",
       // next: {
       // revalidate: revalidate || 1,
       // limit the cache to 120 seconds maximum

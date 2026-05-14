@@ -6,6 +6,7 @@ export function groupAndSortByDate(data: MVRace[]) {
 
   data.forEach((item) => {
     const date = new Date(item.start_date);
+    if (isNaN(date.getTime())) return;
     const key = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(
       2,
       "0"

@@ -32,7 +32,7 @@ const SummaryCard: FC<SummaryCardProps> = ({ race, cardClick, ...props }) => {
             className="min-w-8"
             isBordered
             color="danger"
-            src={`/assets/flags/${race.location_data.country_short?.toLowerCase()}.svg`}
+            src={`/assets/flags/${race.location_data?.country_short?.toLowerCase()}.svg`}
           />
           <div className="flex flex-col gap-1.5">
             <p className="text-white font-semibold">{race.title}</p>

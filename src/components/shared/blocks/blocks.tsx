@@ -48,7 +48,7 @@ const Blocks: FC<Props> = ({ blocks }) => {
               ) {
                 return <XEmbedBlock key={index} url={block.attrs.url} />;
               } else {
-                if (block.attrs.url.includes("instagram")) {
+                if (block.attrs?.url?.includes("instagram")) {
                   return <InstagramBlock key={index} url={block.attrs.url} />;
                 }
               }

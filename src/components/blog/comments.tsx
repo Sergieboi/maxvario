@@ -71,12 +71,12 @@ const Comments: FC<Props> = ({ comments, postId }) => {
     <>
       <div className="space-y-4 pt-12">
         <h3 className="font-semibold">{t("common.comments")}</h3>
-        {comments.length === 0 && (
+        {(comments ?? []).length === 0 && (
           <p className="bg-gray-50 border-1 rounded-lg p-3 text-center text-default-400">
             {t("common.noComments")}
           </p>
         )}
-        {comments.map((comment) => {
+        {(comments ?? []).map((comment) => {
           const { author_name, content, date } = comment;
           return (
             <div

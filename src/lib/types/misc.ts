@@ -47,6 +47,8 @@ export type PageName =
   | "contact"
   | "events"
   | "forgotPassword"
+  | "gear"
+  | "single-gear"
   | "home"
   | "map"
   | "news"
@@ -253,6 +255,42 @@ export type SiteTaxonomies = {
     race_formats: Array<Taxonomy>;
     athlete_categories: Array<Taxonomy>;
 }
+
+export type GearCategory = {
+  id: number;
+  name: string;
+  slug: string;
+};
+
+export type GearSpecification = {
+  label: string;
+  value: string;
+};
+
+export type GearAthleteReview = {
+  athlete_name: string;
+  athlete_photo: string | null;
+  athlete_country: string;
+  review_text: string;
+  rating: number;
+};
+
+export type MVGear = {
+  id: number;
+  title: string;
+  slug: string;
+  short_description: string;
+  thumbnail: string | null;
+  thumbnail_full: string | null;
+  price: string;
+  buy_url: string;
+  brand: string;
+  weight: string;
+  gear_categories: GearCategory[];
+  content_json?: Array<Block>;
+  athlete_reviews?: GearAthleteReview[];
+  specifications?: GearSpecification[];
+};
 
 export type TaxonomyPage = {
   taxonomy: {

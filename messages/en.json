@@ -53,7 +53,29 @@
     },
     "resetPassword": {
       "title": "Reset Password"
+    },
+    "gear": {
+      "title": "Gear Guide"
     }
+  },
+  "gear": {
+    "hero": {
+      "title": "Hike & Fly Gear Guide",
+      "description": "Trusted gear recommendations from experienced hike and fly athletes. Find the best wings, harnesses, helmets, packs, and instruments for your next adventure."
+    },
+    "filter": {
+      "all": "All Gear"
+    },
+    "noItems": "No gear found in this category.",
+    "item": "item",
+    "items": "items",
+    "reviews": {
+      "title": "Athlete Reviews"
+    },
+    "buyNow": "View Product",
+    "specifications": "Specifications",
+    "weight": "Weight",
+    "brand": "Brand"
   },
   "header": {
     "nav": {
@@ -62,6 +84,7 @@
       "about": "About",
       "blog": "Blog",
       "races": "Races",
+      "gear": "Gear",
       "aboutSlug": "about",
       "account": "Account",
       "signin": "Sign in"

@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import { Locale, MVBlog, MVNews, MVRace, PageName, TaxonomyPage } from "../types/misc";
+import { Locale, MVBlog, MVGear, MVNews, MVRace, PageName, TaxonomyPage } from "../types/misc";
 import { getTranslations } from "next-intl/server";
 import { DEFAULT_LOCALE } from "../constants";
 
@@ -23,6 +23,7 @@ export const seoContent = async ({
     case "blog":
     case "news":
     case "404":
+    case "gear":
     case "home":
     case "about":
     case "contact":
@@ -38,6 +39,11 @@ export const seoContent = async ({
     case "resetPassword":
     case "signup":
       md.title += ` - ${t(`${page}.title`)}`;
+      break;
+    case "single-gear":
+      md.title += ` - ${(data as MVGear)?.title ?? ""}`;
+      md.robots = { index: true, follow: true, "max-image-preview": "large" };
+      md.openGraph.images = [];
       break;
     case "race":
       md.title += ` - ${(data as MVRace)?.title}`;

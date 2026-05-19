@@ -3,6 +3,7 @@ import {
   ApiResponse,
   CalendarResponse,
   Locale,
+  MVGear,
   SidebarContent,
   SiteTaxonomies,
   TaxonomyPage,
@@ -163,6 +164,28 @@ export const getPostBlog = async (slug: string, locale: Locale) => {
     return blog[0];
   }
   return null;
+};
+
+export const getGear = async (
+  locale: Locale,
+  category?: string
+): Promise<ApiResponse<MVGear[]> | null> => {
+  const params = new URLSearchParams({ lang: locale });
+  if (category) params.set("category", category);
+  return fetcher({
+    url: `${process.env.NEXT_PUBLIC_MAXVARIO_API}/gear?${params}`,
+    locale,
+  });
+};
+
+export const getSingleGear = async (
+  slug: string,
+  locale: Locale
+): Promise<ApiResponse<MVGear> | null> => {
+  return fetcher({
+    url: `${process.env.NEXT_PUBLIC_MAXVARIO_API}/gear/${slug}?lang=${locale}`,
+    locale,
+  });
 };
 
 export const getTaxonomy = async (

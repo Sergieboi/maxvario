@@ -38,6 +38,10 @@ const Navbar: FC = () => {
       title: t("nav.blog"),
     },
     {
+      href: "/gear",
+      title: t("nav.gear"),
+    },
+    {
       href: session.status === "authenticated" ? "/account" : "/auth/signin",
       title:
         session.status === "authenticated" ? t("nav.account") : t("nav.signin"),

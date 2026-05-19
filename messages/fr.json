@@ -53,7 +53,29 @@
     },
     "resetPassword": {
       "title": "Réinitialiser le mot de passe"
+    },
+    "gear": {
+      "title": "Guide Équipement"
     }
+  },
+  "gear": {
+    "hero": {
+      "title": "Guide Équipement Hike & Fly",
+      "description": "Recommandations d'équipement de confiance par des athlètes expérimentés en hike and fly."
+    },
+    "filter": {
+      "all": "Tout l'Équipement"
+    },
+    "noItems": "Aucun équipement trouvé dans cette catégorie.",
+    "item": "article",
+    "items": "articles",
+    "reviews": {
+      "title": "Avis des Athlètes"
+    },
+    "buyNow": "Voir le Produit",
+    "specifications": "Spécifications",
+    "weight": "Poids",
+    "brand": "Marque"
   },
   "header": {
     "nav": {
@@ -62,6 +84,7 @@
       "about": "À propos",
       "blog": "Blog",
       "races": "Courses",
+      "gear": "Équipement",
       "aboutSlug": "a-propos",
       "account": "Compte",
       "signin": "Se connecter"
@@ -169,7 +192,7 @@
         "termsSlug": "conditions",
         "privacySlug": "confidentialite"
       },
-      "account":"Compte"
+      "account": "Compte"
     }
   },
   "calendar": {
@@ -223,7 +246,10 @@
       "filter": "Filtre"
     },
     "listView": "Vue liste",
-    "clickOnMarker": "Cliquez sur un marqueur pour voir les détails de la course"
+    "clickOnMarker": "Cliquez sur un marqueur pour voir les détails de la course",
+    "map": {
+      "clickOnMarker": "Click on any race to subscribe for updates."
+    }
   },
   "race": {
     "duration": {
@@ -273,7 +299,18 @@
       },
       "genericError": "Erreur générale, veuillez réessayer plus tard",
       "success": "Terminé",
-      "successDescription": "Compte créé avec succès"
+      "successDescription": "Compte créé avec succès",
+      "type": {
+        "title": "Sign up as",
+        "contributor": {
+          "description": "Add/Manage your own events",
+          "title": "Events organizer"
+        },
+        "subscriber": {
+          "title": "Athlete",
+          "description": "Subscribe to events and news"
+        }
+      }
     },
     "alreadyHaveAccount": "Vous avez déjà un compte",
     "signin": {
@@ -560,7 +597,8 @@
   },
   "subscription": {
     "success": "Abonnement réussi",
-    "error": "Nous n'avons pas pu enregistrer votre abonnement"
+    "error": "Nous n'avons pas pu enregistrer votre abonnement",
+    "Guestsuccess": "Subscription successful! Please check your email to confirm and manage your subscriptions."
   },
   "social": {
     "facebook": "Page Facebook",
@@ -578,6 +616,7 @@
   "newsletter": {
     "title": "Abonnez-vous à la newsletter",
     "success": "Abonné avec succès",
-    "error": "Nous n'avons pas pu vous inscrire, veuillez réessayer plus tard"
+    "error": "Nous n'avons pas pu vous inscrire, veuillez réessayer plus tard",
+    "email": "E-mail address"
   }
 }

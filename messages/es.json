@@ -53,7 +53,29 @@
     },
     "resetPassword": {
       "title": "Restablecer la contraseña"
+    },
+    "gear": {
+      "title": "Guía de Equipamiento"
     }
+  },
+  "gear": {
+    "hero": {
+      "title": "Guía de Equipamiento Hike & Fly",
+      "description": "Recomendaciones de equipamiento de atletas experimentados en hike and fly."
+    },
+    "filter": {
+      "all": "Todo el Equipamiento"
+    },
+    "noItems": "No se encontró equipamiento en esta categoría.",
+    "item": "artículo",
+    "items": "artículos",
+    "reviews": {
+      "title": "Reseñas de Atletas"
+    },
+    "buyNow": "Ver Producto",
+    "specifications": "Especificaciones",
+    "weight": "Peso",
+    "brand": "Marca"
   },
   "header": {
     "nav": {
@@ -62,9 +84,10 @@
       "about": "Acerca de",
       "blog": "Blog",
       "races": "Carreras",
+      "gear": "Equipamiento",
       "aboutSlug": "acerca",
       "account": "Cuenta",
-"signin": "Iniciar sesión"
+      "signin": "Iniciar sesión"
     }
   },
   "home": {
@@ -223,7 +246,10 @@
       "filter": "Filtrar"
     },
     "listView": "Vista de lista",
-    "clickOnMarker": "Haz clic en un marcador para ver más detalles"
+    "clickOnMarker": "Haz clic en un marcador para ver más detalles",
+    "map": {
+      "clickOnMarker": "Click on any race to subscribe for updates."
+    }
   },
   "race": {
     "duration": {
@@ -273,7 +299,18 @@
       },
       "genericError": "Error genérico, por favor intenta nuevamente más tarde",
       "success": "Hecho",
-      "successDescription": "Cuenta creada con éxito"
+      "successDescription": "Cuenta creada con éxito",
+      "type": {
+        "title": "Sign up as",
+        "contributor": {
+          "description": "Add/Manage your own events",
+          "title": "Events organizer"
+        },
+        "subscriber": {
+          "title": "Athlete",
+          "description": "Subscribe to events and news"
+        }
+      }
     },
     "alreadyHaveAccount": "¿Ya tienes una cuenta?",
     "signin": {
@@ -560,7 +597,8 @@
   },
   "subscription": {
     "success": "Te has suscrito con éxito",
-    "error": "No pudimos almacenar tu suscripción"
+    "error": "No pudimos almacenar tu suscripción",
+    "Guestsuccess": "Subscription successful! Please check your email to confirm and manage your subscriptions."
   },
   "social": {
     "facebook": "Página de Facebook",
@@ -578,6 +616,7 @@
   "newsletter": {
     "title": "Suscríbete al boletín",
     "success": "Suscripción exitosa",
-    "error": "No pudimos registrarte, por favor inténtalo de nuevo más tarde"
+    "error": "No pudimos registrarte, por favor inténtalo de nuevo más tarde",
+    "email": "E-mail address"
   }
 }

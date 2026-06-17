@@ -1,7 +1,7 @@
 "use client";
 
 import { FC, useState, useMemo } from "react";
-import { Button, Chip } from "@nextui-org/react";
+import { Button } from "@nextui-org/react";
 import { useTranslations } from "next-intl";
 import { MVGear, GearCategory } from "@/lib/types/misc";
 import GearCard from "@/components/cards/gear-card";

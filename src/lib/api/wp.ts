@@ -32,6 +32,7 @@ export const fetcher = async ({
         "Content-Type": "application/json",
         "Accept-Language": locale || DEFAULT_LOCALE,
         Authorization: token ? `Bearer ${token}` : "",
+        "User-Agent": "Mozilla/5.0 (compatible; Maxvario/1.0)",
       },
       body: data ? JSON.stringify(data) : undefined,
       // completely disable cache

@@ -15,7 +15,12 @@ export async function generateMetadata({ params }: Props) {
 
 export default async function GearPage({ params }: Props) {
   const locale = (await params).locale;
-  const response = await getGear(locale);
+  let response = await getGear(locale);
+
+  // Fall back to English if no gear exists for this locale
+  if (!response?.data && locale !== "en") {
+    response = await getGear("en");
+  }
 
   if (!response?.data) return notFound();
 

@@ -22,7 +22,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function SingleGearPage({ params }: Props) {
   const { locale, slug } = await params;
-  const response = await getSingleGear(slug, locale);
+  let response = await getSingleGear(slug, locale);
+
+  // Fall back to English if no translation exists for this locale
+  if (!response?.data && locale !== "en") {
+    response = await getSingleGear(slug, "en");
+  }
 
   if (!response?.data) return notFound();
 

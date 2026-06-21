@@ -25,14 +25,22 @@ export const fetcher = async ({
   // revalidate,
   token,
 }: Fetcher) => {
+  // Bypass Cloudflare by hitting Bluehost directly on server-side
+  const internalHost = process.env.MAXVARIO_INTERNAL_HOST;
+  const fetchUrl = internalHost
+    ? url.replace("https://api.maxvario.com", `http://${internalHost}`)
+    : url;
+  const hostHeader = internalHost ? { Host: "api.maxvario.com" } : {};
+
   try {
-    const response = await fetch(url, {
+    const response = await fetch(fetchUrl, {
       method: method || "GET",
       headers: {
         "Content-Type": "application/json",
         "Accept-Language": locale || DEFAULT_LOCALE,
         Authorization: token ? `Bearer ${token}` : "",
         "User-Agent": "Mozilla/5.0 (compatible; Maxvario/1.0)",
+        ...hostHeader,
       },
       body: data ? JSON.stringify(data) : undefined,
       // completely disable cache

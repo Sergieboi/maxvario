@@ -43,6 +43,11 @@ export const fetcher = async ({
       // revalidate: revalidate ? 120 : 1,
       // },
     });
+    const contentType = response.headers.get("content-type") || "";
+    if (!contentType.includes("application/json")) {
+      console.error("API returned non-JSON response for:", url);
+      return null;
+    }
     const result = await response.json();
     if (response.ok) {
       return result;

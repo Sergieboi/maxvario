@@ -30,18 +30,19 @@ export const fetcher = async ({
   const fetchUrl = internalHost
     ? url.replace("https://api.maxvario.com", `http://${internalHost}`)
     : url;
-  const hostHeader = internalHost ? { Host: "api.maxvario.com" } : {};
+
+  const headers: Record<string, string> = {
+    "Content-Type": "application/json",
+    "Accept-Language": locale || DEFAULT_LOCALE,
+    Authorization: token ? `Bearer ${token}` : "",
+    "User-Agent": "Mozilla/5.0 (compatible; Maxvario/1.0)",
+  };
+  if (internalHost) headers["Host"] = "api.maxvario.com";
 
   try {
     const response = await fetch(fetchUrl, {
       method: method || "GET",
-      headers: {
-        "Content-Type": "application/json",
-        "Accept-Language": locale || DEFAULT_LOCALE,
-        Authorization: token ? `Bearer ${token}` : "",
-        "User-Agent": "Mozilla/5.0 (compatible; Maxvario/1.0)",
-        ...hostHeader,
-      },
+      headers,
       body: data ? JSON.stringify(data) : undefined,
       // completely disable cache
       cache: "no-store",

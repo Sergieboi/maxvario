@@ -75,7 +75,8 @@
     "buyNow": "Ver Producto",
     "specifications": "Especificaciones",
     "weight": "Peso",
-    "brand": "Marca"
+    "brand": "Marca",
+    "backToCategories": "All Categories"
   },
   "header": {
     "nav": {

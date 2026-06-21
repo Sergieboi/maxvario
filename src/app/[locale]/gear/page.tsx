@@ -1,4 +1,5 @@
 import Gear from "@/components/gear/gear";
+import GearLanding from "@/components/gear/gear-landing";
 import { getGear } from "@/lib/api/wp";
 import { seoContent } from "@/lib/seo/seo";
 import { GearCategory, Locale, MVGear } from "@/lib/types/misc";
@@ -6,6 +7,7 @@ import { notFound } from "next/navigation";
 
 type Props = {
   params: Promise<{ locale: Locale }>;
+  searchParams: Promise<{ category?: string }>;
 };
 
 export async function generateMetadata({ params }: Props) {
@@ -13,29 +15,36 @@ export async function generateMetadata({ params }: Props) {
   return seoContent({ page: "gear", locale });
 }
 
-export default async function GearPage({ params }: Props) {
+export default async function GearPage({ params, searchParams }: Props) {
   const locale = (await params).locale;
-  let response = await getGear(locale);
+  const { category } = await searchParams;
 
-  // Fall back to English if no gear exists for this locale
+  let response = await getGear(locale);
   if (!response?.data && locale !== "en") {
     response = await getGear("en");
   }
-
   if (!response?.data) return notFound();
 
   const gear: MVGear[] = response.data;
 
-  // Collect unique categories from the fetched gear items
-  const categoryMap = new Map<string, GearCategory>();
+  // Build category map with first thumbnail and count from gear items
+  const categoryMap = new Map<string, GearCategory & { thumbnail: string | null; count: number }>();
   for (const item of gear) {
     for (const cat of item.gear_categories) {
       if (!categoryMap.has(cat.slug)) {
-        categoryMap.set(cat.slug, cat);
+        categoryMap.set(cat.slug, { ...cat, thumbnail: item.thumbnail, count: 1 });
+      } else {
+        categoryMap.get(cat.slug)!.count++;
       }
     }
   }
   const categories = Array.from(categoryMap.values());
 
-  return <Gear gear={gear} categories={categories} />;
+  // No category selected → show landing page
+  if (!category) {
+    return <GearLanding categories={categories} />;
+  }
+
+  // Category selected → show filtered product grid
+  return <Gear gear={gear} categories={categories} activeCategory={category} />;
 }

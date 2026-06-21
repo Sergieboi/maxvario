@@ -66,6 +66,7 @@
     "filter": {
       "all": "All Gear"
     },
+    "backToCategories": "All Categories",
     "noItems": "No gear found in this category.",
     "item": "item",
     "items": "items",

@@ -3,6 +3,7 @@
 import { FC, useState, useMemo } from "react";
 import { Button } from "@nextui-org/react";
 import { useTranslations } from "next-intl";
+import { Link } from "@/i18n/routing";
 import { MVGear, GearCategory } from "@/lib/types/misc";
 import GearCard from "@/components/cards/gear-card";
 import Container from "@/components/shared/container";
@@ -10,11 +11,12 @@ import Container from "@/components/shared/container";
 type Props = {
   gear: MVGear[];
   categories: GearCategory[];
+  activeCategory?: string;
 };
 
-const Gear: FC<Props> = ({ gear, categories }) => {
+const Gear: FC<Props> = ({ gear, categories, activeCategory: initialCategory }) => {
   const t = useTranslations("gear");
-  const [activeCategory, setActiveCategory] = useState<string>("all");
+  const [activeCategory, setActiveCategory] = useState<string>(initialCategory ?? "all");
 
   const filtered = useMemo(() => {
     if (activeCategory === "all") return gear;
@@ -28,6 +30,9 @@ const Gear: FC<Props> = ({ gear, categories }) => {
       {/* Hero */}
       <div className="bg-blue-900 text-white pt-32 pb-16">
         <Container>
+          <Link href="/gear" className="text-blue-300 hover:text-white text-sm mb-4 inline-block transition-colors">
+            ← {t("backToCategories")}
+          </Link>
           <h1 className="text-4xl md:text-5xl font-bold mb-4">{t("hero.title")}</h1>
           <p className="text-lg text-blue-200 max-w-2xl">{t("hero.description")}</p>
         </Container>

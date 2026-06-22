@@ -25,10 +25,13 @@ export const fetcher = async ({
   revalidate,
   token,
 }: Fetcher) => {
-  // Bypass Cloudflare by hitting Bluehost directly on server-side
+  // Bypass Cloudflare via direct subdomain (wp-internal.maxvario.com → Bluehost IP)
   const internalHost = process.env.MAXVARIO_INTERNAL_HOST;
+  // Add trailing slash before query string to avoid WPML's redirect (which drops Host header)
   const fetchUrl = internalHost
-    ? url.replace("https://api.maxvario.com", `http://${internalHost}`)
+    ? url
+        .replace("https://api.maxvario.com", `http://${internalHost}`)
+        .replace(/\/(home|gear|sidebar|categories|taxonomy|calendar|search|post|subscribe-race|subscriptions|mailchimp|register|me|my-posts|create-blog|create-race|update-race|delete-posts|create-comment|forgot-password|reset-password)(\?)/, "/$1/$2")
     : url;
 
   const headers: Record<string, string> = {
@@ -45,6 +48,7 @@ export const fetcher = async ({
       headers,
       body: data ? JSON.stringify(data) : undefined,
       next: { revalidate: revalidate ?? 300 },
+      redirect: "follow",
     });
     const contentType = response.headers.get("content-type") || "";
     if (!contentType.includes("application/json")) {

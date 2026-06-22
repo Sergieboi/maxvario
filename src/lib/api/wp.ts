@@ -22,7 +22,7 @@ export const fetcher = async ({
   method,
   data,
   locale,
-  // revalidate,
+  revalidate,
   token,
 }: Fetcher) => {
   // Bypass Cloudflare by hitting Bluehost directly on server-side
@@ -44,13 +44,7 @@ export const fetcher = async ({
       method: method || "GET",
       headers,
       body: data ? JSON.stringify(data) : undefined,
-      // completely disable cache
-      cache: "no-store",
-      // next: {
-      // revalidate: revalidate || 1,
-      // limit the cache to 120 seconds maximum
-      // revalidate: revalidate ? 120 : 1,
-      // },
+      next: { revalidate: revalidate ?? 300 },
     });
     const contentType = response.headers.get("content-type") || "";
     if (!contentType.includes("application/json")) {

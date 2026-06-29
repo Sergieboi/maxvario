@@ -20,10 +20,10 @@ export default async function GearPage({ params, searchParams }: Props) {
   const { category } = await searchParams;
 
   let response = await getGear(locale);
-  if (!response?.data && locale !== "en") {
+  if (!response?.data?.length && locale !== "en") {
     response = await getGear("en");
   }
-  if (!response?.data) return notFound();
+  if (!response?.data?.length) return notFound();
 
   const gear: MVGear[] = response.data;
 

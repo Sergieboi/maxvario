@@ -17,6 +17,9 @@ type Fetcher = {
   revalidate?: number;
   token?: string;
 };
+const reroute = (targetUrl: string, internalHost: string) =>
+  targetUrl.replace("https://api.maxvario.com", `http://${internalHost}`);
+
 export const fetcher = async ({
   url,
   method,
@@ -25,14 +28,8 @@ export const fetcher = async ({
   revalidate,
   token,
 }: Fetcher) => {
-  // Bypass Cloudflare via direct subdomain (wp-internal.maxvario.com → Bluehost IP)
   const internalHost = process.env.MAXVARIO_INTERNAL_HOST;
-  // Add trailing slash before query string to avoid WPML's redirect (which drops Host header)
-  const fetchUrl = internalHost
-    ? url
-        .replace("https://api.maxvario.com", `http://${internalHost}`)
-        .replace(/\/(home|gear|sidebar|categories|taxonomy|calendar|search|post|subscribe-race|subscriptions|mailchimp|register|me|my-posts|create-blog|create-race|update-race|delete-posts|create-comment|forgot-password|reset-password)(\?)/, "/$1/$2")
-    : url;
+  const fetchUrl = internalHost ? reroute(url, internalHost) : url;
 
   const headers: Record<string, string> = {
     "Content-Type": "application/json",
@@ -42,14 +39,37 @@ export const fetcher = async ({
   };
   if (internalHost) headers["Host"] = "api.maxvario.com";
 
+  const fetchOptions: RequestInit = {
+    method: method || "GET",
+    headers,
+    body: data ? JSON.stringify(data) : undefined,
+    next: { revalidate: revalidate ?? 300 },
+    redirect: "manual",
+  };
+
   try {
-    const response = await fetch(fetchUrl, {
-      method: method || "GET",
-      headers,
-      body: data ? JSON.stringify(data) : undefined,
-      next: { revalidate: revalidate ?? 300 },
-      redirect: "follow",
-    });
+    let currentUrl = fetchUrl;
+    let response: Response | null = null;
+
+    // Follow redirects manually so our custom Host header is preserved on every hop.
+    // WordPress/WPML issues 302s that drop query params; without manual following,
+    // Node.js fetch recalculates Host from the redirect URL, hitting a 404 on Bluehost.
+    for (let i = 0; i < 5; i++) {
+      response = await fetch(currentUrl, fetchOptions);
+      if (response.status < 300 || response.status >= 400) break;
+
+      const location = response.headers.get("location");
+      if (!location) break;
+
+      // Resolve relative redirect; reroute back through internal host if needed
+      const resolved = location.startsWith("http")
+        ? location
+        : new URL(location, currentUrl).toString();
+      currentUrl = internalHost ? reroute(resolved, internalHost) : resolved;
+    }
+
+    if (!response) return null;
+
     const contentType = response.headers.get("content-type") || "";
     if (!contentType.includes("application/json")) {
       console.error("API returned non-JSON response for:", url);

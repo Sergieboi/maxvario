@@ -51,17 +51,15 @@ export const fetcher = async ({
     let currentUrl = fetchUrl;
     let response: Response | null = null;
 
-    // Follow redirects manually so our custom Host header is preserved on every hop.
-    // WordPress/WPML issues 302s that drop query params; without manual following,
-    // Node.js fetch recalculates Host from the redirect URL, hitting a 404 on Bluehost.
     for (let i = 0; i < 5; i++) {
+      console.log(`[fetch] attempt ${i} →`, currentUrl);
       response = await fetch(currentUrl, fetchOptions);
+      console.log(`[fetch] status ${response.status}`);
       if (response.status < 300 || response.status >= 400) break;
 
       const location = response.headers.get("location");
       if (!location) break;
 
-      // Resolve relative redirect; reroute back through internal host if needed
       const resolved = location.startsWith("http")
         ? location
         : new URL(location, currentUrl).toString();
@@ -72,15 +70,16 @@ export const fetcher = async ({
 
     const contentType = response.headers.get("content-type") || "";
     if (!contentType.includes("application/json")) {
-      console.error("API returned non-JSON response for:", url);
+      console.error(`[fetch] non-JSON (${contentType}) for:`, url);
       return null;
     }
     const result = await response.json();
     if (response.ok) {
       return result;
     }
+    console.error(`[fetch] not ok (${response.status}) for:`, url);
   } catch (error) {
-    console.error(error);
+    console.error("[fetch] error for:", url, error);
   }
   return null;
 };

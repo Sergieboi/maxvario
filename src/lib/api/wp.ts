@@ -1,3 +1,4 @@
+import http from "http";
 import { DEFAULT_LOCALE } from "../constants";
 import {
   ApiResponse,
@@ -17,8 +18,41 @@ type Fetcher = {
   revalidate?: number;
   token?: string;
 };
-const reroute = (targetUrl: string, internalHost: string) =>
-  targetUrl.replace("https://api.maxvario.com", `http://${internalHost}`);
+
+// Node.js http.request honours a custom Host header; global fetch() does not.
+// We use this for the internal bypass host (wp-internal.maxvario.com) so Apache
+// routes the request to the api.maxvario.com vhost.
+function httpGet(
+  targetUrl: string,
+  headers: Record<string, string>
+): Promise<{ status: number; contentType: string; location: string | null; body: string }> {
+  return new Promise((resolve, reject) => {
+    const parsed = new URL(targetUrl);
+    const req = http.request(
+      {
+        hostname: parsed.hostname,
+        port: Number(parsed.port) || 80,
+        path: parsed.pathname + (parsed.search || ""),
+        method: "GET",
+        headers,
+      },
+      (res) => {
+        const chunks: Buffer[] = [];
+        res.on("data", (c: Buffer) => chunks.push(c));
+        res.on("end", () =>
+          resolve({
+            status: res.statusCode ?? 0,
+            contentType: (res.headers["content-type"] as string) ?? "",
+            location: (res.headers["location"] as string) ?? null,
+            body: Buffer.concat(chunks).toString("utf8"),
+          })
+        );
+      }
+    );
+    req.on("error", reject);
+    req.end();
+  });
+}
 
 export const fetcher = async ({
   url,
@@ -29,57 +63,63 @@ export const fetcher = async ({
   token,
 }: Fetcher) => {
   const internalHost = process.env.MAXVARIO_INTERNAL_HOST;
-  const fetchUrl = internalHost ? reroute(url, internalHost) : url;
 
+  // For POST/PUT/DELETE or when no bypass host is set, use global fetch normally.
+  if (!internalHost || (method && method !== "GET")) {
+    const headers: Record<string, string> = {
+      "Content-Type": "application/json",
+      "Accept-Language": locale || DEFAULT_LOCALE,
+      Authorization: token ? `Bearer ${token}` : "",
+      "User-Agent": "Mozilla/5.0 (compatible; Maxvario/1.0)",
+    };
+    try {
+      const response = await fetch(url, {
+        method: method || "GET",
+        headers,
+        body: data ? JSON.stringify(data) : undefined,
+        next: { revalidate: revalidate ?? 300 },
+      });
+      const contentType = response.headers.get("content-type") || "";
+      if (!contentType.includes("application/json")) return null;
+      const result = await response.json();
+      return response.ok ? result : null;
+    } catch (error) {
+      console.error("[fetch] error:", url, error);
+      return null;
+    }
+  }
+
+  // GET via internal bypass host — use http.request so Host header is preserved.
   const headers: Record<string, string> = {
     "Content-Type": "application/json",
     "Accept-Language": locale || DEFAULT_LOCALE,
     Authorization: token ? `Bearer ${token}` : "",
     "User-Agent": "Mozilla/5.0 (compatible; Maxvario/1.0)",
-  };
-  if (internalHost) headers["Host"] = "api.maxvario.com";
-
-  const fetchOptions: RequestInit = {
-    method: method || "GET",
-    headers,
-    body: data ? JSON.stringify(data) : undefined,
-    next: { revalidate: revalidate ?? 300 },
-    redirect: "manual",
+    Host: "api.maxvario.com",
   };
 
   try {
-    let currentUrl = fetchUrl;
-    let response: Response | null = null;
+    let currentUrl = url.replace("https://api.maxvario.com", `http://${internalHost}`);
 
     for (let i = 0; i < 5; i++) {
-      console.log(`[fetch] attempt ${i} →`, currentUrl);
-      response = await fetch(currentUrl, fetchOptions);
-      console.log(`[fetch] status ${response.status}`);
-      if (response.status < 300 || response.status >= 400) break;
-
-      const location = response.headers.get("location");
-      if (!location) break;
-
-      const resolved = location.startsWith("http")
-        ? location
-        : new URL(location, currentUrl).toString();
-      currentUrl = internalHost ? reroute(resolved, internalHost) : resolved;
+      const res = await httpGet(currentUrl, headers);
+      if (res.status >= 300 && res.status < 400 && res.location) {
+        const resolved = res.location.startsWith("http")
+          ? res.location
+          : new URL(res.location, currentUrl).toString();
+        // If redirect goes back to api.maxvario.com, re-route through internal host.
+        currentUrl = resolved.replace("https://api.maxvario.com", `http://${internalHost}`);
+        continue;
+      }
+      if (!res.contentType.includes("application/json")) {
+        console.error("[fetch] non-JSON:", res.status, res.contentType, "for:", url);
+        return null;
+      }
+      const result = JSON.parse(res.body);
+      return res.status >= 200 && res.status < 300 ? result : null;
     }
-
-    if (!response) return null;
-
-    const contentType = response.headers.get("content-type") || "";
-    if (!contentType.includes("application/json")) {
-      console.error(`[fetch] non-JSON (${contentType}) for:`, url);
-      return null;
-    }
-    const result = await response.json();
-    if (response.ok) {
-      return result;
-    }
-    console.error(`[fetch] not ok (${response.status}) for:`, url);
   } catch (error) {
-    console.error("[fetch] error for:", url, error);
+    console.error("[fetch] error:", url, error);
   }
   return null;
 };

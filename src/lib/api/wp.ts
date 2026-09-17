@@ -19,13 +19,23 @@ type Fetcher = {
   token?: string;
 };
 
-// Node.js http.request honours a custom Host header; global fetch() does not.
-// We use this for the internal bypass host (wp-internal.maxvario.com) so Apache
-// routes the request to the api.maxvario.com vhost.
-function httpGet(
+type WpRequestResult = {
+  status: number;
+  contentType: string;
+  location: string | null;
+  body: string;
+};
+
+// Node.js http.request honours a custom Host header; global fetch() silently
+// overrides it with the URL hostname. We route all server-side WordPress calls
+// through wp-internal.maxvario.com (bypasses Cloudflare) while presenting
+// Host: api.maxvario.com so Apache serves the correct vhost.
+function httpRaw(
   targetUrl: string,
-  headers: Record<string, string>
-): Promise<{ status: number; contentType: string; location: string | null; body: string }> {
+  method: string,
+  headers: Record<string, string>,
+  body?: string
+): Promise<WpRequestResult> {
   return new Promise((resolve, reject) => {
     const parsed = new URL(targetUrl);
     const req = http.request(
@@ -33,8 +43,10 @@ function httpGet(
         hostname: parsed.hostname,
         port: Number(parsed.port) || 80,
         path: parsed.pathname + (parsed.search || ""),
-        method: "GET",
-        headers,
+        method,
+        headers: body
+          ? { ...headers, "Content-Length": Buffer.byteLength(body).toString() }
+          : headers,
       },
       (res) => {
         const chunks: Buffer[] = [];
@@ -50,8 +62,68 @@ function httpGet(
       }
     );
     req.on("error", reject);
+    if (body) req.write(body);
     req.end();
   });
+}
+
+// Shared bypass request used by both the fetcher and Next.js API routes.
+// Follows redirects while keeping the Host header intact on every hop.
+export async function wpRequest(
+  url: string,
+  options: {
+    method?: string;
+    headers?: Record<string, string>;
+    body?: string;
+  } = {}
+): Promise<WpRequestResult | null> {
+  const internalHost = process.env.MAXVARIO_INTERNAL_HOST;
+  const method = options.method ?? "GET";
+
+  if (!internalHost) {
+    // No bypass configured — call WordPress directly via fetch.
+    try {
+      const res = await fetch(url, {
+        method,
+        headers: options.headers,
+        body: options.body,
+      });
+      return {
+        status: res.status,
+        contentType: res.headers.get("content-type") ?? "",
+        location: res.headers.get("location"),
+        body: await res.text(),
+      };
+    } catch (err) {
+      console.error("[wpRequest] fetch error:", url, err);
+      return null;
+    }
+  }
+
+  const headers: Record<string, string> = {
+    ...options.headers,
+    Host: "api.maxvario.com",
+  };
+
+  try {
+    let currentUrl = url.replace("https://api.maxvario.com", `http://${internalHost}`);
+
+    for (let i = 0; i < 5; i++) {
+      const res = await httpRaw(currentUrl, method, headers, options.body);
+      if (res.status >= 300 && res.status < 400 && res.location) {
+        const resolved = res.location.startsWith("http")
+          ? res.location
+          : new URL(res.location, currentUrl).toString();
+        currentUrl = resolved.replace("https://api.maxvario.com", `http://${internalHost}`);
+        // Redirects are always GET
+        continue;
+      }
+      return res;
+    }
+  } catch (err) {
+    console.error("[wpRequest] error:", url, err);
+  }
+  return null;
 }
 
 export const fetcher = async ({
@@ -62,16 +134,17 @@ export const fetcher = async ({
   revalidate,
   token,
 }: Fetcher) => {
+  const headers: Record<string, string> = {
+    "Content-Type": "application/json",
+    "Accept-Language": locale || DEFAULT_LOCALE,
+    Authorization: token ? `Bearer ${token}` : "",
+    "User-Agent": "Mozilla/5.0 (compatible; Maxvario/1.0)",
+  };
+
   const internalHost = process.env.MAXVARIO_INTERNAL_HOST;
 
-  // For POST/PUT/DELETE or when no bypass host is set, use global fetch normally.
+  // For GET requests use the bypass; for mutations without bypass use plain fetch.
   if (!internalHost || (method && method !== "GET")) {
-    const headers: Record<string, string> = {
-      "Content-Type": "application/json",
-      "Accept-Language": locale || DEFAULT_LOCALE,
-      Authorization: token ? `Bearer ${token}` : "",
-      "User-Agent": "Mozilla/5.0 (compatible; Maxvario/1.0)",
-    };
     try {
       const response = await fetch(url, {
         method: method || "GET",
@@ -84,42 +157,22 @@ export const fetcher = async ({
       const result = await response.json();
       return response.ok ? result : null;
     } catch (error) {
-      console.error("[fetch] error:", url, error);
+      console.error("[fetcher] error:", url, error);
       return null;
     }
   }
 
-  // GET via internal bypass host — use http.request so Host header is preserved.
-  const headers: Record<string, string> = {
-    "Content-Type": "application/json",
-    "Accept-Language": locale || DEFAULT_LOCALE,
-    Authorization: token ? `Bearer ${token}` : "",
-    "User-Agent": "Mozilla/5.0 (compatible; Maxvario/1.0)",
-    Host: "api.maxvario.com",
-  };
-
   try {
-    let currentUrl = url.replace("https://api.maxvario.com", `http://${internalHost}`);
-
-    for (let i = 0; i < 5; i++) {
-      const res = await httpGet(currentUrl, headers);
-      if (res.status >= 300 && res.status < 400 && res.location) {
-        const resolved = res.location.startsWith("http")
-          ? res.location
-          : new URL(res.location, currentUrl).toString();
-        // If redirect goes back to api.maxvario.com, re-route through internal host.
-        currentUrl = resolved.replace("https://api.maxvario.com", `http://${internalHost}`);
-        continue;
-      }
-      if (!res.contentType.includes("application/json")) {
-        console.error("[fetch] non-JSON:", res.status, res.contentType, "for:", url);
-        return null;
-      }
-      const result = JSON.parse(res.body);
-      return res.status >= 200 && res.status < 300 ? result : null;
+    const res = await wpRequest(url, { method: "GET", headers });
+    if (!res) return null;
+    if (!res.contentType.includes("application/json")) {
+      console.error("[fetcher] non-JSON:", res.status, res.contentType, "for:", url);
+      return null;
     }
+    const result = JSON.parse(res.body);
+    return res.status >= 200 && res.status < 300 ? result : null;
   } catch (error) {
-    console.error("[fetch] error:", url, error);
+    console.error("[fetcher] error:", url, error);
   }
   return null;
 };

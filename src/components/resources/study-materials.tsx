@@ -69,7 +69,7 @@ const ResourceCard: FC<{ resource: typeof RESOURCES[0] }> = ({ resource }) => {
     >
       {/* Large visual header */}
       <div className="relative h-52 overflow-hidden">
-        {resource.image && !resource.logoOnGradient ? (
+        {resource.image && !resource.logoOnGradient && !resource.logoOnLight ? (
           <>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
@@ -77,13 +77,21 @@ const ResourceCard: FC<{ resource: typeof RESOURCES[0] }> = ({ resource }) => {
               alt={resource.title}
               className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
             />
-            {/* Gradient overlay for text legibility */}
             <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
           </>
+        ) : resource.image && resource.logoOnLight ? (
+          <div className="w-full h-full bg-gray-50 flex items-center justify-center p-6">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={resource.image}
+              alt={resource.title}
+              className="max-w-[75%] max-h-28 object-contain"
+            />
+          </div>
         ) : (
           <div className={`w-full h-full bg-gradient-to-br ${meta.gradient} flex items-center justify-center`}>
             {resource.image && resource.logoOnGradient && (
-              /* eslint-disable-next-line @next/next/no-img-element */
+              // eslint-disable-next-line @next/next/no-img-element
               <img
                 src={resource.image}
                 alt={resource.title}
@@ -100,13 +108,15 @@ const ResourceCard: FC<{ resource: typeof RESOURCES[0] }> = ({ resource }) => {
             Free
           </span>
         )}
-        {/* Title overlay at bottom */}
-        <div className="absolute bottom-0 left-0 right-0 p-4 z-10">
-          <p className="text-white/80 text-xs font-medium">{resource.author}</p>
-          <h3 className="text-white font-bold text-base leading-snug line-clamp-2 mt-0.5 drop-shadow">
-            {resource.title}
-          </h3>
-        </div>
+        {/* Title overlay at bottom — only on dark/gradient headers */}
+        {!resource.logoOnLight && (
+          <div className="absolute bottom-0 left-0 right-0 p-4 z-10">
+            <p className="text-white/80 text-xs font-medium">{resource.author}</p>
+            <h3 className="text-white font-bold text-base leading-snug line-clamp-2 mt-0.5 drop-shadow">
+              {resource.title}
+            </h3>
+          </div>
+        )}
       </div>
 
       {/* Details */}

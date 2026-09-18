@@ -10,6 +10,7 @@ export type Resource = {
   platform?: string;
   image?: string;
   logoOnGradient?: boolean;
+  logoOnLight?: boolean;
 };
 
 export const RESOURCES: Resource[] = [
@@ -140,7 +141,8 @@ export const RESOURCES: Resource[] = [
     url: "https://cloudbasemayhem.com",
     free: true,
     platform: "All platforms",
-    image: "https://www.cloudbasemayhem.com/wp-content/uploads/2021/02/Advanced-PG-Slider2-1600x600.jpg",
+    image: "https://www.cloudbasemayhem.com/wp-content/uploads/2019/04/cloudbase-mayhem-top-logo.png",
+    logoOnLight: true,
   },
   {
     title: "The Paragliding Atlas",

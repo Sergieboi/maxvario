@@ -68,20 +68,34 @@ const ResourceCard: FC<{ resource: typeof RESOURCES[0] }> = ({ resource }) => {
       className={`group flex flex-col bg-white dark:bg-gray-900 rounded-2xl overflow-hidden shadow-sm border border-gray-100 dark:border-gray-800 transition-all duration-300 hover:shadow-lg hover:-translate-y-1 ${!isExternal ? "cursor-default" : ""}`}
     >
       {/* Large visual header */}
-      <div className={`relative bg-gradient-to-br ${meta.gradient} flex flex-col justify-between p-6 h-48 overflow-hidden`}>
+      <div className="relative h-52 overflow-hidden">
+        {resource.image ? (
+          <>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={resource.image}
+              alt={resource.title}
+              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+            />
+            {/* Gradient overlay for text legibility */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+          </>
+        ) : (
+          <div className={`w-full h-full bg-gradient-to-br ${meta.gradient} flex flex-col justify-end p-6`}>
+            <div className="absolute -right-6 -bottom-6 w-32 h-32 rounded-full bg-white/10 group-hover:scale-110 transition-transform duration-300" />
+            <div className="absolute right-8 -top-4 w-20 h-20 rounded-full bg-white/5" />
+          </div>
+        )}
         {/* Free badge */}
         {resource.free && (
-          <span className="self-start bg-white/20 text-white text-xs font-semibold px-2.5 py-1 rounded-full backdrop-blur-sm">
+          <span className="absolute top-3 left-3 bg-white/20 text-white text-xs font-semibold px-2.5 py-1 rounded-full backdrop-blur-sm z-10">
             Free
           </span>
         )}
-        {/* Decorative circles */}
-        <div className="absolute -right-6 -bottom-6 w-32 h-32 rounded-full bg-white/10 group-hover:scale-110 transition-transform duration-300" />
-        <div className="absolute right-8 -top-4 w-20 h-20 rounded-full bg-white/5" />
-        {/* Icon + title at bottom */}
-        <div className="mt-auto relative z-10">
-          <p className="text-white/70 text-sm font-medium">{resource.author}</p>
-          <h3 className="text-white font-bold text-lg leading-snug line-clamp-2 mt-0.5">
+        {/* Title overlay at bottom */}
+        <div className="absolute bottom-0 left-0 right-0 p-4 z-10">
+          <p className="text-white/80 text-xs font-medium">{resource.author}</p>
+          <h3 className="text-white font-bold text-base leading-snug line-clamp-2 mt-0.5 drop-shadow">
             {resource.title}
           </h3>
         </div>

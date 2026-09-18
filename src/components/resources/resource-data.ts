@@ -8,6 +8,7 @@ export type Resource = {
   url: string;
   free: boolean;
   platform?: string;
+  image?: string;
 };
 
 export const RESOURCES: Resource[] = [
@@ -19,6 +20,7 @@ export const RESOURCES: Resource[] = [
     category: "book",
     url: "https://pagenbooks.com/category/books/",
     free: false,
+    image: "https://pagenbooks.com/wp-content/uploads/2020/08/cropped-HangGlider-byJeffGoin-HGOnly-1.jpg",
   },
   {
     title: "Touching Cloudbase",
@@ -27,6 +29,7 @@ export const RESOURCES: Resource[] = [
     category: "book",
     url: "https://touchingcloudbase.co.uk/",
     free: false,
+    image: "https://touchingcloudbase.co.uk/app/uploads/touching-cloudbase-paperback-book.jpg",
   },
   {
     title: "Understanding the Sky",
@@ -35,6 +38,7 @@ export const RESOURCES: Resource[] = [
     category: "book",
     url: "https://pagenbooks.com/category/books/",
     free: false,
+    image: "https://pagenbooks.com/wp-content/uploads/2022/06/UnderstandingTheSkyFromCrossCountry-440x280.jpg",
   },
   {
     title: "Performance Flying",
@@ -51,6 +55,7 @@ export const RESOURCES: Resource[] = [
     category: "book",
     url: "https://www.cloudbasemayhem.com/product/advanced-paragliding-by-gavin-mcclurg/",
     free: false,
+    image: "https://www.cloudbasemayhem.com/wp-content/uploads/2021/11/ADVANCED-PARAGLIDING-07-620x413.jpeg",
   },
   {
     title: "The Wanderbird Strategy",
@@ -59,6 +64,7 @@ export const RESOURCES: Resource[] = [
     category: "book",
     url: "https://wanderbirdshop.com/en/products/wanderbird-strategy-by-paul-guschlbauer",
     free: false,
+    image: "https://wanderbirdshop.com/cdn/shop/files/Wanderbird-Strategy-Cover-Amazon_jpg.webp?v=1763657814&width=800",
   },
   {
     title: "Der Überflieger",
@@ -67,6 +73,7 @@ export const RESOURCES: Resource[] = [
     category: "book",
     url: "https://hikeandfly.com/en-ch/products/chrigel-maurer-der-uberflieger",
     free: false,
+    image: "https://hikeandfly.com/cdn/shop/files/OhneTitel_4a13583d-b174-4586-ac8c-530d8de59c1c.jpg?v=1730381977",
   },
   {
     title: "101 Ways to Fly Better",
@@ -75,6 +82,7 @@ export const RESOURCES: Resource[] = [
     category: "book",
     url: "https://xcmag.com/product/paragliding-101-ways-to-fly-better/",
     free: false,
+    image: "https://xcmag.com/wp-content/uploads/2026/01/Paragliding-101-Ways-to-Fly-Better-Front-Cover-xcshop.jpg",
   },
 
   // ── Free PDFs ────────────────────────────────────────────────────────────
@@ -121,6 +129,7 @@ export const RESOURCES: Resource[] = [
     url: "https://docs.xcskies.com/",
     free: true,
     platform: "XC Skies",
+    image: "https://tv31.xcskies.com/splash/xcskies_social.jpg",
   },
 
   // ── Podcasts ─────────────────────────────────────────────────────────────
@@ -132,6 +141,7 @@ export const RESOURCES: Resource[] = [
     url: "https://cloudbasemayhem.com",
     free: true,
     platform: "All platforms",
+    image: "https://www.cloudbasemayhem.com/wp-content/uploads/2021/02/Advanced-PG-Slider2-1600x600.jpg",
   },
   {
     title: "The Paragliding Atlas",
@@ -141,6 +151,7 @@ export const RESOURCES: Resource[] = [
     url: "https://paraglidingatlas.com/podcast.html",
     free: true,
     platform: "All platforms",
+    image: "https://paraglidingatlas.com/assets/images/pod-hero-gemona.jpg",
   },
   {
     title: "XC Mag Podcast",
@@ -150,6 +161,7 @@ export const RESOURCES: Resource[] = [
     url: "https://xcmag.com/podcasts/",
     free: true,
     platform: "All platforms",
+    image: "https://xcmag.com/wp-content/uploads/2024/12/cross-country-magazine-home.jpg",
   },
   {
     title: "The Wanderbird Podcast",
@@ -159,6 +171,7 @@ export const RESOURCES: Resource[] = [
     url: "https://www.wanderbird.io/wanderbird-podcast",
     free: true,
     platform: "All platforms",
+    image: "https://static.wixstatic.com/media/acd7d4_a98ff644f9ff4ef68d312993e17af70e~mv2.png/v1/fit/w_1200,h_630,al_c/acd7d4_a98ff644f9ff4ef68d312993e17af70e~mv2.png",
   },
   {
     title: "Que Hay de Vuelo",
@@ -179,6 +192,7 @@ export const RESOURCES: Resource[] = [
     url: "https://www.youtube.com/flybubbleparagliding",
     free: true,
     platform: "YouTube",
+    image: "https://yt3.googleusercontent.com/-ZIuD9tC_u2yIXpwfmKgAbyqV9ZkYynr8gMPcXGH7XANYKKVXjdk4CwincY1fSVCVIpKdmylXg=s900-c-k-c0x00ffffff-no-rj",
   },
   {
     title: "XCmag",
@@ -188,6 +202,7 @@ export const RESOURCES: Resource[] = [
     url: "https://www.youtube.com/@xcmag",
     free: true,
     platform: "YouTube",
+    image: "https://yt3.googleusercontent.com/ytc/AIdro_kqej8R3JDoeBvmqtyyh-ypVhBdTIp5RudZC4i2Lt9ICCA=s900-c-k-c0x00ffffff-no-rj",
   },
   {
     title: "Ari in the Air",
@@ -197,6 +212,7 @@ export const RESOURCES: Resource[] = [
     url: "https://www.youtube.com/@AriintheAir",
     free: true,
     platform: "YouTube",
+    image: "https://yt3.googleusercontent.com/ytc/AIdro_lpfRYJlr4p4ZkQ1dnmJmJeDYMwtRUbiGFGFW24ZMciLQ=s900-c-k-c0x00ffffff-no-rj",
   },
   {
     title: "Red Bull X-Alps",
@@ -206,6 +222,7 @@ export const RESOURCES: Resource[] = [
     url: "https://www.youtube.com/@redbullx-alps",
     free: true,
     platform: "YouTube",
+    image: "https://yt3.googleusercontent.com/D8PZanaQilSO-6tdms4UKr7nskqHU9LyFzIqUIFxYDXNmIxbiKRhnYZwAMlQ4M0KWhwubm4U9Q=s900-c-k-c0x00ffffff-no-rj",
   },
   {
     title: "Gin Gliders",
@@ -215,6 +232,7 @@ export const RESOURCES: Resource[] = [
     url: "https://www.youtube.com/@Ginglidersinc",
     free: true,
     platform: "YouTube",
+    image: "https://yt3.googleusercontent.com/eLaHd8euksfkTmUyZE2UD4W1zEtKGE-kgI1_NeY2xsrvv9UKYMRGbc23UwBVdOhHbCNKrjzv3g=s900-c-k-c0x00ffffff-no-rj",
   },
 
   // ── Apps ─────────────────────────────────────────────────────────────────
@@ -235,6 +253,7 @@ export const RESOURCES: Resource[] = [
     url: "https://www.windy.com",
     free: true,
     platform: "iOS & Android",
+    image: "https://www.windy.com/img/socialshare4.png",
   },
   {
     title: "XCTrack",
@@ -244,6 +263,7 @@ export const RESOURCES: Resource[] = [
     url: "https://xctrack.org",
     free: true,
     platform: "Android",
+    image: "https://xctrack.org/thumbs/XCTrack-0.6.alpha.thumb.png",
   },
   {
     title: "Flyskyhy",
@@ -253,6 +273,7 @@ export const RESOURCES: Resource[] = [
     url: "https://www.flyskyhy.com",
     free: false,
     platform: "iOS",
+    image: "https://www.flyskyhy.com/uploads/mainBanner.png",
   },
   {
     title: "XC Skies",
@@ -262,6 +283,7 @@ export const RESOURCES: Resource[] = [
     url: "https://xcskies.com",
     free: true,
     platform: "Browser / iOS",
+    image: "https://tv31.xcskies.com/splash/xcskies_social.jpg",
   },
   {
     title: "MeteoBlue",
@@ -271,6 +293,7 @@ export const RESOURCES: Resource[] = [
     url: "https://www.meteoblue.com",
     free: true,
     platform: "iOS & Android",
+    image: "https://static.meteoblue.com/assets/images/logo/meteoblue_tile_large.png",
   },
   {
     title: "Relief Maps",
@@ -280,6 +303,7 @@ export const RESOURCES: Resource[] = [
     url: "https://reliefmaps.io/",
     free: false,
     platform: "iOS & Android",
+    image: "https://reliefmaps.io/images/preview.png",
   },
   {
     title: "OsmAnd Maps",
@@ -298,6 +322,7 @@ export const RESOURCES: Resource[] = [
     url: "https://naviter.com/seeyou-navigator/",
     free: false,
     platform: "iOS & Android",
+    image: "https://naviter.com/wp-content/uploads/2020/06/iphone-x-Navigator-Main_Screen.jpg",
   },
   {
     title: "Fatmap / Strava",
@@ -316,6 +341,7 @@ export const RESOURCES: Resource[] = [
     url: "https://www.komoot.com",
     free: true,
     platform: "iOS & Android",
+    image: "https://www.komoot.com/images/og-images/og-image-default.png",
   },
 
   // ── Courses ──────────────────────────────────────────────────────────────
@@ -327,6 +353,7 @@ export const RESOURCES: Resource[] = [
     url: "https://paltakats.com/masteracro",
     free: false,
     platform: "Online",
+    image: "https://paltakats.com/sites/default/files/images/header/Pal_Takats_header1.jpg",
   },
   {
     title: "Online Paragliding Training Course",
@@ -336,5 +363,6 @@ export const RESOURCES: Resource[] = [
     url: "https://flywithgreg.com/pages/online-paragliding-training-course",
     free: false,
     platform: "Online",
+    image: "https://alpha.uscreencdn.com/590xnull/assets%2Fpage-builder%2Fsoaring-flight-colour.1692621621.jpg",
   },
 ];

@@ -106,6 +106,7 @@ const Hero: FC = () => {
         autoPlay
         muted
         loop
+        playsInline
         poster="/assets/paragliding.jpeg"
         className="min-w-full h-full object-cover"
         preload="auto"

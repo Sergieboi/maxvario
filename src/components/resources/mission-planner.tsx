@@ -59,6 +59,10 @@ const GEAR_ITEMS = [
   { key: "map", label: "Offline map / airspace chart" },
   { key: "layers", label: "Wind/warm layers" },
   { key: "sunscreen", label: "Sunscreen & sunglasses" },
+  { key: "battery", label: "External battery (fully charged) + cables" },
+  { key: "poles", label: "Hiking poles" },
+  { key: "electrolytes", label: "Electrolytes (for longer missions)" },
+  { key: "socks", label: "Extra socks" },
 ];
 
 const EMPTY: MissionData = {

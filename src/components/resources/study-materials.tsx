@@ -69,7 +69,7 @@ const ResourceCard: FC<{ resource: typeof RESOURCES[0] }> = ({ resource }) => {
     >
       {/* Large visual header */}
       <div className="relative h-52 overflow-hidden">
-        {resource.image ? (
+        {resource.image && !resource.logoOnGradient ? (
           <>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
@@ -81,7 +81,15 @@ const ResourceCard: FC<{ resource: typeof RESOURCES[0] }> = ({ resource }) => {
             <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
           </>
         ) : (
-          <div className={`w-full h-full bg-gradient-to-br ${meta.gradient} flex flex-col justify-end p-6`}>
+          <div className={`w-full h-full bg-gradient-to-br ${meta.gradient} flex items-center justify-center`}>
+            {resource.image && resource.logoOnGradient && (
+              /* eslint-disable-next-line @next/next/no-img-element */
+              <img
+                src={resource.image}
+                alt={resource.title}
+                className="w-32 h-auto object-contain opacity-90"
+              />
+            )}
             <div className="absolute -right-6 -bottom-6 w-32 h-32 rounded-full bg-white/10 group-hover:scale-110 transition-transform duration-300" />
             <div className="absolute right-8 -top-4 w-20 h-20 rounded-full bg-white/5" />
           </div>

@@ -9,6 +9,7 @@ export type Resource = {
   free: boolean;
   platform?: string;
   image?: string;
+  logoOnGradient?: boolean;
 };
 
 export const RESOURCES: Resource[] = [
@@ -86,6 +87,8 @@ export const RESOURCES: Resource[] = [
     url: "https://www.dhv.de/fliegen/sicherheitstraining/",
     free: true,
     platform: "DHV",
+    image: "/assets/resources/dhv-logo.svg",
+    logoOnGradient: true,
   },
   {
     title: "Enhancing Safety and Performance in Paragliding: The Role of SIV Training Supported by Science",
@@ -103,6 +106,8 @@ export const RESOURCES: Resource[] = [
     url: "https://www.dhv.de/wetter/wetterwissen/",
     free: true,
     platform: "DHV",
+    image: "/assets/resources/dhv-logo.svg",
+    logoOnGradient: true,
   },
   {
     title: "DHV Hike & Fly Resources",
@@ -112,6 +117,8 @@ export const RESOURCES: Resource[] = [
     url: "https://www.dhv.de/flugbetrieb/hike-fly/",
     free: true,
     platform: "DHV",
+    image: "/assets/resources/dhv-logo.svg",
+    logoOnGradient: true,
   },
   {
     title: "XC Skies User Guide",

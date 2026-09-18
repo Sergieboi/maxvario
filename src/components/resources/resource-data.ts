@@ -41,14 +41,6 @@ export const RESOURCES: Resource[] = [
     image: "https://pagenbooks.com/wp-content/uploads/2022/06/UnderstandingTheSkyFromCrossCountry-440x280.jpg",
   },
   {
-    title: "Performance Flying",
-    author: "Dennis Pagen",
-    description: "Advanced cross-country and competition flying. Covers speed-to-fly, glide optimization, and race strategy.",
-    category: "book",
-    url: "https://pagenbooks.com/category/books/",
-    free: false,
-  },
-  {
     title: "Advanced Paragliding",
     author: "Gavin McClurg",
     description: "In-depth guide to advanced paragliding skills from one of the world's top hike and fly athletes and a multiple Red Bull X-Alps finisher.",

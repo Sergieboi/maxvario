@@ -7,53 +7,13 @@ import { RESOURCES, Category } from "@/components/resources/resource-data";
 
 const CATEGORY_META: Record<Category, {
   label: string;
-  gradient: string;
-  icon: string;
-  accentBg: string;
-  accentText: string;
 }> = {
-  book: {
-    label: "Books",
-    gradient: "from-amber-500 to-orange-600",
-    icon: "📖",
-    accentBg: "bg-amber-100",
-    accentText: "text-amber-800",
-  },
-  pdf: {
-    label: "Free PDFs & Guides",
-    gradient: "from-emerald-500 to-teal-600",
-    icon: "📄",
-    accentBg: "bg-emerald-100",
-    accentText: "text-emerald-800",
-  },
-  podcast: {
-    label: "Podcasts",
-    gradient: "from-purple-500 to-violet-600",
-    icon: "🎙️",
-    accentBg: "bg-purple-100",
-    accentText: "text-purple-800",
-  },
-  youtube: {
-    label: "YouTube",
-    gradient: "from-red-500 to-rose-600",
-    icon: "▶",
-    accentBg: "bg-red-100",
-    accentText: "text-red-800",
-  },
-  app: {
-    label: "Apps & Tools",
-    gradient: "from-blue-500 to-indigo-600",
-    icon: "📱",
-    accentBg: "bg-blue-100",
-    accentText: "text-blue-800",
-  },
-  course: {
-    label: "Courses",
-    gradient: "from-teal-500 to-cyan-600",
-    icon: "🎓",
-    accentBg: "bg-teal-100",
-    accentText: "text-teal-800",
-  },
+  book:    { label: "Books" },
+  pdf:     { label: "Free PDFs & Guides" },
+  podcast: { label: "Podcasts" },
+  youtube: { label: "YouTube" },
+  app:     { label: "Apps & Tools" },
+  course:  { label: "Courses" },
 };
 
 const ResourceCard: FC<{ resource: typeof RESOURCES[0] }> = ({ resource }) => {
@@ -89,7 +49,7 @@ const ResourceCard: FC<{ resource: typeof RESOURCES[0] }> = ({ resource }) => {
             />
           </div>
         ) : (
-          <div className={`w-full h-full bg-gradient-to-br ${meta.gradient} flex items-center justify-center`}>
+          <div className="w-full h-full bg-gradient-to-br from-blue-800 to-blue-900 flex items-center justify-center">
             {resource.image && resource.logoOnGradient && (
               // eslint-disable-next-line @next/next/no-img-element
               <img
@@ -148,21 +108,16 @@ const StudyMaterials: FC<Props> = ({ category }) => {
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-950">
       {/* Hero */}
-      <div className={`bg-gradient-to-br ${meta.gradient} text-white pt-32 pb-16`}>
+      <div className="bg-blue-900 text-white pt-32 pb-16">
         <Container>
           <Link
             href="/resources"
-            className="inline-flex items-center gap-1 text-white/70 hover:text-white text-sm font-medium mb-6 transition-colors"
+            className="inline-flex items-center gap-1 text-blue-300 hover:text-white text-sm font-medium mb-6 transition-colors"
           >
-            ← All Categories
+            &larr; All Categories
           </Link>
-          <div className="flex items-center gap-4">
-            <span className="text-5xl">{meta.icon}</span>
-            <div>
-              <h1 className="text-4xl md:text-5xl font-bold">{meta.label}</h1>
-              <p className="text-white/70 mt-1">{resources.length} resource{resources.length !== 1 ? "s" : ""}</p>
-            </div>
-          </div>
+          <h1 className="text-4xl md:text-5xl font-bold">{meta.label}</h1>
+          <p className="text-blue-200 mt-2">{resources.length} resource{resources.length !== 1 ? "s" : ""}</p>
         </Container>
       </div>
 

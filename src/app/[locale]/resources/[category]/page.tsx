@@ -21,7 +21,3 @@ export default async function CategoryPage({
   if (!category) notFound();
   return <StudyMaterials category={category} />;
 }
-
-export function generateStaticParams() {
-  return Object.keys(SLUG_MAP).map((slug) => ({ category: slug }));
-}

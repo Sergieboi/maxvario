@@ -312,6 +312,8 @@ export const RESOURCES: Resource[] = [
     url: "https://osmand.net",
     free: true,
     platform: "iOS & Android",
+    image: "/assets/resources/osmand-logo.svg",
+    logoOnGradient: true,
   },
   {
     title: "SeeYou Navigator",

@@ -68,10 +68,10 @@ const CategoryOverview: FC = () => {
                 className="group bg-white dark:bg-gray-900 rounded-2xl overflow-hidden shadow-sm border border-gray-100 dark:border-gray-800 hover:shadow-lg hover:-translate-y-1 transition-all duration-300"
               >
                 <div className="bg-blue-900 px-6 pt-8 pb-6 flex flex-col gap-8 relative overflow-hidden">
-                  <p className="text-xs font-semibold uppercase tracking-widest text-blue-300">
+                  <p className="text-sm text-blue-300">
                     {count} resource{count !== 1 ? "s" : ""}
                   </p>
-                  <h2 className="text-2xl font-bold text-white">{cat.label}</h2>
+                  <h2 className="text-2xl font-semibold text-white">{cat.label}</h2>
                   <div className="absolute -right-6 -bottom-6 w-32 h-32 rounded-full bg-white/5 group-hover:scale-110 transition-transform duration-300" />
                   <div className="absolute right-4 -top-4 w-20 h-20 rounded-full bg-white/5" />
                 </div>

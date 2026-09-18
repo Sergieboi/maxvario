@@ -22,7 +22,7 @@ export const RESOURCES: Resource[] = [
     category: "book",
     url: "https://pagenbooks.com/category/books/",
     free: false,
-    image: "https://pagenbooks.com/wp-content/uploads/2020/08/cropped-HangGlider-byJeffGoin-HGOnly-1.jpg",
+    image: "https://m.media-amazon.com/images/I/51wrkQLUGLL.jpg",
   },
   {
     title: "Touching Cloudbase",
@@ -182,7 +182,6 @@ export const RESOURCES: Resource[] = [
     url: "https://open.spotify.com/show/316XviQkPv5m5qLg8uGMo7",
     free: true,
     platform: "Spotify",
-    image: "https://i.scdn.co/image/ab6765630000955f26bd98698b2af30d30a1613d",
   },
 
   // ── YouTube ──────────────────────────────────────────────────────────────
@@ -276,7 +275,7 @@ export const RESOURCES: Resource[] = [
     url: "https://www.flyskyhy.com",
     free: false,
     platform: "iOS",
-    image: "https://www.flyskyhy.com/uploads/mainBanner.png",
+    image: "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/04/f0/9e/04f09ed5-c746-e5d6-b2fe-409d32a5dc0e/AppIcon-0-0-1x_U007emarketing-0-9-0-85-220.png/512x512bb.jpg",
   },
   {
     title: "XC Skies",
@@ -327,7 +326,8 @@ export const RESOURCES: Resource[] = [
     url: "https://naviter.com/seeyou-navigator/",
     free: false,
     platform: "iOS & Android",
-    image: "https://naviter.com/wp-content/uploads/2020/06/iphone-x-Navigator-Main_Screen.jpg",
+    image: "https://naviter.com/wp-content/uploads/2017/11/naviter_wordpress_Alyeska_250.png",
+    logoOnLight: true,
   },
   {
     title: "Fatmap / Strava",
@@ -337,6 +337,7 @@ export const RESOURCES: Resource[] = [
     url: "https://fatmap.com",
     free: true,
     platform: "iOS & Android",
+    image: "https://web-assets.strava.com/assets/landing-pages/_next/static/media/DesktopWide-Col-1-en-US@1x.3c006b09.webp",
   },
   {
     title: "Komoot",
@@ -358,7 +359,7 @@ export const RESOURCES: Resource[] = [
     url: "https://paltakats.com/masteracro",
     free: false,
     platform: "Online",
-    image: "https://paltakats.com/sites/default/files/images/header/Pal_Takats_header1.jpg",
+    image: "https://justacro.com/files/poster_safety_first.jpg",
   },
   {
     title: "Online Paragliding Training Course",

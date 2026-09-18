@@ -9,7 +9,7 @@ const ResourcesCta: FC = () => (
         Pilot Resources
       </p>
       <h2 className="text-center text-3xl md:text-4xl font-bold text-gray-900 mb-10">
-        Everything you need to fly further
+        Everything you need to fly further and hike stronger.
       </h2>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
         {/* Study Materials */}
@@ -40,7 +40,7 @@ const ResourcesCta: FC = () => (
           className="group relative overflow-hidden rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
         >
           <div className="bg-gradient-to-br from-blue-600 to-indigo-700 p-8 h-64 flex flex-col justify-between">
-            <span className="text-5xl">🗺️</span>
+            <span className="text-5xl">🏔️</span>
             {/* Decorative circles */}
             <div className="absolute -right-8 -bottom-8 w-48 h-48 rounded-full bg-white/10 group-hover:scale-110 transition-transform duration-300" />
             <div className="absolute right-6 -top-6 w-28 h-28 rounded-full bg-white/5" />

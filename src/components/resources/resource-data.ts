@@ -70,7 +70,7 @@ export const RESOURCES: Resource[] = [
   },
   {
     title: "101 Ways to Fly Better",
-    author: "Bruce Goldsmith et al.",
+    author: "Bruce Goldsmith, Théo de Blic, Greg Hamerton and friends",
     description: "Practical tips from legendary paraglider designer Bruce Goldsmith and co-authors — 101 concise lessons covering technique, safety, equipment, and mindset for pilots at every level.",
     category: "book",
     url: "https://xcmag.com/product/paragliding-101-ways-to-fly-better/",

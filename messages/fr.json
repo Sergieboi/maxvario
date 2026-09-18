@@ -89,7 +89,9 @@
       "aboutSlug": "a-propos",
       "account": "Compte",
       "signin": "Se connecter",
-      "resources": "Ressources"
+      "resources": "Ressources",
+      "studyMaterials": "Matériaux d'Étude",
+      "adventurePlanning": "Planification d'Aventure"
     }
   },
   "home": {

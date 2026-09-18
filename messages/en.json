@@ -89,7 +89,9 @@
       "aboutSlug": "about",
       "account": "Account",
       "signin": "Sign in",
-      "resources": "Resources"
+      "resources": "Resources",
+      "studyMaterials": "Study Materials",
+      "adventurePlanning": "Adventure Planning"
     }
   },
   "home": {

@@ -1,5 +1,5 @@
-import MissionPlanner from "@/components/resources/mission-planner";
+import StudyMaterials from "@/components/resources/study-materials";
 
 export default function ResourcesPage() {
-  return <MissionPlanner />;
+  return <StudyMaterials />;
 }

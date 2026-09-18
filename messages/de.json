@@ -89,7 +89,9 @@
       "aboutSlug": "uber-uns",
       "account": "Konto",
       "signin": "Anmelden",
-      "resources": "Ressourcen"
+      "resources": "Ressourcen",
+      "studyMaterials": "Lernmaterialien",
+      "adventurePlanning": "Abenteuerplanung"
     }
   },
   "home": {

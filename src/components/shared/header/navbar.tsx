@@ -42,6 +42,10 @@ const Navbar: FC = () => {
       title: t("nav.gear"),
     },
     {
+      href: "/resources",
+      title: t("nav.resources"),
+    },
+    {
       href: session.status === "authenticated" ? "/account" : "/auth/signin",
       title:
         session.status === "authenticated" ? t("nav.account") : t("nav.signin"),

@@ -182,6 +182,7 @@ export const RESOURCES: Resource[] = [
     url: "https://open.spotify.com/show/316XviQkPv5m5qLg8uGMo7",
     free: true,
     platform: "Spotify",
+    image: "https://i.scdn.co/image/ab6765630000955f26bd98698b2af30d30a1613d",
   },
 
   // ── YouTube ──────────────────────────────────────────────────────────────

@@ -71,13 +71,6 @@ const EMPTY: MissionData = {
 
 // ─── Step components ──────────────────────────────────────────────────────────
 
-const Field: FC<{ label: string; children: React.ReactNode }> = ({ label, children }) => (
-  <div className="flex flex-col gap-1">
-    <label className="text-sm font-medium text-gray-700 dark:text-gray-300">{label}</label>
-    {children}
-  </div>
-);
-
 function Step1({ data, set }: { data: MissionData; set: (d: Partial<MissionData>) => void }) {
   return (
     <div className="flex flex-col gap-5">

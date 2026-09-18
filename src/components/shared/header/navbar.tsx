@@ -17,7 +17,7 @@ type NavItem =
   | { type?: "link"; href: string; title: string }
   | { type: "dropdown"; title: string; children: { href: string; title: string }[] };
 
-const ResourcesDropdown: FC<{ label: string; children: { href: string; title: string }[] }> = ({ label, children }) => {
+const ResourcesDropdown: FC<{ label: string; subItems: { href: string; title: string }[] }> = ({ label, subItems }) => {
   const [open, setOpen] = useState(false);
   return (
     <li
@@ -31,7 +31,7 @@ const ResourcesDropdown: FC<{ label: string; children: { href: string; title: st
       </button>
       {open && (
         <div className="absolute top-full left-0 bg-white dark:bg-gray-900 rounded-xl shadow-lg border border-gray-100 dark:border-gray-800 py-1 min-w-[180px] z-50">
-          {children.map((child) => (
+          {subItems.map((child) => (
             <Link
               key={child.href}
               href={child.href}
@@ -82,7 +82,7 @@ const Navbar: FC = () => {
       <ul className="hidden lg:flex space-x-4">
         {items.map((item, index) =>
           item.type === "dropdown" ? (
-            <ResourcesDropdown key={index} label={item.title} children={item.children} />
+            <ResourcesDropdown key={index} label={item.title} subItems={item.children} />
           ) : (
             <li key={index} className="relative">
               <Link

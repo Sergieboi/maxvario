@@ -1,5 +1,5 @@
-import StudyMaterials from "@/components/resources/study-materials";
+import CategoryOverview from "@/components/resources/category-overview";
 
 export default function ResourcesPage() {
-  return <StudyMaterials />;
+  return <CategoryOverview />;
 }

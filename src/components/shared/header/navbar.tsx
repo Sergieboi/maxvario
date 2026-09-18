@@ -79,7 +79,7 @@ const Navbar: FC = () => {
 
   return (
     <nav>
-      <ul className="hidden lg:flex space-x-4">
+      <ul className="hidden lg:flex items-center space-x-4">
         {items.map((item, index) =>
           item.type === "dropdown" ? (
             <ResourcesDropdown key={index} label={item.title} subItems={item.children} />

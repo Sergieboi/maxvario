@@ -245,6 +245,7 @@ export const RESOURCES: Resource[] = [
     url: "https://burnair.ch",
     free: false,
     platform: "iOS & Android",
+    image: "https://www.burnair.ch/wp-content/uploads/2022/03/Portfolio_burnairMap-260x185.png",
   },
   {
     title: "Windy",

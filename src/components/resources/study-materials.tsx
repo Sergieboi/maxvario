@@ -17,7 +17,6 @@ const CATEGORY_META: Record<Category, {
 };
 
 const ResourceCard: FC<{ resource: typeof RESOURCES[0] }> = ({ resource }) => {
-  const meta = CATEGORY_META[resource.category];
   const isExternal = resource.url !== "#";
 
   return (

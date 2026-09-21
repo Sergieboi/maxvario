@@ -622,5 +622,208 @@
     "success": "Erfolgreich abonniert",
     "error": "Wir konnten Sie nicht anmelden, bitte versuchen Sie es später erneut",
     "email": "E-mail address"
+  },
+  "resourcesCta": {
+    "heading": "Piloten-Ressourcen",
+    "tagline": "Alles, was du brauchst, um weiter zu fliegen und stärker zu wandern.",
+    "studyMaterials": {
+      "subtitle": "Bücher · Podcasts · Apps · Mehr",
+      "title": "Lernmaterialien",
+      "description": "Bücher, Podcasts, Apps und Leitfäden für Hike & Fly-Piloten auf jedem Niveau.",
+      "cta": "Ressourcen entdecken"
+    },
+    "adventurePlanning": {
+      "subtitle": "Wetter · Route · Ausrüstung · Briefing",
+      "title": "Abenteuerplanung",
+      "description": "Plane deine nächste Hike & Fly-Mission — Wetter, Route, Ausrüstungscheckliste und druckbares Briefing.",
+      "cta": "Mission planen"
+    }
+  },
+  "studyMaterials": {
+    "heroTitle": "Lernmaterialien",
+    "heroDescription": "Die besten Bücher, Podcasts, Apps und Online-Ressourcen speziell für Hike & Fly-Piloten — vom Einsteiger bis zur Elite.",
+    "resourceSingular": "Ressource",
+    "resourcePlural": "Ressourcen",
+    "backToCategories": "Alle Kategorien",
+    "free": "Kostenlos",
+    "open": "Öffnen",
+    "browse": "Entdecken",
+    "categories": {
+      "book": "Bücher",
+      "pdf": "Kostenlose PDFs & Leitfäden",
+      "podcast": "Podcasts",
+      "youtube": "YouTube",
+      "app": "Apps & Tools",
+      "course": "Kurse"
+    },
+    "categoryDescriptions": {
+      "book": "Grundlegende Lektüre für Hike & Fly-Piloten, von Einsteigermanuals bis zu Einblicken von Spitzensportlern.",
+      "pdf": "Herunterladbare Handbücher, Sicherheitsleitfäden und technische Ressourcen führende Luftfahrtorganisationen.",
+      "podcast": "Interviews mit Spitzensportlern, Sicherheitsdiskussionen und Abenteuergeschichten — perfekt fürs Training.",
+      "youtube": "Technikvideos, Ausrüstungstests und Rennaufnahmen der besten Kanäle der Sportart.",
+      "app": "Wetter-, Navigations- und Flugtracking-Tools professioneller Hike & Fly-Athleten.",
+      "course": "Strukturierte Online-Trainingsprogramme zur Beschleunigung deiner Entwicklung als Pilot."
+    }
+  },
+  "missionPlanner": {
+    "heroTitle": "Hike & Fly Missionsplaner",
+    "heroDescription": "Plane deine Mission Schritt für Schritt — Wetter, Route, Ausrüstung und Bereitschaft — und erstelle einen druckbaren Einsatzplan.",
+    "steps": {
+      "basics": "Grundlagen",
+      "weather": "Wetter",
+      "route": "Route",
+      "gear": "Ausrüstung",
+      "readiness": "Bereitschaft"
+    },
+    "nav": {
+      "back": "Zurück",
+      "next": "Weiter",
+      "generate": "Missionsbericht erstellen"
+    },
+    "step1": {
+      "title": "Missionsgrunddaten",
+      "missionName": "Missionsname",
+      "missionNamePlaceholder": "z.B. Chamonix Speedrun",
+      "date": "Datum",
+      "launchSite": "Startplatz",
+      "launchSitePlaceholder": "z.B. Planpraz",
+      "country": "Land / Region",
+      "countryPlaceholder": "z.B. Frankreich – Alpen",
+      "duration": "Voraussichtliche Dauer",
+      "durationOptions": {
+        "1-2h": "1 – 2 Stunden",
+        "2-4h": "2 – 4 Stunden",
+        "4-6h": "4 – 6 Stunden",
+        "6-8h": "6 – 8 Stunden",
+        "8h+": "Ganzer Tag (8 h+)"
+      },
+      "goal": "Missionsziel",
+      "goalOptions": {
+        "fun": "Freizeit- / Spassflug",
+        "training": "Training / Fertigkeitenentwicklung",
+        "race-prep": "Rennvorbereitung",
+        "competition": "Wettkampf",
+        "exploration": "Erkundung / neue Route"
+      }
+    },
+    "step2": {
+      "title": "Wetterbewertung",
+      "windSpeed": "Windgeschwindigkeit am Start (km/h)",
+      "windSpeedPlaceholder": "z.B. 15",
+      "windDirection": "Windrichtung",
+      "cloudBase": "Erwartete Wolkenbasis (m ü. NN)",
+      "cloudBasePlaceholder": "z.B. 2800",
+      "thermalActivity": "Thermikaktivität",
+      "thermalOptions": {
+        "none": "Keine (Schlittenfahrtbedingungen)",
+        "weak": "Schwach / ruhig",
+        "moderate": "Moderat",
+        "strong": "Stark / turbulent",
+        "extreme": "Extrem – Abbruch erwägen"
+      },
+      "weatherNotes": "Wetternotizen",
+      "weatherNotesPlaceholder": "NOTAM geprüft? Vorhersagequelle? Bedenken..."
+    },
+    "step3": {
+      "title": "Routenplanung",
+      "startPoint": "Start- / Startplatz",
+      "startPointPlaceholder": "z.B. Planpraz (2000 m)",
+      "endPoint": "Ziel- / Landepunkt",
+      "endPointPlaceholder": "z.B. Les Houches Tal",
+      "distance": "Geschätzte Entfernung (km)",
+      "distancePlaceholder": "z.B. 18",
+      "elevationGain": "Gesamter Höhengewinn zu Fuß (m)",
+      "elevationGainPlaceholder": "z.B. 1200",
+      "escapeRoutes": "Ausweichrouten",
+      "escapeRoutesPlaceholder": "Beschreibe deine Ausweichoptionen bei Wetterversänderung...",
+      "terrainNotes": "Geländenotizen",
+      "terrainNotesPlaceholder": "Technische Abschnitte, Luftraumeinschränkungen, bekannte Gefahren..."
+    },
+    "step4": {
+      "title": "Ausrüstungscheckliste",
+      "items": {
+        "wing": "Gleitschirmflügel (geprüft)",
+        "harness": "Gurt (Vorflugkontrolle)",
+        "reserve": "Reserveschirm (gepackt & datiert)",
+        "helmet": "Helm",
+        "vario": "Variometer / GPS",
+        "radio": "Funk",
+        "tracker": "Live-Tracker (SPOT / InReach / Garmin)",
+        "water": "Wasser (mind. 1,5 L)",
+        "food": "Essen / Energiesnacks",
+        "firstaid": "Erste-Hilfe-Set",
+        "phone": "Vollgeladenes Handy",
+        "map": "Offline-Karte / Luftraumkarte",
+        "layers": "Wind-/Wärmeschichten",
+        "sunscreen": "Sonnencreme & Sonnenbrille",
+        "battery": "Externe Batterie (vollgeladen) + Kabel",
+        "poles": "Wanderstöcke",
+        "electrolytes": "Elektrolyte (für längere Missionen)",
+        "socks": "Zusätzliche Socken"
+      }
+    },
+    "step5": {
+      "title": "Persönliche Bereitschaft",
+      "fitnessLevel": "Fitnesslevel heute",
+      "fitnessOptions": {
+        "low": "Niedrig – nicht mein bester Tag",
+        "ok": "OK – fühle mich gut",
+        "good": "Gut – gut ausgeruht",
+        "peak": "Top – bereit für einen großen Tag"
+      },
+      "recentFlightHours": "Flugstunden in den letzten 30 Tagen",
+      "recentFlightHoursPlaceholder": "z.B. 6",
+      "siteFamiliarity": "Vertrautheit mit dem Startplatz",
+      "siteFamiliarityOptions": {
+        "first-time": "Erstes Mal – brauche ein lokales Briefing",
+        "some": "Schon hier geflogen",
+        "familiar": "Sehr vertraut mit dem Platz"
+      },
+      "emergencyContact": "Notfallkontakt Name",
+      "emergencyContactPlaceholder": "z.B. Maria Santos",
+      "emergencyPhone": "Notfallkontakt Telefon",
+      "emergencyPhonePlaceholder": "z.B. +41 79 123 4567",
+      "abortConditions": "Abbruchbedingungen",
+      "abortConditionsPlaceholder": "z.B. Wenn Wind über 30 km/h, Wolkenbasis unter 2000 m fällt oder ich mich auf halbem Weg müde fühle..."
+    },
+    "summary": {
+      "title": "Missionsbericht",
+      "riskLabel": "Risiko",
+      "riskLow": "Niedrig – bereit",
+      "riskModerate": "Moderat – markierte Punkte prüfen",
+      "riskHigh": "Hoch – Mission überdenken",
+      "sections": {
+        "basics": "Grundlagen",
+        "weather": "Wetter",
+        "route": "Route",
+        "gear": "Ausrüstung",
+        "readiness": "Bereitschaft"
+      },
+      "labels": {
+        "mission": "Mission",
+        "date": "Datum",
+        "launchSite": "Startplatz",
+        "duration": "Dauer",
+        "goal": "Ziel",
+        "wind": "Wind",
+        "cloudBase": "Wolkenbasis",
+        "thermals": "Thermik",
+        "notes": "Notizen",
+        "start": "Start",
+        "end": "Ziel",
+        "distance": "Entfernung",
+        "elevationGain": "Höhengewinn",
+        "escapeRoutes": "Ausweichrouten",
+        "terrainNotes": "Geländenotizen",
+        "fitness": "Fitness",
+        "recentHours": "Aktuelle Flugstunden",
+        "siteFamiliarity": "Platzkenntnis",
+        "emergencyContact": "Notfallkontakt",
+        "abortConditions": "Abbruchbedingungen"
+      },
+      "allGearChecked": "Gesamte Ausrüstung geprüft",
+      "print": "Drucken / Als PDF speichern",
+      "reset": "Neue Mission starten"
+    }
   }
 }

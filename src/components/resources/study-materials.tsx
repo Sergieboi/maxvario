@@ -4,19 +4,9 @@ import { FC } from "react";
 import Link from "next/link";
 import Container from "@/components/shared/container";
 import { RESOURCES, Category } from "@/components/resources/resource-data";
+import { useTranslations } from "next-intl";
 
-const CATEGORY_META: Record<Category, {
-  label: string;
-}> = {
-  book:    { label: "Books" },
-  pdf:     { label: "Free PDFs & Guides" },
-  podcast: { label: "Podcasts" },
-  youtube: { label: "YouTube" },
-  app:     { label: "Apps & Tools" },
-  course:  { label: "Courses" },
-};
-
-const ResourceCard: FC<{ resource: typeof RESOURCES[0] }> = ({ resource }) => {
+const ResourceCard: FC<{ resource: typeof RESOURCES[0]; freeLabel: string; openLabel: string }> = ({ resource, freeLabel, openLabel }) => {
   const isExternal = resource.url !== "#";
 
   return (
@@ -64,7 +54,7 @@ const ResourceCard: FC<{ resource: typeof RESOURCES[0] }> = ({ resource }) => {
         {/* Free badge */}
         {resource.free && (
           <span className="absolute top-3 left-3 bg-white/20 text-white text-xs font-semibold px-2.5 py-1 rounded-full backdrop-blur-sm z-10">
-            Free
+            {freeLabel}
           </span>
         )}
         {/* Title overlay at bottom — only on dark/gradient headers */}
@@ -89,7 +79,7 @@ const ResourceCard: FC<{ resource: typeof RESOURCES[0] }> = ({ resource }) => {
           )}
           {isExternal && (
             <span className="text-xs font-semibold text-blue-600 dark:text-blue-400 group-hover:underline ml-auto">
-              Open →
+              {openLabel} &rarr;
             </span>
           )}
         </div>
@@ -101,8 +91,9 @@ const ResourceCard: FC<{ resource: typeof RESOURCES[0] }> = ({ resource }) => {
 type Props = { category: Category };
 
 const StudyMaterials: FC<Props> = ({ category }) => {
-  const meta = CATEGORY_META[category];
+  const t = useTranslations("studyMaterials");
   const resources = RESOURCES.filter((r) => r.category === category);
+  const label = t(`categories.${category}`);
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-950">
@@ -113,17 +104,19 @@ const StudyMaterials: FC<Props> = ({ category }) => {
             href="/resources"
             className="inline-flex items-center gap-1 text-blue-300 hover:text-white text-sm font-medium mb-6 transition-colors"
           >
-            &larr; All Categories
+            &larr; {t("backToCategories")}
           </Link>
-          <h1 className="text-4xl md:text-5xl font-bold">{meta.label}</h1>
-          <p className="text-blue-200 mt-2">{resources.length} resource{resources.length !== 1 ? "s" : ""}</p>
+          <h1 className="text-4xl md:text-5xl font-bold">{label}</h1>
+          <p className="text-blue-200 mt-2">
+            {resources.length} {resources.length !== 1 ? t("resourcePlural") : t("resourceSingular")}
+          </p>
         </Container>
       </div>
 
       <Container className="py-12">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {resources.map((r, i) => (
-            <ResourceCard key={i} resource={r} />
+            <ResourceCard key={i} resource={r} freeLabel={t("free")} openLabel={t("open")} />
           ))}
         </div>
       </Container>

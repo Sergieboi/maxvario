@@ -622,5 +622,208 @@
     "success": "Iscrizione avvenuta con successo",
     "error": "Non siamo riusciti a iscriverti, riprova più tardi",
     "email": "E-mail address"
+  },
+  "resourcesCta": {
+    "heading": "Risorse per Piloti",
+    "tagline": "Tutto ciò di cui hai bisogno per volare più lontano e camminare più forte.",
+    "studyMaterials": {
+      "subtitle": "Libri · Podcast · App · Altro",
+      "title": "Materiali di Studio",
+      "description": "Libri, podcast, app e guide selezionati per piloti di hike & fly di ogni livello.",
+      "cta": "Sfoglia le risorse"
+    },
+    "adventurePlanning": {
+      "subtitle": "Meteo · Percorso · Attrezzatura · Briefing",
+      "title": "Pianificazione Avventura",
+      "description": "Pianifica la tua prossima missione hike & fly — meteo, percorso, lista attrezzatura e briefing stampabile.",
+      "cta": "Pianifica la missione"
+    }
+  },
+  "studyMaterials": {
+    "heroTitle": "Materiali di Studio",
+    "heroDescription": "I migliori libri, podcast, app e risorse online selezionati per i piloti di hike & fly — dal principiante all'elite.",
+    "resourceSingular": "risorsa",
+    "resourcePlural": "risorse",
+    "backToCategories": "Tutte le categorie",
+    "free": "Gratuito",
+    "open": "Apri",
+    "browse": "Sfoglia",
+    "categories": {
+      "book": "Libri",
+      "pdf": "PDF e Guide Gratuiti",
+      "podcast": "Podcast",
+      "youtube": "YouTube",
+      "app": "App e Strumenti",
+      "course": "Corsi"
+    },
+    "categoryDescriptions": {
+      "book": "Letture essenziali per piloti di hike & fly, dai manuali per principianti alle intuizioni degli atleti d'élite.",
+      "pdf": "Manuali scaricabili, guide alla sicurezza e risorse tecniche delle principali organizzazioni aeronautiche.",
+      "podcast": "Interviste con atleti d'élite, discussioni sulla sicurezza e storie di avventura — perfetti per gli allenamenti.",
+      "youtube": "Analisi tecniche, recensioni di attrezzatura e riprese di gare dai migliori canali dello sport.",
+      "app": "Strumenti meteorologici, di navigazione e tracciamento di volo usati da atleti professionisti.",
+      "course": "Programmi di formazione online strutturati per accelerare la tua progressione come pilota."
+    }
+  },
+  "missionPlanner": {
+    "heroTitle": "Pianificatore di Missione Hike & Fly",
+    "heroDescription": "Pianifica la tua missione passo dopo passo — meteo, percorso, attrezzatura e preparazione — poi genera un briefing stampabile.",
+    "steps": {
+      "basics": "Basi",
+      "weather": "Meteo",
+      "route": "Percorso",
+      "gear": "Attrezzatura",
+      "readiness": "Preparazione"
+    },
+    "nav": {
+      "back": "Indietro",
+      "next": "Avanti",
+      "generate": "Genera briefing missione"
+    },
+    "step1": {
+      "title": "Dati di Base",
+      "missionName": "Nome della missione",
+      "missionNamePlaceholder": "es. Chamonix speed run",
+      "date": "Data",
+      "launchSite": "Sito di decollo",
+      "launchSitePlaceholder": "es. Planpraz",
+      "country": "Paese / Regione",
+      "countryPlaceholder": "es. Francia – Alpi",
+      "duration": "Durata prevista",
+      "durationOptions": {
+        "1-2h": "1 – 2 ore",
+        "2-4h": "2 – 4 ore",
+        "4-6h": "4 – 6 ore",
+        "6-8h": "6 – 8 ore",
+        "8h+": "Giornata intera (8 h+)"
+      },
+      "goal": "Obiettivo della missione",
+      "goalOptions": {
+        "fun": "Volo ricreativo / per piacere",
+        "training": "Allenamento / sviluppo delle abilità",
+        "race-prep": "Preparazione gara",
+        "competition": "Competizione",
+        "exploration": "Esplorazione / nuovo percorso"
+      }
+    },
+    "step2": {
+      "title": "Valutazione Meteorologica",
+      "windSpeed": "Velocità del vento al decollo (km/h)",
+      "windSpeedPlaceholder": "es. 15",
+      "windDirection": "Direzione del vento",
+      "cloudBase": "Base delle nuvole prevista (m slm)",
+      "cloudBasePlaceholder": "es. 2800",
+      "thermalActivity": "Attività termica",
+      "thermalOptions": {
+        "none": "Nessuna (condizioni di planata)",
+        "weak": "Debole / calma",
+        "moderate": "Moderata",
+        "strong": "Forte / turbolenta",
+        "extreme": "Estrema – considera di annullare"
+      },
+      "weatherNotes": "Note meteo",
+      "weatherNotesPlaceholder": "NOTAM verificato? Fonte previsioni? Qualche preoccupazione..."
+    },
+    "step3": {
+      "title": "Pianificazione del Percorso",
+      "startPoint": "Punto di partenza / decollo",
+      "startPointPlaceholder": "es. Planpraz (2000 m)",
+      "endPoint": "Obiettivo / punto di atterraggio",
+      "endPointPlaceholder": "es. Valle di Les Houches",
+      "distance": "Distanza stimata (km)",
+      "distancePlaceholder": "es. 18",
+      "elevationGain": "Dislivello positivo a piedi (m)",
+      "elevationGainPlaceholder": "es. 1200",
+      "escapeRoutes": "Percorsi di fuga",
+      "escapeRoutesPlaceholder": "Descrivi le opzioni di ripiego se il meteo cambia...",
+      "terrainNotes": "Note sul terreno",
+      "terrainNotesPlaceholder": "Sezioni tecniche, restrizioni spazio aereo, pericoli noti..."
+    },
+    "step4": {
+      "title": "Lista Attrezzatura",
+      "items": {
+        "wing": "Vela da parapendio (ispezionata)",
+        "harness": "Imbrago (controllo pre-volo)",
+        "reserve": "Paracadute di riserva (ripiegato e datato)",
+        "helmet": "Casco",
+        "vario": "Variometro / GPS",
+        "radio": "Radio",
+        "tracker": "Tracker in diretta (SPOT / InReach / Garmin)",
+        "water": "Acqua (min. 1,5 L)",
+        "food": "Cibo / snack energetici",
+        "firstaid": "Kit di pronto soccorso",
+        "phone": "Telefono completamente carico",
+        "map": "Mappa offline / carta spazio aereo",
+        "layers": "Strati antivento / caldi",
+        "sunscreen": "Crema solare & occhiali da sole",
+        "battery": "Batteria esterna (completamente carica) + cavi",
+        "poles": "Bastoncini da trekking",
+        "electrolytes": "Elettroliti (per missioni lunghe)",
+        "socks": "Calze extra"
+      }
+    },
+    "step5": {
+      "title": "Preparazione Personale",
+      "fitnessLevel": "Livello di forma oggi",
+      "fitnessOptions": {
+        "low": "Basso – non è il mio giorno migliore",
+        "ok": "OK – mi sento bene",
+        "good": "Buono – ben riposato",
+        "peak": "Ottimo – pronto per una grande giornata"
+      },
+      "recentFlightHours": "Ore di volo negli ultimi 30 giorni",
+      "recentFlightHoursPlaceholder": "es. 6",
+      "siteFamiliarity": "Familiarità con il sito di decollo",
+      "siteFamiliarityOptions": {
+        "first-time": "Prima volta – ho bisogno di un briefing locale",
+        "some": "Ho già volato qui",
+        "familiar": "Molto familiare con il sito"
+      },
+      "emergencyContact": "Nome contatto di emergenza",
+      "emergencyContactPlaceholder": "es. Maria Santos",
+      "emergencyPhone": "Telefono contatto di emergenza",
+      "emergencyPhonePlaceholder": "es. +41 79 123 4567",
+      "abortConditions": "Condizioni di annullamento",
+      "abortConditionsPlaceholder": "es. Se il vento supera 30 km/h, la base delle nuvole scende sotto 2000 m o mi sento stanco a metà percorso..."
+    },
+    "summary": {
+      "title": "Briefing Missione",
+      "riskLabel": "Rischio",
+      "riskLow": "Basso – pronto a volare",
+      "riskModerate": "Moderato – rivedi i punti segnalati",
+      "riskHigh": "Alto – riconsidера la missione",
+      "sections": {
+        "basics": "Basi",
+        "weather": "Meteo",
+        "route": "Percorso",
+        "gear": "Attrezzatura",
+        "readiness": "Preparazione"
+      },
+      "labels": {
+        "mission": "Missione",
+        "date": "Data",
+        "launchSite": "Sito di decollo",
+        "duration": "Durata",
+        "goal": "Obiettivo",
+        "wind": "Vento",
+        "cloudBase": "Base delle nuvole",
+        "thermals": "Termiche",
+        "notes": "Note",
+        "start": "Partenza",
+        "end": "Obiettivo",
+        "distance": "Distanza",
+        "elevationGain": "Dislivello positivo",
+        "escapeRoutes": "Percorsi di fuga",
+        "terrainNotes": "Note sul terreno",
+        "fitness": "Forma fisica",
+        "recentHours": "Ore di volo recenti",
+        "siteFamiliarity": "Conoscenza del sito",
+        "emergencyContact": "Contatto di emergenza",
+        "abortConditions": "Condizioni di annullamento"
+      },
+      "allGearChecked": "Tutta l'attrezzatura verificata",
+      "print": "Stampa / Salva PDF",
+      "reset": "Nuova missione"
+    }
   }
 }

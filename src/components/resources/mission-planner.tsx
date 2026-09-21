@@ -3,39 +3,33 @@
 import { FC, useState } from "react";
 import { Button, Input, Select, SelectItem, Textarea, Checkbox, Chip } from "@nextui-org/react";
 import Container from "@/components/shared/container";
+import { useTranslations } from "next-intl";
+
+type T = ReturnType<typeof useTranslations<"missionPlanner">>;
 
 // ─── Types ───────────────────────────────────────────────────────────────────
 
 type Step = 1 | 2 | 3 | 4 | 5;
 
 interface MissionData {
-  // Step 1 – Basics
   missionName: string;
   date: string;
   launchSite: string;
   country: string;
   duration: string;
   goalType: string;
-
-  // Step 2 – Weather
   windSpeed: string;
   windDirection: string;
   cloudBase: string;
   thermalActivity: string;
   weatherNotes: string;
-
-  // Step 3 – Route
   startPoint: string;
   endPoint: string;
   distance: string;
   elevationGain: string;
   escapeRoutes: string;
   terrainNotes: string;
-
-  // Step 4 – Gear
   gear: Record<string, boolean>;
-
-  // Step 5 – Readiness
   fitnessLevel: string;
   recentFlightHours: string;
   familiarWithSite: string;
@@ -44,26 +38,11 @@ interface MissionData {
   abortConditions: string;
 }
 
-const GEAR_ITEMS = [
-  { key: "wing", label: "Paraglider wing (inspected)" },
-  { key: "harness", label: "Harness (pre-flight check)" },
-  { key: "reserve", label: "Reserve parachute (packed & dated)" },
-  { key: "helmet", label: "Helmet" },
-  { key: "vario", label: "Variometer / GPS" },
-  { key: "radio", label: "Radio" },
-  { key: "tracker", label: "Live tracker (SPOT / InReach / Garmin)" },
-  { key: "water", label: "Water (min. 1.5 L)" },
-  { key: "food", label: "Food / energy snacks" },
-  { key: "firstaid", label: "First aid kit" },
-  { key: "phone", label: "Fully charged phone" },
-  { key: "map", label: "Offline map / airspace chart" },
-  { key: "layers", label: "Wind/warm layers" },
-  { key: "sunscreen", label: "Sunscreen & sunglasses" },
-  { key: "battery", label: "External battery (fully charged) + cables" },
-  { key: "poles", label: "Hiking poles" },
-  { key: "electrolytes", label: "Electrolytes (for longer missions)" },
-  { key: "socks", label: "Extra socks" },
-];
+const GEAR_KEYS = [
+  "wing","harness","reserve","helmet","vario","radio","tracker","water",
+  "food","firstaid","phone","map","layers","sunscreen","battery","poles",
+  "electrolytes","socks",
+] as const;
 
 const EMPTY: MissionData = {
   missionName: "", date: "", launchSite: "", country: "", duration: "", goalType: "",
@@ -75,87 +54,87 @@ const EMPTY: MissionData = {
 
 // ─── Step components ──────────────────────────────────────────────────────────
 
-function Step1({ data, set }: { data: MissionData; set: (d: Partial<MissionData>) => void }) {
+function Step1({ data, set, t }: { data: MissionData; set: (d: Partial<MissionData>) => void; t: T }) {
   return (
     <div className="flex flex-col gap-5">
-      <h2 className="text-xl font-bold text-blue-900">Mission Basics</h2>
-      <Input label="Mission name" placeholder="e.g. Chamonix speed run" value={data.missionName} onValueChange={v => set({ missionName: v })} variant="bordered" />
-      <Input label="Date" type="date" value={data.date} onValueChange={v => set({ date: v })} variant="bordered" />
-      <Input label="Launch site" placeholder="e.g. Planpraz" value={data.launchSite} onValueChange={v => set({ launchSite: v })} variant="bordered" />
-      <Input label="Country / Region" placeholder="e.g. France – Alps" value={data.country} onValueChange={v => set({ country: v })} variant="bordered" />
-      <Select label="Expected duration" selectedKeys={data.duration ? [data.duration] : []} onSelectionChange={k => set({ duration: Array.from(k)[0] as string })} variant="bordered">
-        <SelectItem key="1-2h">1 – 2 hours</SelectItem>
-        <SelectItem key="2-4h">2 – 4 hours</SelectItem>
-        <SelectItem key="4-6h">4 – 6 hours</SelectItem>
-        <SelectItem key="6-8h">6 – 8 hours</SelectItem>
-        <SelectItem key="8h+">Full day (8 h+)</SelectItem>
+      <h2 className="text-xl font-semibold text-blue-900">{t("step1.title")}</h2>
+      <Input label={t("step1.missionName")} placeholder={t("step1.missionNamePlaceholder")} value={data.missionName} onValueChange={v => set({ missionName: v })} variant="bordered" />
+      <Input label={t("step1.date")} type="date" value={data.date} onValueChange={v => set({ date: v })} variant="bordered" />
+      <Input label={t("step1.launchSite")} placeholder={t("step1.launchSitePlaceholder")} value={data.launchSite} onValueChange={v => set({ launchSite: v })} variant="bordered" />
+      <Input label={t("step1.country")} placeholder={t("step1.countryPlaceholder")} value={data.country} onValueChange={v => set({ country: v })} variant="bordered" />
+      <Select label={t("step1.duration")} selectedKeys={data.duration ? [data.duration] : []} onSelectionChange={k => set({ duration: Array.from(k)[0] as string })} variant="bordered">
+        <SelectItem key="1-2h">{t("step1.durationOptions.1-2h")}</SelectItem>
+        <SelectItem key="2-4h">{t("step1.durationOptions.2-4h")}</SelectItem>
+        <SelectItem key="4-6h">{t("step1.durationOptions.4-6h")}</SelectItem>
+        <SelectItem key="6-8h">{t("step1.durationOptions.6-8h")}</SelectItem>
+        <SelectItem key="8h+">{t("step1.durationOptions.8h+")}</SelectItem>
       </Select>
-      <Select label="Mission goal" selectedKeys={data.goalType ? [data.goalType] : []} onSelectionChange={k => set({ goalType: Array.from(k)[0] as string })} variant="bordered">
-        <SelectItem key="fun">Recreational / fun flight</SelectItem>
-        <SelectItem key="training">Training / skill building</SelectItem>
-        <SelectItem key="race-prep">Race preparation</SelectItem>
-        <SelectItem key="competition">Competition</SelectItem>
-        <SelectItem key="exploration">Exploration / new route</SelectItem>
+      <Select label={t("step1.goal")} selectedKeys={data.goalType ? [data.goalType] : []} onSelectionChange={k => set({ goalType: Array.from(k)[0] as string })} variant="bordered">
+        <SelectItem key="fun">{t("step1.goalOptions.fun")}</SelectItem>
+        <SelectItem key="training">{t("step1.goalOptions.training")}</SelectItem>
+        <SelectItem key="race-prep">{t("step1.goalOptions.race-prep")}</SelectItem>
+        <SelectItem key="competition">{t("step1.goalOptions.competition")}</SelectItem>
+        <SelectItem key="exploration">{t("step1.goalOptions.exploration")}</SelectItem>
       </Select>
     </div>
   );
 }
 
-function Step2({ data, set }: { data: MissionData; set: (d: Partial<MissionData>) => void }) {
+function Step2({ data, set, t }: { data: MissionData; set: (d: Partial<MissionData>) => void; t: T }) {
   return (
     <div className="flex flex-col gap-5">
-      <h2 className="text-xl font-bold text-blue-900">Weather Assessment</h2>
-      <Input label="Wind speed at launch (km/h)" placeholder="e.g. 15" type="number" value={data.windSpeed} onValueChange={v => set({ windSpeed: v })} variant="bordered" />
-      <Select label="Wind direction" selectedKeys={data.windDirection ? [data.windDirection] : []} onSelectionChange={k => set({ windDirection: Array.from(k)[0] as string })} variant="bordered">
+      <h2 className="text-xl font-semibold text-blue-900">{t("step2.title")}</h2>
+      <Input label={t("step2.windSpeed")} placeholder={t("step2.windSpeedPlaceholder")} type="number" value={data.windSpeed} onValueChange={v => set({ windSpeed: v })} variant="bordered" />
+      <Select label={t("step2.windDirection")} selectedKeys={data.windDirection ? [data.windDirection] : []} onSelectionChange={k => set({ windDirection: Array.from(k)[0] as string })} variant="bordered">
         {["N","NE","E","SE","S","SW","W","NW"].map(d => <SelectItem key={d}>{d}</SelectItem>)}
       </Select>
-      <Input label="Expected cloud base (m asl)" placeholder="e.g. 2800" type="number" value={data.cloudBase} onValueChange={v => set({ cloudBase: v })} variant="bordered" />
-      <Select label="Thermal activity" selectedKeys={data.thermalActivity ? [data.thermalActivity] : []} onSelectionChange={k => set({ thermalActivity: Array.from(k)[0] as string })} variant="bordered">
-        <SelectItem key="none">None (sled ride conditions)</SelectItem>
-        <SelectItem key="weak">Weak / smooth</SelectItem>
-        <SelectItem key="moderate">Moderate</SelectItem>
-        <SelectItem key="strong">Strong / turbulent</SelectItem>
-        <SelectItem key="extreme">Extreme – consider aborting</SelectItem>
+      <Input label={t("step2.cloudBase")} placeholder={t("step2.cloudBasePlaceholder")} type="number" value={data.cloudBase} onValueChange={v => set({ cloudBase: v })} variant="bordered" />
+      <Select label={t("step2.thermalActivity")} selectedKeys={data.thermalActivity ? [data.thermalActivity] : []} onSelectionChange={k => set({ thermalActivity: Array.from(k)[0] as string })} variant="bordered">
+        <SelectItem key="none">{t("step2.thermalOptions.none")}</SelectItem>
+        <SelectItem key="weak">{t("step2.thermalOptions.weak")}</SelectItem>
+        <SelectItem key="moderate">{t("step2.thermalOptions.moderate")}</SelectItem>
+        <SelectItem key="strong">{t("step2.thermalOptions.strong")}</SelectItem>
+        <SelectItem key="extreme">{t("step2.thermalOptions.extreme")}</SelectItem>
       </Select>
-      <Textarea label="Weather notes" placeholder="NOTAM checked? Forecast source? Any concerns..." value={data.weatherNotes} onValueChange={v => set({ weatherNotes: v })} variant="bordered" minRows={3} />
+      <Textarea label={t("step2.weatherNotes")} placeholder={t("step2.weatherNotesPlaceholder")} value={data.weatherNotes} onValueChange={v => set({ weatherNotes: v })} variant="bordered" minRows={3} />
     </div>
   );
 }
 
-function Step3({ data, set }: { data: MissionData; set: (d: Partial<MissionData>) => void }) {
+function Step3({ data, set, t }: { data: MissionData; set: (d: Partial<MissionData>) => void; t: T }) {
   return (
     <div className="flex flex-col gap-5">
-      <h2 className="text-xl font-bold text-blue-900">Route Planning</h2>
-      <Input label="Start / launch point" placeholder="e.g. Planpraz (2000 m)" value={data.startPoint} onValueChange={v => set({ startPoint: v })} variant="bordered" />
-      <Input label="Goal / landing point" placeholder="e.g. Les Houches valley" value={data.endPoint} onValueChange={v => set({ endPoint: v })} variant="bordered" />
-      <Input label="Estimated distance (km)" placeholder="e.g. 18" type="number" value={data.distance} onValueChange={v => set({ distance: v })} variant="bordered" />
-      <Input label="Total elevation gain on foot (m)" placeholder="e.g. 1200" type="number" value={data.elevationGain} onValueChange={v => set({ elevationGain: v })} variant="bordered" />
-      <Textarea label="Escape routes" placeholder="Describe your bail-out options if weather changes..." value={data.escapeRoutes} onValueChange={v => set({ escapeRoutes: v })} variant="bordered" minRows={2} />
-      <Textarea label="Terrain notes" placeholder="Technical sections, airspace restrictions, known hazards..." value={data.terrainNotes} onValueChange={v => set({ terrainNotes: v })} variant="bordered" minRows={2} />
+      <h2 className="text-xl font-semibold text-blue-900">{t("step3.title")}</h2>
+      <Input label={t("step3.startPoint")} placeholder={t("step3.startPointPlaceholder")} value={data.startPoint} onValueChange={v => set({ startPoint: v })} variant="bordered" />
+      <Input label={t("step3.endPoint")} placeholder={t("step3.endPointPlaceholder")} value={data.endPoint} onValueChange={v => set({ endPoint: v })} variant="bordered" />
+      <Input label={t("step3.distance")} placeholder={t("step3.distancePlaceholder")} type="number" value={data.distance} onValueChange={v => set({ distance: v })} variant="bordered" />
+      <Input label={t("step3.elevationGain")} placeholder={t("step3.elevationGainPlaceholder")} type="number" value={data.elevationGain} onValueChange={v => set({ elevationGain: v })} variant="bordered" />
+      <Textarea label={t("step3.escapeRoutes")} placeholder={t("step3.escapeRoutesPlaceholder")} value={data.escapeRoutes} onValueChange={v => set({ escapeRoutes: v })} variant="bordered" minRows={2} />
+      <Textarea label={t("step3.terrainNotes")} placeholder={t("step3.terrainNotesPlaceholder")} value={data.terrainNotes} onValueChange={v => set({ terrainNotes: v })} variant="bordered" minRows={2} />
     </div>
   );
 }
 
-function Step4({ data, set }: { data: MissionData; set: (d: Partial<MissionData>) => void }) {
+function Step4({ data, set, t }: { data: MissionData; set: (d: Partial<MissionData>) => void; t: T }) {
   const toggle = (key: string) => set({ gear: { ...data.gear, [key]: !data.gear[key] } });
   const checked = Object.values(data.gear).filter(Boolean).length;
   return (
     <div className="flex flex-col gap-5">
       <div className="flex items-center justify-between">
-        <h2 className="text-xl font-bold text-blue-900">Gear Checklist</h2>
-        <Chip color={checked === GEAR_ITEMS.length ? "success" : "warning"} variant="flat">
-          {checked} / {GEAR_ITEMS.length}
+        <h2 className="text-xl font-semibold text-blue-900">{t("step4.title")}</h2>
+        <Chip color={checked === GEAR_KEYS.length ? "success" : "warning"} variant="flat">
+          {checked} / {GEAR_KEYS.length}
         </Chip>
       </div>
       <div className="flex flex-col gap-3">
-        {GEAR_ITEMS.map(item => (
+        {GEAR_KEYS.map(key => (
           <Checkbox
-            key={item.key}
-            isSelected={!!data.gear[item.key]}
-            onValueChange={() => toggle(item.key)}
+            key={key}
+            isSelected={!!data.gear[key]}
+            onValueChange={() => toggle(key)}
             classNames={{ label: "text-sm" }}
           >
-            {item.label}
+            {t(`step4.items.${key}`)}
           </Checkbox>
         ))}
       </div>
@@ -163,32 +142,32 @@ function Step4({ data, set }: { data: MissionData; set: (d: Partial<MissionData>
   );
 }
 
-function Step5({ data, set }: { data: MissionData; set: (d: Partial<MissionData>) => void }) {
+function Step5({ data, set, t }: { data: MissionData; set: (d: Partial<MissionData>) => void; t: T }) {
   return (
     <div className="flex flex-col gap-5">
-      <h2 className="text-xl font-bold text-blue-900">Personal Readiness</h2>
-      <Select label="Fitness level today" selectedKeys={data.fitnessLevel ? [data.fitnessLevel] : []} onSelectionChange={k => set({ fitnessLevel: Array.from(k)[0] as string })} variant="bordered">
-        <SelectItem key="low">Low – not my best day</SelectItem>
-        <SelectItem key="ok">OK – feeling fine</SelectItem>
-        <SelectItem key="good">Good – well rested</SelectItem>
-        <SelectItem key="peak">Peak – ready for a big day</SelectItem>
+      <h2 className="text-xl font-semibold text-blue-900">{t("step5.title")}</h2>
+      <Select label={t("step5.fitnessLevel")} selectedKeys={data.fitnessLevel ? [data.fitnessLevel] : []} onSelectionChange={k => set({ fitnessLevel: Array.from(k)[0] as string })} variant="bordered">
+        <SelectItem key="low">{t("step5.fitnessOptions.low")}</SelectItem>
+        <SelectItem key="ok">{t("step5.fitnessOptions.ok")}</SelectItem>
+        <SelectItem key="good">{t("step5.fitnessOptions.good")}</SelectItem>
+        <SelectItem key="peak">{t("step5.fitnessOptions.peak")}</SelectItem>
       </Select>
-      <Input label="Flight hours in last 30 days" placeholder="e.g. 6" type="number" value={data.recentFlightHours} onValueChange={v => set({ recentFlightHours: v })} variant="bordered" />
-      <Select label="Familiarity with launch site" selectedKeys={data.familiarWithSite ? [data.familiarWithSite] : []} onSelectionChange={k => set({ familiarWithSite: Array.from(k)[0] as string })} variant="bordered">
-        <SelectItem key="first-time">First time – need a local briefing</SelectItem>
-        <SelectItem key="some">Flown here before</SelectItem>
-        <SelectItem key="familiar">Very familiar with the site</SelectItem>
+      <Input label={t("step5.recentFlightHours")} placeholder={t("step5.recentFlightHoursPlaceholder")} type="number" value={data.recentFlightHours} onValueChange={v => set({ recentFlightHours: v })} variant="bordered" />
+      <Select label={t("step5.siteFamiliarity")} selectedKeys={data.familiarWithSite ? [data.familiarWithSite] : []} onSelectionChange={k => set({ familiarWithSite: Array.from(k)[0] as string })} variant="bordered">
+        <SelectItem key="first-time">{t("step5.siteFamiliarityOptions.first-time")}</SelectItem>
+        <SelectItem key="some">{t("step5.siteFamiliarityOptions.some")}</SelectItem>
+        <SelectItem key="familiar">{t("step5.siteFamiliarityOptions.familiar")}</SelectItem>
       </Select>
-      <Input label="Emergency contact name" placeholder="e.g. Maria Santos" value={data.emergencyContact} onValueChange={v => set({ emergencyContact: v })} variant="bordered" />
-      <Input label="Emergency contact phone" placeholder="e.g. +41 79 123 4567" value={data.emergencyPhone} onValueChange={v => set({ emergencyPhone: v })} variant="bordered" />
-      <Textarea label="Abort conditions" placeholder="e.g. If wind exceeds 30 km/h, cloud base drops below 2000 m, or I feel tired at the halfway point..." value={data.abortConditions} onValueChange={v => set({ abortConditions: v })} variant="bordered" minRows={3} />
+      <Input label={t("step5.emergencyContact")} placeholder={t("step5.emergencyContactPlaceholder")} value={data.emergencyContact} onValueChange={v => set({ emergencyContact: v })} variant="bordered" />
+      <Input label={t("step5.emergencyPhone")} placeholder={t("step5.emergencyPhonePlaceholder")} value={data.emergencyPhone} onValueChange={v => set({ emergencyPhone: v })} variant="bordered" />
+      <Textarea label={t("step5.abortConditions")} placeholder={t("step5.abortConditionsPlaceholder")} value={data.abortConditions} onValueChange={v => set({ abortConditions: v })} variant="bordered" minRows={3} />
     </div>
   );
 }
 
 // ─── Summary ──────────────────────────────────────────────────────────────────
 
-function riskScore(data: MissionData): { label: string; color: "success" | "warning" | "danger" } {
+function riskScore(data: MissionData, t: T): { label: string; color: "success" | "warning" | "danger" } {
   let risk = 0;
   if (Number(data.windSpeed) > 30) risk += 2;
   else if (Number(data.windSpeed) > 20) risk += 1;
@@ -198,12 +177,12 @@ function riskScore(data: MissionData): { label: string; color: "success" | "warn
   if (data.familiarWithSite === "first-time") risk += 1;
   if (Number(data.recentFlightHours) < 3) risk += 1;
   const gearChecked = Object.values(data.gear).filter(Boolean).length;
-  if (gearChecked < GEAR_ITEMS.length * 0.7) risk += 2;
+  if (gearChecked < GEAR_KEYS.length * 0.7) risk += 2;
   if (!data.abortConditions) risk += 1;
 
-  if (risk <= 2) return { label: "Low – good to go", color: "success" };
-  if (risk <= 4) return { label: "Moderate – review flagged items", color: "warning" };
-  return { label: "High – reconsider the mission", color: "danger" };
+  if (risk <= 2) return { label: t("summary.riskLow"), color: "success" };
+  if (risk <= 4) return { label: t("summary.riskModerate"), color: "warning" };
+  return { label: t("summary.riskHigh"), color: "danger" };
 }
 
 function SummaryRow({ label, value }: { label: string; value: string }) {
@@ -216,50 +195,50 @@ function SummaryRow({ label, value }: { label: string; value: string }) {
   );
 }
 
-function Summary({ data, onReset }: { data: MissionData; onReset: () => void }) {
-  const risk = riskScore(data);
+function Summary({ data, onReset, t }: { data: MissionData; onReset: () => void; t: T }) {
+  const risk = riskScore(data, t);
   const gearChecked = Object.values(data.gear).filter(Boolean).length;
-  const missingGear = GEAR_ITEMS.filter(g => !data.gear[g.key]).map(g => g.label);
+  const missingGear = GEAR_KEYS.filter(k => !data.gear[k]).map(k => t(`step4.items.${k}`));
 
   return (
     <div className="flex flex-col gap-6">
       <div className="flex items-center justify-between flex-wrap gap-3">
-        <h2 className="text-2xl font-bold text-blue-900">Mission Brief</h2>
+        <h2 className="text-2xl font-semibold text-blue-900">{t("summary.title")}</h2>
         <Chip color={risk.color} variant="flat" size="lg" className="font-semibold">
-          Risk: {risk.label}
+          {t("summary.riskLabel")}: {risk.label}
         </Chip>
       </div>
 
       <section>
-        <h3 className="text-sm font-semibold uppercase tracking-wide text-blue-700 mb-2">Basics</h3>
-        <SummaryRow label="Mission" value={data.missionName} />
-        <SummaryRow label="Date" value={data.date} />
-        <SummaryRow label="Launch site" value={`${data.launchSite}${data.country ? `, ${data.country}` : ""}`} />
-        <SummaryRow label="Duration" value={data.duration} />
-        <SummaryRow label="Goal" value={data.goalType} />
+        <h3 className="text-sm font-semibold uppercase tracking-wide text-blue-700 mb-2">{t("summary.sections.basics")}</h3>
+        <SummaryRow label={t("summary.labels.mission")} value={data.missionName} />
+        <SummaryRow label={t("summary.labels.date")} value={data.date} />
+        <SummaryRow label={t("summary.labels.launchSite")} value={`${data.launchSite}${data.country ? `, ${data.country}` : ""}`} />
+        <SummaryRow label={t("summary.labels.duration")} value={data.duration} />
+        <SummaryRow label={t("summary.labels.goal")} value={data.goalType} />
       </section>
 
       <section>
-        <h3 className="text-sm font-semibold uppercase tracking-wide text-blue-700 mb-2">Weather</h3>
-        <SummaryRow label="Wind" value={data.windSpeed ? `${data.windSpeed} km/h ${data.windDirection}` : ""} />
-        <SummaryRow label="Cloud base" value={data.cloudBase ? `${data.cloudBase} m asl` : ""} />
-        <SummaryRow label="Thermals" value={data.thermalActivity} />
-        <SummaryRow label="Notes" value={data.weatherNotes} />
+        <h3 className="text-sm font-semibold uppercase tracking-wide text-blue-700 mb-2">{t("summary.sections.weather")}</h3>
+        <SummaryRow label={t("summary.labels.wind")} value={data.windSpeed ? `${data.windSpeed} km/h ${data.windDirection}` : ""} />
+        <SummaryRow label={t("summary.labels.cloudBase")} value={data.cloudBase ? `${data.cloudBase} m asl` : ""} />
+        <SummaryRow label={t("summary.labels.thermals")} value={data.thermalActivity} />
+        <SummaryRow label={t("summary.labels.notes")} value={data.weatherNotes} />
       </section>
 
       <section>
-        <h3 className="text-sm font-semibold uppercase tracking-wide text-blue-700 mb-2">Route</h3>
-        <SummaryRow label="Start" value={data.startPoint} />
-        <SummaryRow label="Goal" value={data.endPoint} />
-        <SummaryRow label="Distance" value={data.distance ? `${data.distance} km` : ""} />
-        <SummaryRow label="Elevation gain" value={data.elevationGain ? `${data.elevationGain} m` : ""} />
-        <SummaryRow label="Escape routes" value={data.escapeRoutes} />
-        <SummaryRow label="Terrain notes" value={data.terrainNotes} />
+        <h3 className="text-sm font-semibold uppercase tracking-wide text-blue-700 mb-2">{t("summary.sections.route")}</h3>
+        <SummaryRow label={t("summary.labels.start")} value={data.startPoint} />
+        <SummaryRow label={t("summary.labels.end")} value={data.endPoint} />
+        <SummaryRow label={t("summary.labels.distance")} value={data.distance ? `${data.distance} km` : ""} />
+        <SummaryRow label={t("summary.labels.elevationGain")} value={data.elevationGain ? `${data.elevationGain} m` : ""} />
+        <SummaryRow label={t("summary.labels.escapeRoutes")} value={data.escapeRoutes} />
+        <SummaryRow label={t("summary.labels.terrainNotes")} value={data.terrainNotes} />
       </section>
 
       <section>
         <h3 className="text-sm font-semibold uppercase tracking-wide text-blue-700 mb-2">
-          Gear ({gearChecked}/{GEAR_ITEMS.length})
+          {t("summary.sections.gear")} ({gearChecked}/{GEAR_KEYS.length})
         </h3>
         {missingGear.length > 0 ? (
           <div className="flex flex-wrap gap-2">
@@ -268,22 +247,22 @@ function Summary({ data, onReset }: { data: MissionData; onReset: () => void }) 
             ))}
           </div>
         ) : (
-          <Chip color="success" variant="flat">All gear checked ✓</Chip>
+          <Chip color="success" variant="flat">{t("summary.allGearChecked")} ✓</Chip>
         )}
       </section>
 
       <section>
-        <h3 className="text-sm font-semibold uppercase tracking-wide text-blue-700 mb-2">Readiness</h3>
-        <SummaryRow label="Fitness" value={data.fitnessLevel} />
-        <SummaryRow label="Recent flight hours" value={data.recentFlightHours ? `${data.recentFlightHours} h` : ""} />
-        <SummaryRow label="Site familiarity" value={data.familiarWithSite} />
-        <SummaryRow label="Emergency contact" value={data.emergencyContact ? `${data.emergencyContact} – ${data.emergencyPhone}` : ""} />
-        <SummaryRow label="Abort conditions" value={data.abortConditions} />
+        <h3 className="text-sm font-semibold uppercase tracking-wide text-blue-700 mb-2">{t("summary.sections.readiness")}</h3>
+        <SummaryRow label={t("summary.labels.fitness")} value={data.fitnessLevel} />
+        <SummaryRow label={t("summary.labels.recentHours")} value={data.recentFlightHours ? `${data.recentFlightHours} h` : ""} />
+        <SummaryRow label={t("summary.labels.siteFamiliarity")} value={data.familiarWithSite} />
+        <SummaryRow label={t("summary.labels.emergencyContact")} value={data.emergencyContact ? `${data.emergencyContact} – ${data.emergencyPhone}` : ""} />
+        <SummaryRow label={t("summary.labels.abortConditions")} value={data.abortConditions} />
       </section>
 
       <div className="flex gap-3 flex-wrap print:hidden">
-        <Button color="primary" onPress={() => window.print()}>Print / Save PDF</Button>
-        <Button variant="flat" onPress={onReset}>Start new mission</Button>
+        <Button color="primary" onPress={() => window.print()}>{t("summary.print")}</Button>
+        <Button variant="flat" onPress={onReset}>{t("summary.reset")}</Button>
       </div>
     </div>
   );
@@ -291,15 +270,8 @@ function Summary({ data, onReset }: { data: MissionData; onReset: () => void }) 
 
 // ─── Main component ───────────────────────────────────────────────────────────
 
-const STEPS: { label: string; short: string }[] = [
-  { label: "Basics", short: "1" },
-  { label: "Weather", short: "2" },
-  { label: "Route", short: "3" },
-  { label: "Gear", short: "4" },
-  { label: "Readiness", short: "5" },
-];
-
 const MissionPlanner: FC = () => {
+  const t = useTranslations("missionPlanner");
   const [step, setStep] = useState<Step>(1);
   const [done, setDone] = useState(false);
   const [data, setData] = useState<MissionData>(EMPTY);
@@ -307,22 +279,28 @@ const MissionPlanner: FC = () => {
   const set = (patch: Partial<MissionData>) => setData(d => ({ ...d, ...patch }));
   const reset = () => { setData(EMPTY); setStep(1); setDone(false); };
 
+  const STEPS = [
+    { label: t("steps.basics"),    short: "1" },
+    { label: t("steps.weather"),   short: "2" },
+    { label: t("steps.route"),     short: "3" },
+    { label: t("steps.gear"),      short: "4" },
+    { label: t("steps.readiness"), short: "5" },
+  ];
+
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-950">
       {/* Hero */}
       <div className="bg-blue-900 text-white pt-32 pb-16">
         <Container>
-          <h1 className="text-4xl md:text-5xl font-bold mb-3">Hike & Fly Mission Planner</h1>
-          <p className="text-blue-200 text-lg max-w-2xl">
-            Plan your mission step by step — weather, route, gear, and readiness — then generate a printable brief.
-          </p>
+          <h1 className="text-4xl md:text-5xl font-bold mb-3">{t("heroTitle")}</h1>
+          <p className="text-blue-200 text-lg max-w-2xl">{t("heroDescription")}</p>
         </Container>
       </div>
 
       <Container className="py-12">
         {done ? (
           <div className="max-w-2xl mx-auto bg-white dark:bg-gray-900 rounded-2xl shadow-md p-8">
-            <Summary data={data} onReset={reset} />
+            <Summary data={data} onReset={reset} t={t} />
           </div>
         ) : (
           <div className="max-w-2xl mx-auto">
@@ -354,27 +332,23 @@ const MissionPlanner: FC = () => {
 
             {/* Step card */}
             <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-md p-8">
-              {step === 1 && <Step1 data={data} set={set} />}
-              {step === 2 && <Step2 data={data} set={set} />}
-              {step === 3 && <Step3 data={data} set={set} />}
-              {step === 4 && <Step4 data={data} set={set} />}
-              {step === 5 && <Step5 data={data} set={set} />}
+              {step === 1 && <Step1 data={data} set={set} t={t} />}
+              {step === 2 && <Step2 data={data} set={set} t={t} />}
+              {step === 3 && <Step3 data={data} set={set} t={t} />}
+              {step === 4 && <Step4 data={data} set={set} t={t} />}
+              {step === 5 && <Step5 data={data} set={set} t={t} />}
 
               <div className="flex justify-between mt-8">
-                <Button
-                  variant="flat"
-                  onPress={() => setStep(s => (s - 1) as Step)}
-                  isDisabled={step === 1}
-                >
-                  Back
+                <Button variant="flat" onPress={() => setStep(s => (s - 1) as Step)} isDisabled={step === 1}>
+                  {t("nav.back")}
                 </Button>
                 {step < 5 ? (
                   <Button color="primary" onPress={() => setStep(s => (s + 1) as Step)}>
-                    Next
+                    {t("nav.next")}
                   </Button>
                 ) : (
                   <Button color="primary" onPress={() => setDone(true)}>
-                    Generate mission brief
+                    {t("nav.generate")}
                   </Button>
                 )}
               </div>

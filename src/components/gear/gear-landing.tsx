@@ -45,16 +45,19 @@ function getCategoryIcon(slug: string, name: string): ReactNode {
   // Harness
   if (key.includes("harness")) {
     return (
-      <svg viewBox="0 0 64 72" fill="none" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-        <rect x="20" y="16" width="24" height="36" rx="5" />
-        <path d="M20 26 L6 18" />
-        <path d="M44 26 L58 18" />
-        <path d="M20 42 L6 54" />
-        <path d="M44 42 L58 54" />
-        <line x1="32" y1="52" x2="32" y2="64" />
-        <line x1="24" y1="60" x2="40" y2="60" />
-        <line x1="26" y1="30" x2="38" y2="30" />
-        <line x1="26" y1="38" x2="38" y2="38" />
+      <svg viewBox="0 0 64 76" fill="none" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        {/* Pod body — rounded cocoon shape */}
+        <path d="M16 36 Q15 58 32 64 Q49 58 48 36 L48 30 Q48 24 42 24 L22 24 Q16 24 16 30 Z" />
+        {/* Left A-riser pair going up to carabiner */}
+        <path d="M22 24 L12 8" />
+        <path d="M28 24 L16 8" />
+        <line x1="12" y1="8" x2="16" y2="8" />
+        {/* Right A-riser pair going up to carabiner */}
+        <path d="M42 24 L52 8" />
+        <path d="M36 24 L48 8" />
+        <line x1="48" y1="8" x2="52" y2="8" />
+        {/* Speed bar / foot stirrup at bottom */}
+        <path d="M24 62 L24 70 Q32 72 40 70 L40 62" opacity="0.6" />
       </svg>
     );
   }

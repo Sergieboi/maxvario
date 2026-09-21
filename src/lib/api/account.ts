@@ -11,8 +11,7 @@ export const loginWithCredentials = async (email: string, password: string) => {
       body: JSON.stringify({ username: email, password }),
     }
   );
-  console.error("[loginWithCredentials] status:", res?.status, "body:", res?.body?.slice(0, 500));
-  if (!res || res.status < 200 || res.status >= 300) return null;
+if (!res || res.status < 200 || res.status >= 300) return null;
   return JSON.parse(res.body);
 };
 

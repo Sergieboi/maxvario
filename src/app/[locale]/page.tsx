@@ -18,9 +18,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function HomePage({ params }: Props) {
   const locale = (await params).locale;
-  const home: ApiResponse<HomeResponse> = await getHome(locale);
+  const [home, homeEn]: [ApiResponse<HomeResponse>, ApiResponse<HomeResponse>] = await Promise.all([
+    getHome(locale),
+    locale !== "en" ? getHome("en") : Promise.resolve(null as unknown as ApiResponse<HomeResponse>),
+  ]);
   if (!home?.data) {
     return notFound();
   }
-  return <Home data={home.data} />;
+  const data = homeEn?.data?.images
+    ? { ...home.data, images: homeEn.data.images }
+    : home.data;
+  return <Home data={data} />;
 }

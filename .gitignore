@@ -39,3 +39,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+# Content sync credentials
+scripts/.env.sync
+scripts/google-service-account.json
